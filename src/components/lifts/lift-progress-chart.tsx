@@ -6,7 +6,6 @@ import { type NameType, type ValueType } from 'recharts/types/component/DefaultT
 import { sortBy } from 'remeda'
 
 import { useDateIntervalStore } from '~/state/use-date-interval-store'
-import { useDialogStore } from '~/state/use-dialog-store'
 import { type RouterOutputs } from '~/trpc/shared'
 import {
   getEstimatedMax,
@@ -15,7 +14,6 @@ import {
   getWeightPercentageChange
 } from '~/utils/core'
 import { getDaysBetween } from '~/utils/date'
-import { PersonalRecordForm } from './personal-record-form'
 
 type LiftProgressChartProps = {
   lift: NonNullable<RouterOutputs['lifts']['getBySlug']>
@@ -42,15 +40,14 @@ export const LiftProgressChart = ({ lift }: LiftProgressChartProps) => {
   })
 
   return (
-    <div className='relative w-full rounded-md border border-neutral-200 p-8 dark:border-neutral-800'>
-      <div className='absolute right-0 top-0 h-[1px] w-80 bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700' />
+    <div className='relative col-span-8 w-full rounded-md border border-neutral-200 p-8 dark:border-neutral-800'>
       <div className='mb-20 flex justify-between'>
         <div>
           <h2 className='text-neutral-800 dark:text-neutral-500'>Total sets</h2>
           <span className='text-4xl dark:text-white'>{lift.sets.filter((s) => s.tracked).length}</span>
         </div>
       </div>
-      <ResponsiveContainer className='relative h-full min-h-52'>
+      <ResponsiveContainer className='relative h-full max-h-52 min-h-52'>
         <LineChart data={data} className='text-2xs'>
           <XAxis tickLine={false} dataKey='day' />
           <YAxis tickLine={false} orientation='right' />
@@ -112,7 +109,7 @@ export const LiftDataTable = ({ lift }: LiftsDataTableProps) => {
   })
 
   return (
-    <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+    <div className='col-span-4 space-y-4'>
       <div className='relative w-full space-y-4 rounded-md border border-neutral-200 p-8 dark:border-neutral-800'>
         <div className='grid grid-cols-2 gap-4'>
           <div>

@@ -27,7 +27,7 @@ export const Navigation = () => {
           <Link
             href={item.href}
             key={item.href}
-            className={classNames('border-b border-transparent px-3 pb-2 pt-1 transition-all', {
+            className={classNames('border-b border-transparent px-3 pb-2 pt-1', {
               'border-neutral-500': pathname === item.href
             })}
           >

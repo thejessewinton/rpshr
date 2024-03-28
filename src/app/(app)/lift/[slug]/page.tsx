@@ -48,9 +48,9 @@ export default function LiftPage({ params }: LiftPageParams) {
         </div>
       </div>
 
-      <div className='space-y-4'>
-        <LiftDataTable lift={lift.data} />
+      <div className='grid grid-cols-12 gap-4'>
         <LiftProgressChart lift={lift.data} />
+        <LiftDataTable lift={lift.data} />
       </div>
     </>
   )
