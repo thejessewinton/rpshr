@@ -31,7 +31,7 @@ export const CompositionForm = () => {
         <div className='flex gap-2'>
           <label className='text-xs'>Current weight</label>
         </div>
-        <div className='flex overflow-hidden rounded transition-all focus-within:ring-1 focus-within:ring-blue-400'>
+        <div className='flex overflow-hidden rounded focus-within:ring-1 focus-within:ring-blue-400'>
           <Input
             {...register('weight', {
               valueAsNumber: true

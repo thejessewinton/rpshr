@@ -39,7 +39,7 @@ export const LiftActions = ({ lift }: LiftActionsProps) => {
   return (
     <Dropdown
       trigger={
-        <button className='flex h-8 w-8 justify-center rounded border border-neutral-200 p-1 outline-none transition-all hover:bg-neutral-50 focus:ring-2 focus:ring-blue-400 dark:border-neutral-800 dark:hover:bg-neutral-900'>
+        <button className='flex h-8 w-8 justify-center rounded border border-neutral-200 p-1 outline-none hover:bg-neutral-50 focus:ring-2 focus:ring-blue-400 dark:border-neutral-800 dark:hover:bg-neutral-900'>
           <EllipsisHorizontalIcon className='h-4 w-4' />
         </button>
       }
