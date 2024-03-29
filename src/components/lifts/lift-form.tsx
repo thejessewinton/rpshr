@@ -52,7 +52,7 @@ export const LiftForm = ({ lift }: { lift?: NewLiftValues }) => {
 
           <p className='block text-xs text-neutral-500'>— Record your current PR</p>
         </div>
-        <div className='flex overflow-hidden rounded focus-within:ring-1 focus-within:ring-blue-400'>
+        <div className='flex overflow-hidden rounded transition-all focus-within:ring-1 focus-within:ring-blue-400'>
           <Input
             placeholder='PR'
             {...register('weight', {

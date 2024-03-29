@@ -55,7 +55,7 @@ export const MarkdownEditor = forwardRef(
         {...rest}
         ref={ref}
         editor={editor}
-        className='h-fit w-full resize-none bg-transparent py-2 text-sm text-white outline-none focus:outline-none'
+        className='h-fit w-full resize-none bg-transparent py-2 text-sm text-white outline-none transition-all focus:outline-none'
       />
     )
   }

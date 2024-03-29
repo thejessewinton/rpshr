@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`bg-white font-sans bg-blend-multiply dark:bg-neutral-950 ${GeistSans.variable} ${GeistMono.variable}`}
+        className={`bg-white font-sans bg-blend-multiply dark:bg-neutral-900 ${GeistSans.variable} ${GeistMono.variable}`}
       >
         <SessionProvider>
           <ThemeProvider attribute='class'>

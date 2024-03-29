@@ -44,7 +44,7 @@ export const LiftCard = ({ lift }: LiftCardProps) => {
       </div>
 
       <div className='mb-4 mt-8 max-h-24 min-h-24 w-full border-b border-neutral-200 dark:border-neutral-800'>
-        <ResponsiveContainer className='relative min-h-16'>
+        <ResponsiveContainer className='relative -z-10 min-h-16'>
           <LineChart defaultShowTooltip={false} data={data} className='w-full text-xs'>
             <Line connectNulls type='monotone' dot={false} stroke='#93c5fd' fill='#222' dataKey='weight' />
           </LineChart>

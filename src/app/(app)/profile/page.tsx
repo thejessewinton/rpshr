@@ -26,7 +26,7 @@ export default function SettingsPage() {
           <div className='flex items-center justify-between'>
             <span className='text-xs'>Composition</span>
             <button
-              className='flex h-6 w-6 items-center justify-center rounded border border-neutral-200 p-1 outline-none hover:bg-neutral-50 focus:ring-2 focus:ring-blue-400 dark:border-neutral-800 dark:hover:bg-neutral-900'
+              className='flex h-6 w-6 items-center justify-center rounded border border-neutral-200 p-1 outline-none transition-all hover:bg-neutral-50 focus:ring-2 focus:ring-blue-400 dark:border-neutral-800 dark:hover:bg-neutral-900'
               onClick={() => {
                 handleDialog({ component: <CompositionForm />, title: 'Add composition' })
               }}

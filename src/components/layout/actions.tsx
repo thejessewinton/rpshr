@@ -21,7 +21,7 @@ export const Actions = ({ session }: ActionsProps) => {
           <div>
             <Dropdown
               trigger={
-                <button className='relative flex h-6 w-6 items-center justify-center rounded-full border border-neutral-200 outline-none focus:ring-2 focus:ring-blue-400 dark:border-neutral-800'>
+                <button className='relative flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 outline-none transition-all focus:ring-2 focus:ring-blue-400 dark:border-neutral-800'>
                   {getFirstInitial(session.user?.name ?? '')}
                 </button>
               }
