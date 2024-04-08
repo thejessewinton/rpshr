@@ -53,7 +53,7 @@ export const LiftProgressChart = ({ lift }: LiftProgressChartProps) => {
       <ResponsiveContainer className='relative h-full min-h-52'>
         <LineChart data={data} className='text-2xs'>
           <XAxis tickLine={false} dataKey='day' />
-          <YAxis tickLine={false} orientation='right' />
+          <YAxis tickLine={false} dataKey='weight' orientation='right' />
           <Tooltip cursor={false} content={<CustomTooltip />} />
           <Line connectNulls type='monotone' stroke='#93c5fd' dataKey='weight' />
         </LineChart>
