@@ -1,47 +1,23 @@
 'use client'
 
-import Link from 'next/link'
+import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
+import * as Dropdown from '@radix-ui/react-dropdown-menu'
 
-import { type Session } from 'next-auth'
-import { signOut } from 'next-auth/react'
-
-import { Dropdown, DropdownItem } from '~/components/shared/dropdown'
-import { ThemeSwitcher } from '~/components/shared/theme-switcher'
-import { getFirstInitial } from '~/utils/core'
-
-type ActionsProps = {
-  session: Session
-}
-
-export const Actions = ({ session }: ActionsProps) => {
+export const Actions = () => {
   return (
-    <div className='z-40 text-neutral-900 dark:text-white'>
-      <div className='mx-auto'>
-        <div className='flex items-center justify-between pb-2 pt-3 md:pb-3 md:pt-4'>
-          <div>
-            <Dropdown
-              trigger={
-                <button className='relative flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 outline-none focus:ring-2 focus:ring-blue-400 dark:border-neutral-800'>
-                  {getFirstInitial(session.user?.name ?? '')}
-                </button>
-              }
-              align='end'
-            >
-              <DropdownItem>
-                <Link href='/profile' className='w-full'>
-                  Profile
-                </Link>
-              </DropdownItem>
-              <DropdownItem>
-                <button onClick={() => signOut()} className='w-full text-left'>
-                  Log out
-                </button>
-              </DropdownItem>
-              <ThemeSwitcher />
-            </Dropdown>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Dropdown.Root>
+      <Dropdown.Trigger className='flex cursor-pointer items-center gap-2 rounded-full px-5 py-2 text-xs font-light tracking-wide text-neutral-400 outline-none transition-colors hover:bg-neutral-800 focus:ring-1 focus:ring-neutral-400'>
+        <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap '>thejessewinton</span>
+        <ChevronUpDownIcon className='h-4 w-4 text-neutral-400' />
+      </Dropdown.Trigger>
+      <Dropdown.Content
+        align='start'
+        className='mt-1 w-40 rounded-lg border border-neutral-700 bg-neutral-800 p-1 text-xs text-neutral-400 shadow-lg shadow-black/10 radix-state-closed:animate-fade-out'
+      >
+        <Dropdown.Item className='w-full rounded px-4 py-1 outline-none focus:bg-neutral-700'>
+          <button className='w-full text-left'>Profile</button>
+        </Dropdown.Item>
+      </Dropdown.Content>
+    </Dropdown.Root>
   )
 }

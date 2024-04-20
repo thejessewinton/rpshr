@@ -2,16 +2,15 @@ import '~/styles/globals.css'
 
 import { type ReactNode } from 'react'
 import { type Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import { cookies } from 'next/headers'
-
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 
 import { Dialog } from '~/components/shared/dialog'
 import { HotkeysProvider } from '~/providers/hotkeys'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
 import { TRPCReactProvider } from '~/trpc/react'
+import { classNames } from '~/utils/core'
 
 export const metadata: Metadata = {
   title: {
@@ -21,12 +20,16 @@ export const metadata: Metadata = {
   icons: [{ rel: 'icon', url: '/favicon.ico' }]
 }
 
+const inter = Inter({
+  display: 'fallback',
+  variable: '--font-inter',
+  subsets: ['latin']
+})
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body
-        className={`bg-white font-sans bg-blend-multiply dark:bg-neutral-900 ${GeistSans.variable} ${GeistMono.variable}`}
-      >
+      <body className={classNames('bg-white font-sans dark:bg-neutral-900', inter.variable)}>
         <SessionProvider>
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>

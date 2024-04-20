@@ -7,8 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)', ...fontFamily.sans],
-        mono: ['var(--font-geist-mono)', ...fontFamily.mono]
+        sans: ['var(--font-inter)', ...fontFamily.sans]
       },
       fontSize: {
         '2xs': '0.625rem'
@@ -19,7 +18,7 @@ export default {
         'scale-in-dialog': 'scale-in-dialog 0.2s ease',
         'scale-out-dialog': 'scale-out-dialog 0.2s ease',
         'fade-in': 'fade-in 0.2s ease',
-        'fade-out': 'fade-out 0.2s ease'
+        'fade-out': 'fade-out 0.1s ease'
       },
       boxShadow: ({ colors }) => ({
         autofill: `inset 0 0 0 1000px ${colors.neutral[800]}`
