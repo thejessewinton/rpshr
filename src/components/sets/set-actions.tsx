@@ -1,4 +1,4 @@
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
+import { DotsThree } from '@phosphor-icons/react'
 
 import { DeleteConfirm } from '~/components/actions/delete-confirm'
 import { Dropdown, DropdownItem } from '~/components/shared/dropdown'
@@ -38,7 +38,7 @@ export const SetActions = ({ set }: SetActionsProps) => {
     <Dropdown
       trigger={
         <button className='rounded p-1 outline-none hover:bg-neutral-50 focus:ring-2 focus:ring-blue-400 hover:dark:bg-neutral-800'>
-          <EllipsisHorizontalIcon className='h-4 w-4' />
+          <DotsThree className='h-4 w-4' />
         </button>
       }
       align='end'

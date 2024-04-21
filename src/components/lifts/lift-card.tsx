@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { ArrowUpIcon } from '@heroicons/react/24/outline'
+import { ArrowUp } from '@phosphor-icons/react'
 import { Line, LineChart, ResponsiveContainer } from 'recharts'
 import { sortBy } from 'remeda'
 
@@ -40,7 +40,7 @@ export const LiftCard = ({ lift }: LiftCardProps) => {
     <Link href={`/lift/${lift.slug}`} className='relative rounded border border-neutral-200 dark:border-neutral-800'>
       <div className='flex items-center gap-1 px-6 pt-4'>
         <h3>{percentageChange.percentage}%</h3>
-        <ArrowUpIcon className='h-4 w-4 text-neutral-500' />
+        <ArrowUp className='h-4 w-4 text-neutral-500' />
       </div>
 
       <div className='mb-4 mt-8 max-h-24 min-h-24 w-full border-b border-neutral-200 dark:border-neutral-800'>

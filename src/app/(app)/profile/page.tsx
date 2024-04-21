@@ -1,6 +1,6 @@
 'use client'
 
-import { PlusIcon } from '@heroicons/react/24/outline'
+import { Plus } from '@phosphor-icons/react'
 
 import { CompositionTable } from '~/components/composition/composition-table'
 import { CompositionForm } from '~/components/settings/composition-action'
@@ -31,7 +31,7 @@ export default function SettingsPage() {
                 handleDialog({ component: <CompositionForm />, title: 'Add composition' })
               }}
             >
-              <PlusIcon className='h-4 w-4' />
+              <Plus className='h-4 w-4' />
             </button>
           </div>
           <CompositionTable compositions={data.compositions} />

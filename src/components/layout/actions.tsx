@@ -1,23 +1,46 @@
 'use client'
 
-import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
-import * as Dropdown from '@radix-ui/react-dropdown-menu'
+import { CaretUpDown, CircleDashed, SignOut, User } from '@phosphor-icons/react'
+import { signOut } from 'next-auth/react'
+import { useTheme } from 'next-themes'
+
+import { Dropdown } from '~/components/shared/dropdown'
 
 export const Actions = () => {
+  const { theme, setTheme } = useTheme()
+
   return (
-    <Dropdown.Root>
-      <Dropdown.Trigger className='flex cursor-pointer items-center gap-2 rounded-full px-5 py-2 text-xs font-light tracking-wide text-neutral-400 outline-none transition-colors hover:bg-neutral-800 focus:ring-1 focus:ring-neutral-400'>
+    <Dropdown>
+      <Dropdown.Trigger>
+        <div className='size-4 rounded-full bg-orange-700' />
         <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap '>thejessewinton</span>
-        <ChevronUpDownIcon className='h-4 w-4 text-neutral-400' />
+        <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
-      <Dropdown.Content
-        align='start'
-        className='mt-1 w-40 rounded-lg border border-neutral-700 bg-neutral-800 p-1 text-xs text-neutral-400 shadow-lg shadow-black/10 radix-state-closed:animate-fade-out'
-      >
-        <Dropdown.Item className='w-full rounded px-4 py-1 outline-none focus:bg-neutral-700'>
-          <button className='w-full text-left'>Profile</button>
+      <Dropdown.Content align='start'>
+        <Dropdown.Item>
+          <div className='flex items-center gap-3'>
+            <User className='size-4 text-neutral-700 dark:text-white' />
+            Profile
+          </div>
+        </Dropdown.Item>
+        <Dropdown.Item
+          onSelect={(e) => {
+            e.preventDefault()
+            setTheme(theme === 'dark' ? 'light' : 'dark')
+          }}
+        >
+          <div className='flex items-center gap-3'>
+            <CircleDashed className='size-4 text-neutral-700 dark:text-white' />
+            Theme
+          </div>
+        </Dropdown.Item>
+        <Dropdown.Item onSelect={() => signOut()}>
+          <div className='flex items-center gap-3'>
+            <SignOut className='size-4 text-neutral-700 dark:text-white' />
+            Logout
+          </div>
         </Dropdown.Item>
       </Dropdown.Content>
-    </Dropdown.Root>
+    </Dropdown>
   )
 }

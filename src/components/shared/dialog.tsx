@@ -1,6 +1,6 @@
 'use client'
 
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { X } from '@phosphor-icons/react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
 import { useDialogStore } from '~/state/use-dialog-store'
@@ -24,7 +24,7 @@ export const Dialog = () => {
             <div className='mb-2 flex justify-between'>
               <DialogPrimitive.Title className='mb-4'>{title}</DialogPrimitive.Title>
               <DialogPrimitive.Close className='self-end rounded p-1 outline-none hover:bg-neutral-200 hover:dark:bg-neutral-800'>
-                <XMarkIcon className='h-4 w-4 text-neutral-800 dark:text-neutral-500' />
+                <X className='h-4 w-4 text-neutral-800 dark:text-neutral-500' />
               </DialogPrimitive.Close>
             </div>
             {component}

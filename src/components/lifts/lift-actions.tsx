@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
+import { DotsThree } from '@phosphor-icons/react'
 
 import { useDialogStore } from '~/state/use-dialog-store'
 import { api } from '~/trpc/react'
@@ -40,7 +40,7 @@ export const LiftActions = ({ lift }: LiftActionsProps) => {
     <Dropdown
       trigger={
         <button className='flex h-8 w-8 justify-center rounded border border-neutral-200 p-1 outline-none hover:bg-neutral-50 focus:ring-2 focus:ring-blue-400 dark:border-neutral-800 dark:hover:bg-neutral-900'>
-          <EllipsisHorizontalIcon className='h-4 w-4' />
+          <DotsThree className='h-4 w-4' />
         </button>
       }
       align='end'

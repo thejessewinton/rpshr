@@ -29,7 +29,7 @@ const inter = Inter({
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={classNames('bg-white font-sans dark:bg-neutral-900', inter.variable)}>
+      <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable)}>
         <SessionProvider>
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>

@@ -1,55 +1,87 @@
 'use client'
 
-import { forwardRef, type ReactNode, type Ref } from 'react'
+import { forwardRef, type Ref } from 'react'
 
 import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
 
 import { classNames } from '~/utils/core'
 
-type DropdownProps = {
-  trigger: ReactNode
-  children: ReactNode
-  align?: DropdownPrimitive.MenuContentProps['align']
+export const Dropdown = ({ children, ...props }: DropdownPrimitive.DropdownMenuProps) => {
+  return <DropdownPrimitive.Root {...props}>{children}</DropdownPrimitive.Root>
 }
 
-export const Dropdown = ({ trigger, children, align }: DropdownProps) => {
-  return (
-    <DropdownPrimitive.Root>
-      <DropdownPrimitive.Trigger className='flex cursor-pointer items-center gap-2' asChild>
-        {trigger}
-      </DropdownPrimitive.Trigger>
-      <DropdownPrimitive.Portal>
-        <DropdownPrimitive.Content
-          align={align}
-          className={classNames(
-            'relative z-50 mt-1 min-w-40 space-y-2 rounded border border-neutral-200 bg-white p-2 transition-colors dark:border-neutral-800 dark:bg-neutral-900',
-            'radix-state-open:animate-scale-in-content',
-            'radix-state-closed:animate-scale-out-content'
-          )}
-        >
-          {children}
-        </DropdownPrimitive.Content>
-      </DropdownPrimitive.Portal>
-    </DropdownPrimitive.Root>
-  )
-}
-
-type DropdownItemProps = DropdownPrimitive.DropdownMenuItemProps
-
-export const DropdownItem = forwardRef(
-  ({ className, asChild = true, ...props }: DropdownItemProps, ref: Ref<HTMLDivElement>) => {
+const DropdownTrigger = forwardRef(
+  ({ className, ...props }: DropdownPrimitive.DropdownMenuTriggerProps, ref: Ref<HTMLButtonElement>) => {
     return (
-      <DropdownPrimitive.Item
-        ref={ref}
+      <DropdownPrimitive.Trigger
         className={classNames(
-          'flex w-full cursor-pointer rounded px-3 py-1 text-xs text-neutral-800 transition-colors focus:bg-neutral-50 focus:outline-none dark:text-neutral-400 focus:dark:bg-neutral-800',
+          'flex cursor-pointer items-center gap-2 rounded-full px-3 py-2 text-xs font-light tracking-wide outline-none transition-colors focus:ring-2',
+          'text-neutral-700 hover:bg-neutral-200/70 focus:ring-neutral-200/70',
+          'dark:text-neutral-400 hover:dark:bg-neutral-800/70 focus:dark:ring-neutral-700/30',
           className
         )}
-        asChild={asChild}
+        ref={ref}
         {...props}
       />
     )
   }
 )
 
+DropdownTrigger.displayName = 'DropdownTrigger'
+
+const DropdownContent = forwardRef(
+  ({ className, ...props }: DropdownPrimitive.DropdownMenuContentProps, ref: Ref<HTMLDivElement>) => {
+    return (
+      <DropdownPrimitive.Content
+        className={classNames(
+          'mt-1 w-40 space-y-1 rounded-lg border p-1 text-xs shadow-lg shadow-black/10 radix-state-closed:animate-fade-out',
+          'border-neutral-200/70 bg-neutral-100/70 text-neutral-700',
+          'dark:border-neutral-700/30 dark:bg-neutral-800/70 dark:text-neutral-400',
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+
+DropdownContent.displayName = 'DropdownContent'
+
+type DropdownItemProps = DropdownPrimitive.DropdownMenuItemProps
+
+const DropdownItem = forwardRef(({ className, ...props }: DropdownItemProps, ref: Ref<HTMLDivElement>) => {
+  return (
+    <DropdownPrimitive.Item
+      className={classNames(
+        'flex w-full cursor-pointer items-center justify-between gap-2 rounded p-2 outline-none',
+        'focus:bg-neutral-200/70 focus:text-neutral-700',
+        'focus:dark:bg-neutral-700/20 focus:dark:text-white',
+        className
+      )}
+      ref={ref}
+      {...props}
+    />
+  )
+})
+
 DropdownItem.displayName = 'DropdownItem'
+
+const DropdownSeparator = forwardRef(
+  ({ className, ...props }: DropdownPrimitive.DropdownMenuSeparatorProps, ref: Ref<HTMLHRElement>) => {
+    return (
+      <DropdownPrimitive.Separator
+        className={classNames('my-1 h-px w-full', 'bg-neutral-300', 'dark:bg-neutral-700', className)}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+
+DropdownSeparator.displayName = 'DropdownSeparator'
+
+Dropdown.Trigger = DropdownTrigger
+Dropdown.Content = DropdownContent
+Dropdown.Item = DropdownItem
+Dropdown.Separator = DropdownSeparator
