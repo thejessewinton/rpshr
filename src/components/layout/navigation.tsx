@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check } from '@phosphor-icons/react'
+import { CaretUpDown, Check, CircleDashed, SignOut } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
+import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
@@ -35,9 +36,10 @@ export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [activeItem, setActiveItem] = useState<(typeof items)[number]>(items[0]!)
+  const { theme, setTheme } = useTheme()
 
   useHotkeys(
-    ['1', '2'],
+    ['1', '2', 'm', 'shift+q'],
     (_, handlers) => {
       switch (handlers.keys?.join('')) {
         case '1':
@@ -45,6 +47,9 @@ export const Navigation = () => {
           break
         case '2':
           router.push('/lifts')
+          break
+        case 'q':
+          signOut().catch(console.error)
           break
       }
     },
@@ -89,9 +94,10 @@ export const Navigation = () => {
             </Dropdown.Item>
           )
         })}
+        <Dropdown.Separator />
         <Dropdown.Item onSelect={() => signOut()}>
           <div className='flex items-center gap-3'>
-            <div className='size-4 rounded-full bg-red-900' />
+            <SignOut className='size-4 text-neutral-700 dark:text-white' />
             Logout
           </div>
           <kbd

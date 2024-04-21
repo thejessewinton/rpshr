@@ -22,7 +22,7 @@ export default {
         'fade-out': 'fade-out 0.1s ease'
       },
       boxShadow: ({ colors }) => ({
-        autofill: `inset 0 0 0 1000px ${colors.neutral[800]}`
+        autofill: `inset 0 0 0 1000px ${colors.neutral[900]}`
       }),
       keyframes: {
         'scale-in-content': {

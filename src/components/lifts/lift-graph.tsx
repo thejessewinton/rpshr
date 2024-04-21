@@ -16,7 +16,7 @@ export const LiftGraph = () => {
         <div className='flex items-end gap-2'>
           {data.map(({ day, lifts }, i) => {
             return (
-              <Tooltip.Root key={i}>
+              <Tooltip.Root key={`first-${i}`}>
                 <Tooltip.Trigger
                   className={classNames('relative flex w-px shrink-0 flex-col gap-1 rounded-lg', {
                     'h-12 bg-orange-500 dark:bg-orange-600': day.isFirstOfMonth,
@@ -26,7 +26,7 @@ export const LiftGraph = () => {
                   {lifts.map((lift, i) => {
                     return (
                       <>
-                        <div key={i} className={classNames('absolute bottom-0 left-0 h-20 w-px bg-white')} />
+                        <div key={`other-${i}`} className={classNames('absolute bottom-0 left-0 h-20 w-px bg-white')} />
                         <Tooltip.Content
                           side='bottom'
                           className='mt-2 font-mono text-xs font-light text-neutral-700 radix-state-closed:animate-fade-out radix-state-delayed-open:animate-fade-in dark:text-neutral-400'
