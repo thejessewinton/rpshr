@@ -1,40 +1,73 @@
 'use client'
 
 import { type Route } from 'next'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
+import { CaretUpDown, Check } from '@phosphor-icons/react'
+import { useHotkeys } from 'react-hotkeys-hook'
+
+import { Dropdown } from '~/components/shared/dropdown'
 import { classNames } from '~/utils/core'
 
 export const Navigation = () => {
+  const router = useRouter()
   const pathname = usePathname()
 
   const items: Array<{
     label: string
-    href: Route<string>
+    color: string
+    pathname: Route<string>
+    hotkey: string
   }> = [
     {
-      label: 'Lifts',
-      href: '/'
+      label: 'Activity',
+      color: 'bg-sky-800',
+      pathname: '/login',
+      hotkey: '1'
     },
-    { label: 'Profile', href: '/profile' }
+    {
+      label: 'Lifts',
+      color: 'bg-sky-100',
+      pathname: '/',
+      hotkey: '2'
+    }
   ]
 
+  useHotkeys('1', () => router.push('/'), [])
+
   return (
-    <nav className='-mb-px flex overflow-x-auto text-sm'>
-      {items.map((item) => {
-        return (
-          <Link
-            href={item.href}
-            key={item.href}
-            className={classNames('border-b border-transparent px-3 pb-2 pt-1', {
-              'border-neutral-500': pathname === item.href
-            })}
-          >
-            {item.label}
-          </Link>
-        )
-      })}
-    </nav>
+    <Dropdown>
+      <Dropdown.Trigger>
+        <div className='size-4 rounded-full bg-sky-800' />
+        <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap '>Navigation</span>
+        <CaretUpDown className='size-3 text-inherit' />
+      </Dropdown.Trigger>
+      <Dropdown.Content align='start'>
+        {items.map((item) => {
+          const isActive = item.pathname === pathname
+          return (
+            <Dropdown.Item key={item.label} onSelect={() => router.push(item.pathname)}>
+              <div className='flex items-center gap-3'>
+                <div className={classNames('size-4 rounded-full text-neutral-700 dark:text-white', item.color)} />
+                {item.label}
+              </div>
+              {isActive ? (
+                <Check className='size-4' />
+              ) : (
+                <kbd
+                  className={classNames(
+                    'flex size-4 items-center justify-center rounded font-sans text-[10px]',
+                    'bg-neutral-300/50',
+                    'dark:bg-neutral-700 dark:text-neutral-400'
+                  )}
+                >
+                  {item.hotkey}
+                </kbd>
+              )}
+            </Dropdown.Item>
+          )
+        })}
+      </Dropdown.Content>
+    </Dropdown>
   )
 }

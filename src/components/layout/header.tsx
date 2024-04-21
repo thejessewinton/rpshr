@@ -1,24 +1,16 @@
-import Link from 'next/link'
-
 import { Actions } from '~/components/layout/actions'
 import { Navigation } from '~/components/layout/navigation'
-import { auth } from '~/server/auth'
+import { Logo } from '~/components/shared/logo'
 
 export const Header = async () => {
-  const session = await auth()
-
   return (
-    <div className='relative border-b border-neutral-200 px-8 dark:border-neutral-800'>
-      <header className=''>
-        <div className='mx-auto flex w-full items-center justify-between pb-8 pt-4'>
-          <Link href='/'>Rupture</Link>
-
-          <div className='flex items-center gap-2'>
-            <Actions session={session!} />
-          </div>
-        </div>
+    <header className='flex items-center justify-between px-8 py-4'>
+      <div className='mx-auto flex w-full items-center gap-4'>
+        <Logo className='size-6' />
+        <div className='h-4 w-px rotate-[16deg] bg-neutral-700' />
         <Navigation />
-      </header>
-    </div>
+      </div>
+      <Actions />
+    </header>
   )
 }
