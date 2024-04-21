@@ -21,13 +21,13 @@ export const Navigation = () => {
   }> = [
     {
       label: 'Activity',
-      color: 'bg-sky-800',
+      color: 'dark:bg-sky-800 bg-sky-600',
       pathname: '/login',
       hotkey: '1'
     },
     {
       label: 'Lifts',
-      color: 'bg-sky-100',
+      color: 'dark:bg-teal-800 bg-teal-600',
       pathname: '/',
       hotkey: '2'
     }
@@ -38,8 +38,8 @@ export const Navigation = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <div className='size-4 rounded-full bg-sky-800' />
-        <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap '>Navigation</span>
+        <div className='size-4 rounded-full bg-sky-600 dark:bg-sky-800' />
+        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Navigation</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
       <Dropdown.Content align='start'>
