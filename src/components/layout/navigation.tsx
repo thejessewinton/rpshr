@@ -24,17 +24,10 @@ export const Navigation = () => {
       color: 'bg-blue-400',
       pathname: '/',
       hotkey: '1'
-    },
-    {
-      label: 'Profile',
-      color: 'bg-blue-200',
-      pathname: '/profile',
-      hotkey: '2'
     }
   ]
 
   useHotkeys('1', () => router.push('/'), [])
-  useHotkeys('2', () => router.push('/profile'), [])
 
   return (
     <Dropdown>
@@ -58,7 +51,7 @@ export const Navigation = () => {
                 <kbd
                   className={classNames(
                     'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-                    'border-neutral-300 bg-neutral-300',
+                    'bg-neutral-300/50',
                     'dark:bg-neutral-700 dark:text-neutral-400'
                   )}
                 >

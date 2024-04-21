@@ -22,6 +22,7 @@ export const userRouter = createTRPCRouter({
       z.object({
         name: z.string(),
         email: z.string().email(),
+        username: z.string().optional(),
         weight: z.number().optional()
       })
     )
@@ -40,7 +41,8 @@ export const userRouter = createTRPCRouter({
         .update(users)
         .set({
           name: input.name,
-          email: input.email
+          email: input.email,
+          username: input.username
         })
         .where(eq(users.id, ctx.session.user.id))
     }),

@@ -3,7 +3,6 @@
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { IntervalSwitcher } from '~/components/lifts/interval-switcher'
-import { LiftActions } from '~/components/lifts/lift-actions'
 import { LiftDataTable, LiftProgressChart } from '~/components/lifts/lift-progress-chart'
 import { SetForm } from '~/components/sets/set-form'
 import { Button } from '~/components/shared/button'
@@ -44,7 +43,6 @@ export default function LiftPage({ params }: LiftPageParams) {
           >
             Add set
           </Button>
-          <LiftActions lift={lift.data} />
         </div>
       </div>
 

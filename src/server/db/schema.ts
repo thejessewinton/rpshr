@@ -23,7 +23,8 @@ export const users = pgTable('user', {
   emailVerified: timestamp('emailVerified', {
     mode: 'date'
   }).default(sql`CURRENT_TIMESTAMP`),
-  image: varchar('image', { length: 255 })
+  image: varchar('image', { length: 255 }),
+  username: varchar('username', { length: 255 })
 })
 
 export const usersRelations = relations(users, ({ one, many }) => ({
