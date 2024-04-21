@@ -7,33 +7,21 @@ type InputProps = {
   secondaryLabel?: string
 } & InputHTMLAttributes<HTMLInputElement>
 
-export const Input = forwardRef(
-  ({ name, className, label, onChange, secondaryLabel, ...rest }: InputProps, ref: Ref<HTMLInputElement>) => {
-    return (
-      <div className={classNames('relative flex flex-col gap-2', className)}>
-        {label && (
-          <div className='flex gap-2'>
-            <label htmlFor={name} className='text-xs'>
-              {label}
-            </label>
-
-            {secondaryLabel && <p className='block text-xs text-neutral-500'>— {secondaryLabel}</p>}
-          </div>
-        )}
-
-        <input
-          ref={ref}
-          name={name}
-          onChange={onChange}
-          className={classNames(
-            'h-fit w-full appearance-none rounded border border-neutral-200 bg-transparent px-3 py-1.5 text-sm font-light outline-none placeholder:text-neutral-500 autofill:shadow-autofill read-only:cursor-not-allowed focus:ring-1 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-800',
-            className
-          )}
-          {...rest}
-        />
-      </div>
-    )
-  }
-)
+export const Input = forwardRef(({ name, className, onChange, ...props }: InputProps, ref: Ref<HTMLInputElement>) => {
+  return (
+    <input
+      ref={ref}
+      name={name}
+      onChange={onChange}
+      className={classNames(
+        'min-w-0 max-w-none appearance-none rounded border-none bg-transparent p-0 text-xs !outline-none ring-0',
+        'focus:bg-neutral-200/70 focus:text-neutral-700',
+        'focus:dark:bg-neutral-700/20 focus:dark:text-white',
+        className
+      )}
+      {...props}
+    />
+  )
+})
 
 Input.displayName = 'Input'

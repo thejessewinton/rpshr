@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { CaretUpDown, CircleDashed, SignOut } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
 import { useTheme } from 'next-themes'
@@ -12,13 +14,20 @@ import { classNames } from '~/utils/core'
 export const Actions = () => {
   const { theme, setTheme } = useTheme()
   const { isLoading, data } = api.user.getCurrent.useQuery()
+  const [open, setOpen] = useState(false)
 
-  useHotkeys('m', () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  })
-
-  useHotkeys('shift+q', () => {
-    signOut().catch(console.error)
+  useHotkeys(['m', 'shift+q', 'u'], (_, handler) => {
+    switch (handler.keys?.join('')) {
+      case 'm':
+        setTheme(theme === 'dark' ? 'light' : 'dark')
+        break
+      case 'q':
+        signOut().catch(console.error)
+        break
+      case 'u':
+        setOpen(!open)
+        break
+    }
   })
 
   if (isLoading) return null
@@ -30,7 +39,7 @@ export const Actions = () => {
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>{data?.username}</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
-      <Dropdown.Content align='start'>
+      <Dropdown.Content align='end'>
         <Dropdown.Item
           onSelect={(e) => {
             e.preventDefault()

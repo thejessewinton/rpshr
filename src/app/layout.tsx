@@ -5,7 +5,6 @@ import { type Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
-import { Dialog } from '~/components/shared/dialog'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -39,8 +38,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>
               <main className='flex min-h-screen w-full flex-row'>{children}</main>
-
-              <Dialog />
             </TRPCReactProvider>
           </ThemeProvider>
         </SessionProvider>
