@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { CaretUpDown, CircleDashed, SignOut } from '@phosphor-icons/react'
+import { CaretUpDown, Check, CircleDashed, SignOut, User } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -10,11 +10,20 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { Dropdown } from '~/components/shared/dropdown'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
+import { Input } from '../shared/input'
 
 export const Actions = () => {
   const { theme, setTheme } = useTheme()
   const { isLoading, data } = api.user.getCurrent.useQuery()
   const [open, setOpen] = useState(false)
+  const [username, setUsername] = useState('')
+  const utils = api.useUtils()
+
+  const { mutate } = api.user.updateUsername.useMutation({
+    onSuccess: async () => {
+      await utils.user.getCurrent.invalidate()
+    }
+  })
 
   useHotkeys(['m', 'shift+q', 'u'], (_, handler) => {
     switch (handler.keys?.join('')) {
@@ -24,9 +33,6 @@ export const Actions = () => {
       case 'q':
         signOut().catch(console.error)
         break
-      case 'u':
-        setOpen(!open)
-        break
     }
   })
 
@@ -35,7 +41,7 @@ export const Actions = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger className='animate-fade-in'>
-        <div className='size-4 rounded-full bg-orange-700' />
+        <div className='size-4 rounded-full bg-slate-700' />
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>{data?.username}</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>

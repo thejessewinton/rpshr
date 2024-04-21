@@ -55,8 +55,8 @@ const DropdownItem = forwardRef(({ className, ...props }: DropdownItemProps, ref
     <DropdownPrimitive.Item
       className={classNames(
         'flex w-full cursor-pointer items-center justify-between gap-2 rounded p-2 outline-none',
-        'focus:bg-neutral-200/70 focus:text-neutral-700',
-        'focus:dark:bg-neutral-700/20 focus:dark:text-white',
+        'focus:bg-neutral-200/70 focus:text-neutral-700 radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700',
+        'focus:dark:bg-neutral-700/20 focus:dark:text-white radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white',
         className
       )}
       ref={ref}
