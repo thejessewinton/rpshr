@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check, SignOut } from '@phosphor-icons/react'
+import { CaretUpDown, Check } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -55,9 +55,7 @@ export const Navigation = () => {
     <Dropdown>
       <Dropdown.Trigger>
         <div className={classNames('size-4 rounded-full', activeItem.color)} />
-        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>
-          {activeItem.label}
-        </span>
+        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Navigation</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
       <Dropdown.Content align='start'>

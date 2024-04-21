@@ -1,4 +1,3 @@
-import { Actions } from '~/components/layout/actions'
 import { Navigation } from '~/components/layout/navigation'
 import { Logo } from '~/components/shared/logo'
 import { AddWorkout } from './add-workout'
@@ -11,7 +10,6 @@ export const Header = async () => {
         <div className='h-4 w-px rotate-[16deg] bg-neutral-700' />
         <Navigation />
       </div>
-      {/* <Actions /> */}
       <AddWorkout />
     </header>
   )
