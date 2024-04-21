@@ -57,7 +57,7 @@ export const Navigation = () => {
               ) : (
                 <kbd
                   className={classNames(
-                    'flex size-4 items-center justify-center rounded',
+                    'flex size-4 items-center justify-center rounded font-sans text-[10px]',
                     'border-neutral-300 bg-neutral-300',
                     'dark:bg-neutral-700 dark:text-neutral-400'
                   )}
