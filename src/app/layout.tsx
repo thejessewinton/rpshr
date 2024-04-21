@@ -2,7 +2,7 @@ import '~/styles/globals.css'
 
 import { type ReactNode } from 'react'
 import { type Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
 import { Dialog } from '~/components/shared/dialog'
@@ -25,10 +25,16 @@ const inter = Inter({
   subsets: ['latin']
 })
 
+const jetbrains = JetBrains_Mono({
+  display: 'fallback',
+  variable: '--font-jetbrains-mono',
+  subsets: ['latin']
+})
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable)}>
+      <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable, jetbrains.variable)}>
         <SessionProvider>
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>

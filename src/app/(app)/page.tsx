@@ -1,9 +1,7 @@
 'use client'
 
+import { LiftGraph } from '~/components/lifts/lift-graph'
+
 export default function LiftsPage() {
-  return (
-    <>
-      <div className='flex items-center justify-between pb-4'></div>
-    </>
-  )
+  return <LiftGraph />
 }

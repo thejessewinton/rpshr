@@ -24,7 +24,7 @@ export const users = pgTable('user', {
     mode: 'date'
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar('image', { length: 255 }),
-  username: varchar('username', { length: 255 })
+  username: varchar('username', { length: 255 }).notNull()
 })
 
 export const usersRelations = relations(users, ({ one, many }) => ({

@@ -20,10 +20,16 @@ export const Navigation = () => {
     hotkey: string
   }> = [
     {
-      label: 'Lifts',
-      color: 'bg-blue-400',
-      pathname: '/',
+      label: 'Activity',
+      color: 'bg-sky-800',
+      pathname: '/login',
       hotkey: '1'
+    },
+    {
+      label: 'Lifts',
+      color: 'bg-sky-100',
+      pathname: '/',
+      hotkey: '2'
     }
   ]
 
@@ -32,7 +38,7 @@ export const Navigation = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <div className='size-4 rounded-full bg-blue-400' />
+        <div className='size-4 rounded-full bg-sky-800' />
         <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap '>Navigation</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
@@ -42,7 +48,7 @@ export const Navigation = () => {
           return (
             <Dropdown.Item key={item.label} onSelect={() => router.push(item.pathname)}>
               <div className='flex items-center gap-3'>
-                <div className={classNames('size-4 rounded-full', item.color)} />
+                <div className={classNames('size-4 rounded-full text-neutral-700 dark:text-white', item.color)} />
                 {item.label}
               </div>
               {isActive ? (
