@@ -47,7 +47,7 @@ const Chart = ({ lift, className, ...props }: ChartProps) => {
   return (
     <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
       <div className='w-fit text-nowrap font-mono text-xs text-neutral-400 dark:text-neutral-200'></div>
-      <ResponsiveContainer className='relative h-full min-h-32 w-full pl-4'>
+      <ResponsiveContainer className='relative h-full min-h-32 w-full'>
         <BarChart defaultShowTooltip={false} data={data}>
           <Tooltip cursor={false} content={<CustomTooltip />} />
           <Bar dataKey='weight' minPointSize={32} barSize={1} className='fill-neutral-400 dark:fill-neutral-700' />
