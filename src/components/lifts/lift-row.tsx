@@ -52,7 +52,7 @@ const Chart = ({ lift, className, ...props }: ChartProps) => {
   return (
     <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
       <Link
-        href={`/lift/${lift.slug}`}
+        href={`/app/lift/${lift.slug}`}
         className='w-fit text-nowrap font-mono text-xs text-neutral-400 dark:text-neutral-200'
       >
         {lift.name}
