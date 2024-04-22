@@ -7,26 +7,17 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from '
 import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
 import { sortBy } from 'remeda'
 
-import { api } from '~/trpc/react'
+import { AddSet } from '~/components/sets/add-set'
 import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 import dayjs, { getDaysBetween } from '~/utils/date'
-import { AddSet } from '../sets/add-set'
 
-export const LiftChart = ({ slug }: { slug: string }) => {
-  const lift = api.lifts.getBySlug.useQuery({ slug })
-
-  if (!lift.data) return null
+export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getBySlug'] }) => {
+  if (!lift) return null
 
   return (
-    <div className='flex flex-col text-sm'>
-      <div className='flex items-center justify-between gap-5'>
-        <AddSet liftSlug={slug} liftId={lift.data.id} />
-        <div className='text-nowrap font-mono text-neutral-700 dark:text-neutral-400'>{lift.data.sets.length} Sets</div>
-      </div>
-      <div className='animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto'>
-        <Chart lift={lift.data} />
-      </div>
+    <div className='divide-y divide-neutral-700/30 overflow-x-auto'>
+      <Chart lift={lift} />
     </div>
   )
 }

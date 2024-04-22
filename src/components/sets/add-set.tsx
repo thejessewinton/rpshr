@@ -33,7 +33,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
     })
     const [reps, sets, weight, unit, rawDate, notes] = values.set.split(',').map((v) => v.trim())
 
-    const date = rawDate === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD')
+    const date = rawDate === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs(rawDate).format('YYYY-MM-DD')
 
     const set = setSchema.parse({ reps, sets, weight, unit, date, notes })
 
