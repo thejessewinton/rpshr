@@ -14,6 +14,10 @@ declare module 'next-auth' {
 
 export const config = {
   callbacks: {
+    // limit sign ins to just me for now
+    signIn: async ({ profile }) => {
+      return profile?.email === 'jrandallwinton@gmail.com'
+    },
     session: async ({ session, user }) => {
       return {
         ...session,
