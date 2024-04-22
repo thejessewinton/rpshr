@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
-import { compositions, lift, set } from '~/server/db/schema'
+import { lift, set } from '~/server/db/schema'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
@@ -27,11 +27,6 @@ export const setsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
-        const latestComposition = await db.query.compositions.findFirst({
-          where: eq(compositions.user_id, ctx.session.user.id),
-          orderBy: [desc(compositions.created_at)]
-        })
-
         await db
           .update(lift)
           .set({
@@ -45,7 +40,6 @@ export const setsRouter = createTRPCRouter({
           reps: input.reps,
           weight: input.weight,
           tracked: input.tracked,
-          composition_id: latestComposition?.id,
           lift_id: input.lift_id
         })
       })

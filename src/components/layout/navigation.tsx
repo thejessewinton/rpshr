@@ -23,12 +23,6 @@ const items: Array<{
     color: 'dark:bg-sky-800 bg-sky-600',
     pathname: '/',
     hotkey: '1'
-  },
-  {
-    label: 'Homepage',
-    color: 'dark:bg-teal-800 bg-teal-600',
-    pathname: '/login',
-    hotkey: '2'
   }
 ]
 
@@ -59,7 +53,7 @@ export const Navigation = () => {
     <Dropdown>
       <Dropdown.Trigger>
         <div className={classNames('size-4 rounded-full', activeItem.color)} />
-        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Navigation</span>
+        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Actions</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
       <Dropdown.Content align='start'>

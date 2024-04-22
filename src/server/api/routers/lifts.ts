@@ -1,7 +1,7 @@
 import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
-import { compositions, lift, personalRecord, set, units } from '~/server/db/schema'
+import { lift, personalRecord, set, units } from '~/server/db/schema'
 import dayjs from '~/utils/date'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
@@ -36,18 +36,11 @@ export const liftsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
-        const [latestComposition] = await db.query.compositions.findMany({
-          where: eq(compositions.user_id, ctx.session.user.id),
-          orderBy: [desc(compositions.created_at)],
-          limit: 1
-        })
-
         const [newLift] = await db
           .insert(lift)
           .values({
             name: input.name,
-            user_id: ctx.session.user.id,
-            composition_id: latestComposition?.id
+            user_id: ctx.session.user.id
           })
           .returning({ id: lift.id })
 
@@ -69,11 +62,6 @@ export const liftsRouter = createTRPCRouter({
                 slug: true
               }
             }
-          }
-        },
-        compositions: {
-          columns: {
-            weight: true
           }
         },
         personal_records: {
