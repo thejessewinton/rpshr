@@ -23,15 +23,16 @@ export const marketingRouter = createTRPCRouter({
         }
       }
 
-      await ctx.db.insert(waitlist).values({
-        email: input.email
-      })
-
       await logsnag.track({
         channel: 'waitlist',
         event: 'New Waitlist Signup',
+        user_id: input.email,
         icon: '🚀',
         notify: true
+      })
+
+      await ctx.db.insert(waitlist).values({
+        email: input.email
       })
 
       return {
