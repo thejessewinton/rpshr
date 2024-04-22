@@ -1,6 +1,6 @@
 # rpshr
 
-[Repo image](https://rpshr.app/repo.jpg)
+![Repo image](https://rpshr.app/repo.jpg)
 
 A better way to journal your workouts.
 
