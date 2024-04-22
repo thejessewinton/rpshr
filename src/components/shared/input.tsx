@@ -14,7 +14,7 @@ export const Input = forwardRef(({ name, className, onChange, ...props }: InputP
       name={name}
       onChange={onChange}
       className={classNames(
-        'min-w-0 max-w-none appearance-none rounded border bg-transparent px-2 py-1 text-sm !outline-none ring-0',
+        'min-w-0 max-w-none appearance-none rounded border bg-transparent px-3 py-2 text-sm !outline-none ring-0',
         'border-neutral-200/70 text-neutral-700 placeholder:text-neutral-700 focus:text-neutral-700',
         'placeholder:dark:text-neutral-400 focus:dark:text-white',
 
