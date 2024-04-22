@@ -19,13 +19,13 @@ const items: Array<{
   hotkey: string
 }> = [
   {
-    label: 'Activity',
+    label: 'Lifts',
     color: 'dark:bg-sky-800 bg-sky-600',
     pathname: '/',
     hotkey: '1'
   },
   {
-    label: 'Lifts',
+    label: 'Homepage',
     color: 'dark:bg-teal-800 bg-teal-600',
     pathname: '/login',
     hotkey: '2'

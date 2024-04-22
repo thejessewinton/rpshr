@@ -10,8 +10,8 @@ export const AddActivity = () => {
   return (
     <Popover>
       <Popover.Trigger>
-        <Plus className='size-4 text-white' />
-        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Add</span>
+        <Plus className='size-3 text-neutral-700 dark:text-neutral-400' />
+        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Add Workout</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Popover.Trigger>
       <Popover.Content align='end'>

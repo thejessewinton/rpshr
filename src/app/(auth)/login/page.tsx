@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
-import { DiscordLogo, GoogleLogo } from '@phosphor-icons/react/dist/ssr'
+import { GoogleLogo } from '@phosphor-icons/react/dist/ssr'
 
 import { Button } from '~/components/shared/button'
 import { Logo } from '~/components/shared/logo'
