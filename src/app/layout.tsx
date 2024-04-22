@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     template: '%s · rpshr',
     default: 'rpshr'
   },
+  description: 'A better way to journal your workouts.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }]
 }
 

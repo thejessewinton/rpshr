@@ -6,7 +6,8 @@ export default function Marketing() {
     <div className='w-full max-w-xl space-y-12 px-8'>
       <header className='flex items-center justify-between'>
         <Logo className='size-6 text-neutral-700 dark:text-white' />
-        <h1 className='text-sm text-neutral-700 dark:text-white'>rup • ture</h1>
+
+        <h2 className='text-sm text-neutral-700 dark:text-neutral-400'>rup • ture</h2>
       </header>
 
       <div className='space-y-4 text-sm font-light leading-loose text-neutral-700 dark:text-neutral-400'>
@@ -18,8 +19,11 @@ export default function Marketing() {
         </p>
 
         <p>
-          Focused on simplicity, keyboard navigation, and ease-of-use. Has limited features, but does what it does well.
+          Focused on simplicity, keyboard navigation, accessibility, and ease-of-use. Has limited features, but does
+          what it does well.
         </p>
+
+        <p>Might add more, might not.</p>
 
         <Waitlist />
       </div>
