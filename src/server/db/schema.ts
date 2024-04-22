@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto'
+
 import type { AdapterAccount } from '@auth/core/adapters'
 import { relations, sql } from 'drizzle-orm'
 import {
@@ -24,7 +26,7 @@ export const users = pgTable('user', {
     mode: 'date'
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar('image', { length: 255 }),
-  username: varchar('username', { length: 255 }).notNull()
+  username: varchar('username', { length: 255 })
 })
 
 export const usersRelations = relations(users, ({ one, many }) => ({
@@ -113,7 +115,10 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 export const sessions = pgTable(
   'session',
   {
-    sessionToken: varchar('sessionToken', { length: 255 }).notNull().primaryKey(),
+    id: text('id')
+      .primaryKey()
+      .$defaultFn(() => randomUUID()),
+    sessionToken: text('sessionToken').notNull().unique(),
     userId: varchar('userId', { length: 255 })
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
