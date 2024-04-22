@@ -19,7 +19,7 @@ export const LiftChart = ({ slug }: { slug: string }) => {
   if (!lift.data) return null
 
   return (
-    <div className='flex flex-col px-8 text-sm'>
+    <div className='flex flex-col text-sm'>
       <div className='flex items-center justify-between gap-5'>
         <AddSet liftSlug={slug} liftId={lift.data.id} />
         <div className='text-nowrap font-mono text-neutral-700 dark:text-neutral-400'>{lift.data.sets.length} Sets</div>

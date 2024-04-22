@@ -8,5 +8,9 @@ type LiftPageParams = {
 }
 
 export default function LiftPage({ params }: LiftPageParams) {
-  return <LiftChart slug={params.slug} />
+  return (
+    <div className='px-8'>
+      <LiftChart slug={params.slug} />
+    </div>
+  )
 }
