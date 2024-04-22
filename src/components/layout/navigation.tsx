@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check, SignOut } from '@phosphor-icons/react'
+import { CaretUpDown, Check, CircleDashed, SignOut } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
+import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
@@ -35,6 +36,7 @@ export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [activeItem, setActiveItem] = useState<(typeof items)[number]>(items[0]!)
+  const { theme, setTheme } = useTheme()
 
   useHotkeys(
     ['1', '2', 'm', 'shift+q'],
@@ -48,6 +50,9 @@ export const Navigation = () => {
           break
         case 'q':
           signOut().catch(console.error)
+          break
+        case 'm':
+          setTheme(theme === 'dark' ? 'light' : 'dark')
           break
       }
     },
@@ -93,6 +98,26 @@ export const Navigation = () => {
           )
         })}
         <Dropdown.Separator />
+        <Dropdown.Item
+          onSelect={(e) => {
+            e.preventDefault()
+            setTheme(theme === 'dark' ? 'light' : 'dark')
+          }}
+        >
+          <div className='flex items-center gap-3'>
+            <CircleDashed className='size-4 text-neutral-700 dark:text-white' />
+            Theme
+          </div>
+          <kbd
+            className={classNames(
+              'flex size-4 items-center justify-center rounded font-sans text-[10px]',
+              'bg-neutral-300/50',
+              'dark:bg-neutral-700 dark:text-neutral-400'
+            )}
+          >
+            M
+          </kbd>
+        </Dropdown.Item>
         <Dropdown.Item onSelect={() => signOut()}>
           <div className='flex items-center gap-3'>
             <SignOut className='size-4 text-neutral-700 dark:text-white' />

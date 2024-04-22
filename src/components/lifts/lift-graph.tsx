@@ -1,6 +1,7 @@
 'use client'
 
 import { type ComponentPropsWithoutRef } from 'react'
+import Link from 'next/link'
 
 import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from 'recharts'
 import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
@@ -49,7 +50,12 @@ const LiftChart = ({ lift, className, ...props }: LiftChartProps) => {
 
   return (
     <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
-      <div className='w-fit text-nowrap font-mono text-xs text-neutral-200'>{lift.name}</div>
+      <Link
+        href={`/lift/${lift.slug}`}
+        className='w-fit text-nowrap font-mono text-xs text-neutral-400 dark:text-neutral-200'
+      >
+        {lift.name}
+      </Link>
       <ResponsiveContainer className='relative h-full min-h-16 w-full pl-4'>
         <BarChart data={data}>
           <Tooltip position={{ y: 0 }} cursor={false} content={<CustomTooltip />} />
@@ -70,8 +76,6 @@ interface CustomTooltipProps extends TooltipProps<ValueType, NameType> {
 
 const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (!active) return null
-
-  console.log(payload)
 
   return (
     <div className={classNames('flex flex-col gap-1 font-mono text-xs', 'text-neutral-700', 'dark:text-neutral-400')}>

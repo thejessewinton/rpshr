@@ -1,6 +1,6 @@
 import { Navigation } from '~/components/layout/navigation'
+import { AddActivity } from '~/components/lifts/add-workout'
 import { Logo } from '~/components/shared/logo'
-import { AddActivity } from '../lifts/add-workout'
 
 export const Header = async () => {
   return (
