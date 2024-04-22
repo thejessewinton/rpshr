@@ -2,7 +2,6 @@ import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { compositions, lift, personalRecord, set, units } from '~/server/db/schema'
-import { getAllDaysInYear } from '~/utils/core'
 import dayjs from '~/utils/date'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
