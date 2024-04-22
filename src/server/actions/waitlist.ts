@@ -1,9 +1,12 @@
 'use server'
 
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 
 import { env } from '~/env'
+import { db } from '~/server/db'
+import { users } from '~/server/db/schema'
 import { logsnag } from '~/server/logsnag'
 import { resend } from '../resend'
 
