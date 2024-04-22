@@ -3,7 +3,6 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '~/components/shared/button'
-import { Checkbox } from '~/components/shared/checkbox'
 import { Input } from '~/components/shared/input'
 import { useDialogStore } from '~/state/use-dialog-store'
 import { api } from '~/trpc/react'
@@ -72,8 +71,6 @@ export const SetForm = ({ set, lift }: { set?: SetValues; lift: Lift }) => {
         <Button type='submit' disabled={submit.isLoading}>
           Add set
         </Button>
-
-        <Checkbox label='Track set' {...register('tracked')} />
       </div>
     </form>
   )
