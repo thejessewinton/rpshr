@@ -1,11 +1,11 @@
 'use client'
 
-import { LiftGraph } from '~/components/lifts/lift-graph'
+import { LiftRow } from '~/components/lifts/lift-row'
 
 export default function LiftsPage() {
   return (
     <div className='mx-auto w-full max-w-4xl'>
-      <LiftGraph />
+      <LiftRow />
     </div>
   )
 }

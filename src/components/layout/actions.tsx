@@ -15,6 +15,9 @@ export const Actions = () => {
 
   useHotkeys(['shift+q', 'u'], (_, handler) => {
     switch (handler.keys?.join('')) {
+      case 'm':
+        setTheme(theme === 'dark' ? 'light' : 'dark')
+        break
       case 'q':
         signOut().catch(console.error)
         break

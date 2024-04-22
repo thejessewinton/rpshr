@@ -10,7 +10,7 @@ export const AddActivity = () => {
   return (
     <Popover>
       <Popover.Trigger>
-        <Plus className='size-4 text-orange-700' />
+        <Plus className='size-4 text-white' />
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Add</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Popover.Trigger>

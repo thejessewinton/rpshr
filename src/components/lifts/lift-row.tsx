@@ -3,6 +3,7 @@
 import { type ComponentPropsWithoutRef } from 'react'
 import Link from 'next/link'
 
+import { BatteryCharging } from '@phosphor-icons/react'
 import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from 'recharts'
 import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
 import { sortBy } from 'remeda'
@@ -12,7 +13,7 @@ import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 import dayjs, { getDaysBetween } from '~/utils/date'
 
-export const LiftGraph = () => {
+export const LiftRow = () => {
   const lifts = api.lifts.getAll.useQuery()
 
   if (!lifts.data) return null
@@ -20,17 +21,17 @@ export const LiftGraph = () => {
   return (
     <div className='animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto px-8'>
       {lifts.data.map((lift) => {
-        return <LiftChart lift={lift} key={lift.id} />
+        return <Chart lift={lift} key={lift.id} />
       })}
     </div>
   )
 }
 
-type LiftChartProps = {
+type ChartProps = {
   lift: RouterOutputs['lifts']['getAll'][number]
 } & ComponentPropsWithoutRef<'div'>
 
-const LiftChart = ({ lift, className, ...props }: LiftChartProps) => {
+const Chart = ({ lift, className, ...props }: ChartProps) => {
   const dates = getDaysBetween(dayjs().subtract(60, 'days'), dayjs())
 
   const data = dates.map((date) => {
@@ -44,7 +45,7 @@ const LiftChart = ({ lift, className, ...props }: LiftChartProps) => {
     return {
       day: dayjs(date).format('MMM, DD'),
       weight,
-      className: sets.length && 'fill-orange-600'
+      className: sets.length ? 'fill-orange-600' : undefined
     }
   })
 
@@ -57,8 +58,8 @@ const LiftChart = ({ lift, className, ...props }: LiftChartProps) => {
         {lift.name}
       </Link>
       <ResponsiveContainer className='relative h-full min-h-16 w-full pl-4'>
-        <BarChart data={data}>
-          <Tooltip position={{ y: 0 }} cursor={false} content={<CustomTooltip />} />
+        <BarChart defaultShowTooltip={false} data={data}>
+          <Tooltip position={{ y: -20 }} cursor={false} content={<CustomTooltip />} />
           <Bar dataKey='weight' minPointSize={18} barSize={1} className='fill-neutral-400 dark:fill-neutral-700' />
         </BarChart>
       </ResponsiveContainer>
@@ -83,7 +84,7 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
         return (
           <div key={p.name} className='flex flex-col gap-1'>
             <span>{p.payload.day}</span>
-            <span>{p.payload.weight}</span>
+            <span>{p.payload.weight === 0 ? <BatteryCharging className='size-4' /> : `${p.payload.weight} lbs.`}</span>
           </div>
         )
       })}

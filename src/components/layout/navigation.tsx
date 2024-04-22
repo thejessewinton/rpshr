@@ -38,26 +38,22 @@ export const Navigation = () => {
   const [activeItem, setActiveItem] = useState<(typeof items)[number]>(items[0]!)
   const { theme, setTheme } = useTheme()
 
-  useHotkeys(
-    ['1', '2', 'm', 'shift+q'],
-    (_, handlers) => {
-      switch (handlers.keys?.join('')) {
-        case '1':
-          router.push('/')
-          break
-        case '2':
-          router.push('/login')
-          break
-        case 'q':
-          signOut().catch(console.error)
-          break
-        case 'm':
-          setTheme(theme === 'dark' ? 'light' : 'dark')
-          break
-      }
-    },
-    []
-  )
+  useHotkeys(['1', '2', 'm', 'shift+q'], (_, handlers) => {
+    switch (handlers.keys?.join('')) {
+      case '1':
+        router.push('/')
+        break
+      case '2':
+        router.push('/login')
+        break
+      case 'q':
+        signOut().catch(console.error)
+        break
+      case 'm':
+        setTheme(theme === 'dark' ? 'light' : 'dark')
+        break
+    }
+  })
 
   return (
     <Dropdown>
