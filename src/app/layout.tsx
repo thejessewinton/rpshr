@@ -7,6 +7,7 @@ import { cookies } from 'next/headers'
 
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
+import { Toaster } from '~/providers/toaster'
 import { TRPCReactProvider } from '~/trpc/react'
 import { classNames } from '~/utils/core'
 
@@ -38,6 +39,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>
               <main className='flex min-h-screen w-full flex-row'>{children}</main>
+              <Toaster
+                position='top-center'
+                toastOptions={{
+                  classNames: {
+                    toast:
+                      'mx-auto justify-center border-neutral-200/70 flex items-center px-3 py-2 bg-neutral-100/70 text-neutral-700 rounded border dark:border-neutral-700/30 dark:bg-neutral-800/70 dark:text-neutral-400',
+                    icon: 'hidden',
+                    title: 'text-sm font-light'
+                  }
+                }}
+              />
             </TRPCReactProvider>
           </ThemeProvider>
         </SessionProvider>

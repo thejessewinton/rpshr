@@ -5,7 +5,7 @@ import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { users, waitlist } from '~/server/db/schema'
 
 export const marketingRouter = createTRPCRouter({
-  addNew: publicProcedure
+  joinWaitlist: publicProcedure
     .input(
       z.object({
         email: z.string().email()
@@ -18,7 +18,7 @@ export const marketingRouter = createTRPCRouter({
 
       if (emailCollisions.length > 0) {
         return {
-          message: 'Thanks for signing up! We will notify you when we launch.'
+          message: 'You are already on the waitlist.'
         }
       }
 
