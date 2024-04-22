@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '~/components/shared/button'
 import { Input } from '~/components/shared/input'
-import { useDialogStore } from '~/state/use-dialog-store'
 import { api } from '~/trpc/react'
 import { type RouterInputs, type RouterOutputs } from '~/trpc/shared'
 
@@ -12,7 +11,6 @@ type SetValues = RouterInputs['sets']['createNew']
 type Lift = RouterOutputs['lifts']['getBySlug']
 
 export const SetForm = ({ set, lift }: { set?: SetValues; lift: Lift }) => {
-  const { setIsOpen } = useDialogStore()
   const { register, handleSubmit } = useForm<SetValues>({
     defaultValues: set ?? {
       date: new Date().toISOString().split('T')[0],
@@ -28,7 +26,6 @@ export const SetForm = ({ set, lift }: { set?: SetValues; lift: Lift }) => {
   const submit = api.sets.createNew.useMutation({
     onSuccess: async () => {
       await utils.lifts.getBySlug.invalidate({ slug: lift!.slug })
-      setIsOpen(false)
     },
     onError: (error) => {
       console.error(error)
