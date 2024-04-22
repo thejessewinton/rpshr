@@ -26,12 +26,7 @@ export const Waitlist = () => {
       autoComplete='off'
       className='!mt-16 flex w-full rounded border border-neutral-200/70 focus-within:border-neutral-200/90 hover:border-neutral-200/90 dark:border-neutral-700/30 focus-within:dark:border-neutral-700/70 hover:dark:border-neutral-700/70'
     >
-      <Input
-        type='email'
-        placeholder='Enter your email to join the waitlist...'
-        className='flex-1 rounded-r-none border-0'
-        name='email'
-      />
+      <Input type='email' placeholder='Join the waitlist...' className='flex-1 rounded-r-none border-0' name='email' />
       <Button
         type='submit'
         className='rounded-l-none border-y-0 border-r-0 hover:bg-neutral-200/70 hover:dark:bg-neutral-700/20'
