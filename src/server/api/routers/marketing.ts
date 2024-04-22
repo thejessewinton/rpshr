@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { users, waitlist } from '~/server/db/schema'
+import { logsnag } from '~/server/logsnag'
 
 export const marketingRouter = createTRPCRouter({
   joinWaitlist: publicProcedure
@@ -24,6 +25,13 @@ export const marketingRouter = createTRPCRouter({
 
       await ctx.db.insert(waitlist).values({
         email: input.email
+      })
+
+      await logsnag.track({
+        channel: 'waitlist',
+        event: 'New Waitlist Signup',
+        icon: '🚀',
+        notify: true
       })
 
       return {
