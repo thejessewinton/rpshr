@@ -5,6 +5,7 @@ import { type Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
+import { env } from '~/env'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
 import { Toaster } from '~/providers/toaster'
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
     default: 'rpshr'
   },
   description: 'A better way to journal your workouts.',
-  icons: [{ rel: 'icon', url: '/favicon.ico' }]
+  icons: [{ rel: 'icon', url: '/favicon.ico' }],
+  metadataBase: new URL(env.APP_URL)
 }
 
 const inter = Inter({
