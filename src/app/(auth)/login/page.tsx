@@ -36,7 +36,7 @@ export default async function SignIn() {
         <div className='flex w-full items-center justify-center gap-2'>
           {providers.map((provider) => (
             <form action={provider.action} key={provider.name}>
-              <Button className='w-full py-6' icon={<provider.icon className='size-4 text-neutral-400' />}>
+              <Button className='w-full py-4' icon={<provider.icon className='size-4 text-neutral-400' />}>
                 Continue with {provider.name}
               </Button>
             </form>
