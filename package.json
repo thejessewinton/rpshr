@@ -52,6 +52,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.50.0",
     "react-hotkeys-hook": "^4.5.0",
+    "recharts": "latest",
     "remeda": "latest",
     "resend": "^3.2.0",
     "server-only": "^0.0.1",

@@ -3,7 +3,6 @@
 import { CaretUpDown, Plus } from '@phosphor-icons/react'
 
 import { Popover } from '~/components/shared/popover'
-import { addActivity } from '~/server/actions/activity'
 import { classNames } from '~/utils/core'
 import { Input } from '../shared/input'
 
@@ -26,7 +25,6 @@ export const ActivityForm = () => {
   return (
     <form
       autoComplete='off'
-      action={addActivity}
       className={classNames(
         'grid grid-cols-1 items-center focus-within:ring md:grid-cols-2',
         'text-neutral-700 focus-within:ring-neutral-200/70',

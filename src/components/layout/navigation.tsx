@@ -4,9 +4,8 @@ import { useState } from 'react'
 import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check, CircleDashed, SignOut } from '@phosphor-icons/react'
+import { CaretUpDown, Check, SignOut } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
-import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
@@ -27,7 +26,7 @@ const items: Array<{
   {
     label: 'Lifts',
     color: 'dark:bg-teal-800 bg-teal-600',
-    pathname: '/lifts',
+    pathname: '/login',
     hotkey: '2'
   }
 ]
@@ -36,7 +35,6 @@ export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [activeItem, setActiveItem] = useState<(typeof items)[number]>(items[0]!)
-  const { theme, setTheme } = useTheme()
 
   useHotkeys(
     ['1', '2', 'm', 'shift+q'],
@@ -46,7 +44,7 @@ export const Navigation = () => {
           router.push('/')
           break
         case '2':
-          router.push('/lifts')
+          router.push('/login')
           break
         case 'q':
           signOut().catch(console.error)

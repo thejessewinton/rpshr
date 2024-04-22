@@ -1,47 +1,88 @@
 'use client'
 
-import * as Tooltip from '@radix-ui/react-tooltip'
+import { type ComponentPropsWithoutRef } from 'react'
+
+import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from 'recharts'
+import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
+import { sortBy } from 'remeda'
 
 import { api } from '~/trpc/react'
+import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
+import dayjs, { getDaysBetween } from '~/utils/date'
 
 export const LiftGraph = () => {
-  const { data } = api.activity.getAll.useQuery()
+  const lifts = api.lifts.getAll.useQuery()
 
-  if (!data) return null
+  if (!lifts.data) return null
 
   return (
-    <div className='flex flex-1 animate-fade-in flex-col justify-center overflow-x-auto pl-8 pr-8 md:pl-32'>
-      <Tooltip.Provider delayDuration={0}>
-        <div className='flex items-end gap-2'>
-          {data.map(({ day, lifts }, i) => {
-            return (
-              <Tooltip.Root key={`first-${i}`}>
-                <Tooltip.Trigger
-                  className={classNames('relative flex w-px shrink-0 flex-col gap-1 rounded-lg', {
-                    'h-12 bg-orange-500 dark:bg-orange-600': day.isFirstOfMonth,
-                    'h-8 bg-neutral-400 dark:bg-neutral-700': !day.isFirstOfMonth
-                  })}
-                >
-                  {lifts.map((lift, i) => {
-                    return (
-                      <>
-                        <div key={`other-${i}`} className={classNames('absolute bottom-0 left-0 h-20 w-px bg-white')} />
-                        <Tooltip.Content
-                          side='bottom'
-                          className='mt-2 font-mono text-xs font-light text-neutral-700 radix-state-closed:animate-fade-out radix-state-delayed-open:animate-fade-in dark:text-neutral-400'
-                        >
-                          {lift.sets.length}
-                        </Tooltip.Content>
-                      </>
-                    )
-                  })}
-                </Tooltip.Trigger>
-              </Tooltip.Root>
-            )
-          })}
-        </div>
-      </Tooltip.Provider>
+    <div className='animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto px-8'>
+      {lifts.data.map((lift) => {
+        return <LiftChart lift={lift} key={lift.id} />
+      })}
+    </div>
+  )
+}
+
+type LiftChartProps = {
+  lift: RouterOutputs['lifts']['getAll'][number]
+} & ComponentPropsWithoutRef<'div'>
+
+const LiftChart = ({ lift, className, ...props }: LiftChartProps) => {
+  const dates = getDaysBetween(dayjs().subtract(60, 'days'), dayjs())
+
+  const data = dates.map((date) => {
+    const sets = lift.sets.filter((set) => dayjs(set.date).isSame(dayjs(date), 'day'))
+    const [setWithHighestWeight] = sortBy(sets, [(s) => s.weight, 'desc'])
+
+    if (!setWithHighestWeight) return { day: dayjs(date).format('MMM, DD'), weight: 0, estimatedMax: 0 }
+
+    const { weight } = setWithHighestWeight
+
+    return {
+      day: dayjs(date).format('MMM, DD'),
+      weight,
+      className: sets.length && 'fill-orange-600'
+    }
+  })
+
+  return (
+    <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
+      <div className='w-fit text-nowrap font-mono text-xs text-neutral-200'>{lift.name}</div>
+      <ResponsiveContainer className='relative h-full min-h-16 w-full pl-4'>
+        <BarChart data={data}>
+          <Tooltip position={{ y: 0 }} cursor={false} content={<CustomTooltip />} />
+          <Bar dataKey='weight' minPointSize={18} barSize={1} className='fill-neutral-400 dark:fill-neutral-700' />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+interface CustomTooltipProps extends TooltipProps<ValueType, NameType> {
+  payload?: Array<{
+    name: string
+    value: number
+    payload: { day: string; weight: number; estimatedMax: number; className?: string }
+  }>
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+  if (!active) return null
+
+  console.log(payload)
+
+  return (
+    <div className={classNames('flex flex-col gap-1 font-mono text-xs', 'text-neutral-700', 'dark:text-neutral-400')}>
+      {payload?.map((p) => {
+        return (
+          <div key={p.name} className='flex flex-col gap-1'>
+            <span>{p.payload.day}</span>
+            <span>{p.payload.weight}</span>
+          </div>
+        )
+      })}
     </div>
   )
 }
