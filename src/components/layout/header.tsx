@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { Navigation } from '~/components/layout/navigation'
-import { AddActivity } from '~/components/lifts/add-workout'
+import { Feedback } from '~/components/marketing/feedback'
 import { Logo } from '~/components/shared/logo'
 
 export const Header = async () => {
@@ -14,7 +14,6 @@ export const Header = async () => {
         <div className='h-4 w-px rotate-[16deg] bg-neutral-700' />
         <Navigation />
       </div>
-      <AddActivity />
     </header>
   )
 }

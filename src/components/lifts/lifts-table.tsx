@@ -13,13 +13,13 @@ import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 import dayjs, { getDaysBetween } from '~/utils/date'
 
-export const LiftRow = () => {
+export const LiftsTable = () => {
   const lifts = api.lifts.getAll.useQuery()
 
   if (!lifts.data) return null
 
   return (
-    <div className='animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto px-8'>
+    <div className='animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto'>
       {lifts.data.map((lift) => {
         return <Chart lift={lift} key={lift.id} />
       })}

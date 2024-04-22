@@ -15,6 +15,7 @@ import {
   timestamp,
   varchar
 } from 'drizzle-orm/pg-core'
+import { createInsertSchema } from 'drizzle-zod'
 import { nanoid } from 'nanoid'
 
 // Necessary for Next Auth
@@ -34,8 +35,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   sessions: many(sessions),
   unit: one(unit, { fields: [users.id], references: [unit.user_id] }),
   lifts: many(lift),
-  sets: many(set),
-  personal_records: many(personalRecord)
+  sets: many(set)
 }))
 
 export const accounts = pgTable(
@@ -141,6 +141,8 @@ export const lift = pgTable(
   })
 )
 
+export const liftInsertSchema = createInsertSchema(lift)
+
 export const liftRelations = relations(lift, ({ one, many }) => ({
   user: one(users, { fields: [lift.user_id], references: [users.id] }),
   sets: many(set),
@@ -158,6 +160,8 @@ export const personalRecord = pgTable('personal_record', {
   created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
   updated_at: timestamp('updated_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`)
 })
+
+export const personalRecordInsertSchema = createInsertSchema(personalRecord)
 
 export const personalRecordRelations = relations(personalRecord, ({ one }) => ({
   user: one(users, { fields: [personalRecord.user_id], references: [users.id] }),
