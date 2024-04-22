@@ -15,7 +15,7 @@ export default function Marketing() {
 
         <p>
           Track your lifts, progressive overload, and progress. Add a new lift, and include your PR. Add a set. Update
-          your PR when you break it. Always know.
+          your PR when you break it. Keep getting stronger.
         </p>
 
         <p>
