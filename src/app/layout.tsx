@@ -12,8 +12,8 @@ import { classNames } from '~/utils/core'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s · Rupture',
-    default: 'Rupture'
+    template: '%s · rpshr',
+    default: 'rpshr'
   },
   icons: [{ rel: 'icon', url: '/favicon.ico' }]
 }
