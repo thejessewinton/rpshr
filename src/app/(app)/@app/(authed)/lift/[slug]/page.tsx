@@ -1,4 +1,5 @@
 import { LiftChart } from '~/components/lifts/lift-chart'
+import { AddSet } from '~/components/sets/add-set'
 
 type LiftPageParams = {
   params: {

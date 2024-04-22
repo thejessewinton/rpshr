@@ -178,7 +178,6 @@ export const set = pgTable(
     user_id: varchar('user_id', { length: 255 })
       .notNull()
       .references(() => users.id),
-    tracked: boolean('tracked').notNull().default(false),
     reps: bigint('reps', { mode: 'number' }).notNull(),
     weight: bigint('weight', { mode: 'number' }).notNull(),
     unit: unitEmum('value').notNull().default('lbs'),
@@ -197,6 +196,8 @@ export const set = pgTable(
     liftIdIdx: index('set_liftId_idx').on(set.lift_id)
   })
 )
+
+export const setInsertSchema = createInsertSchema(set)
 
 export const setRelations = relations(set, ({ one }) => ({
   user: one(users, { fields: [set.user_id], references: [users.id] }),
