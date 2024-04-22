@@ -1,5 +1,3 @@
-'use client'
-
 import { AddLift } from '~/components/lifts/add-lift'
 import { LiftsTable } from '~/components/lifts/lifts-table'
 

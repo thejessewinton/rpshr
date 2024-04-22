@@ -10,7 +10,7 @@ import { units } from '~/server/db/schema'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
 
-export const AddLift = () => {
+export const AddSet = () => {
   const utils = api.useUtils()
   const { register, handleSubmit, reset, setFocus } = useForm<{ lift: string }>()
 
