@@ -1,34 +1,28 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
+
+import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
 import { Input } from '~/components/shared/input'
-import { api } from '~/trpc/react'
+import { waitlistAction } from '~/server/actions/waitlist'
 
 export const Waitlist = () => {
-  const { register, handleSubmit } = useForm<{ email: string }>({
-    defaultValues: {
-      email: ''
-    }
-  })
+  const [state, action] = useFormState(waitlistAction, { message: '', success: false })
 
-  const { mutate } = api.marketing.joinWaitlist.useMutation({
-    onSuccess: (data) => {
-      toast.success(data.message, {
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.message, {
         icon: <></>
       })
     }
-  })
-
-  const onSubmit = (values: { email: string }) => {
-    mutate(values)
-  }
+  }, [state.message])
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      action={action}
       autoComplete='off'
       className='!mt-16 flex w-full rounded border border-neutral-200/70 focus-within:border-neutral-200/90 hover:border-neutral-200/90 dark:border-neutral-700/30 focus-within:dark:border-neutral-700/70 hover:dark:border-neutral-700/70'
     >
@@ -36,7 +30,7 @@ export const Waitlist = () => {
         type='email'
         placeholder='Enter your email to join the waitlist...'
         className='flex-1 rounded-r-none border-0'
-        {...register('email')}
+        name='email'
       />
       <Button
         type='submit'
