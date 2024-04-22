@@ -9,7 +9,8 @@ export const env = createEnv({
     AUTH_GOOGLE_ID: z.string(),
     AUTH_GOOGLE_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
-    LOGSNAG_API_KEY: z.string()
+    LOGSNAG_API_KEY: z.string(),
+    WAITLIST_AUDIENCE_ID: z.string()
   },
   client: {},
   runtimeEnv: {
@@ -19,7 +20,8 @@ export const env = createEnv({
     AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
-    LOGSNAG_API_KEY: process.env.LOGSNAG_API_KEY
+    LOGSNAG_API_KEY: process.env.LOGSNAG_API_KEY,
+    WAITLIST_AUDIENCE_ID: process.env.WAITLIST_AUDIENCE_ID
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true

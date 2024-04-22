@@ -227,9 +227,3 @@ export const setRelations = relations(set, ({ one }) => ({
   lift: one(lift, { fields: [set.lift_id], references: [lift.id] }),
   compositions: one(compositions, { fields: [set.composition_id], references: [compositions.id] })
 }))
-
-export const waitlist = pgTable('waitlist', {
-  id: serial('id').primaryKey(),
-  email: varchar('email', { length: 255 }).notNull(),
-  created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`)
-})
