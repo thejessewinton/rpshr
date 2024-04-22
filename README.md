@@ -1,4 +1,4 @@
-# rpshr
+# [rpshr](https://rpshr.app)
 
 ![Repo image](https://rpshr.app/repo.jpg)
 
