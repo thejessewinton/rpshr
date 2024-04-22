@@ -1,6 +1,6 @@
 # [rpshr](https://rpshr.app)
 
-![Repo image](https://rpshr.app/repo.jpg)
+![Repo image](https://rpshr.app/opengraph-image.jpg)
 
 A better way to journal your workouts.
 
