@@ -47,6 +47,6 @@ export const waitlistAction = async (prevState: FormState, formData: FormData) =
 
   return {
     success: true,
-    message: 'Thanks for signing up! We will notify you when we launch.'
+    message: `You'll be notified when rpshr launches.`
   }
 }
