@@ -3,7 +3,7 @@
 import { type ComponentPropsWithoutRef } from 'react'
 import Link from 'next/link'
 
-import { BatteryCharging } from '@phosphor-icons/react'
+import { Barbell, BatteryCharging } from '@phosphor-icons/react'
 import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from 'recharts'
 import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
 import { sortBy } from 'remeda'
@@ -84,7 +84,17 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
         return (
           <div key={p.name} className='flex flex-col gap-1'>
             <span>{p.payload.day}</span>
-            <span>{p.payload.weight === 0 ? <BatteryCharging className='size-4' /> : `${p.payload.weight} lbs.`}</span>
+            <span>
+              {p.payload.weight === 0 ? (
+                <div className='flex gap-2'>
+                  <BatteryCharging className='size-4' /> <span>Rest</span>
+                </div>
+              ) : (
+                <div className='flex gap-2'>
+                  <Barbell className='size-4' /> <span>{`${p.payload.weight}lbs.`}</span>
+                </div>
+              )}
+            </span>
           </div>
         )
       })}
