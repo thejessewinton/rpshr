@@ -29,7 +29,7 @@ export const AddLift = () => {
     })
 
     const pattern: RegExp =
-      /([A-Za-z\s]+),\s*(\d+)(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
+      /([A-Za-z]+),\s*(\d+)(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
 
     const match: RegExpMatchArray | null = values.lift.match(pattern)
 
@@ -58,7 +58,7 @@ export const AddLift = () => {
       autoComplete='off'
       autoCorrect='off'
       className={classNames(
-        'relative -z-10 -mx-[2px] flex items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
+        'relative -mx-[2px] flex items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
         'border-neutral-200/50 text-neutral-700 focus-within:border-neutral-200/90',
         'border-neutral-700/50 dark:text-neutral-400 focus-within:dark:border-neutral-700/90'
       )}
