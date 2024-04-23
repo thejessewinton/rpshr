@@ -46,15 +46,19 @@ export const AddLift = () => {
     () => {
       setFocus('lift')
     },
-    { preventDefault: true }
+    { preventDefault: true },
+    {
+      enableOnFormTags: ['input']
+    }
   )
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       autoComplete='off'
+      autoCorrect='off'
       className={classNames(
-        'relative -mx-[2px] flex items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
+        'relative -z-10 -mx-[2px] flex items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
         'border-neutral-200/50 text-neutral-700 focus-within:border-neutral-200/90',
         'border-neutral-700/50 dark:text-neutral-400 focus-within:dark:border-neutral-700/90'
       )}
@@ -65,6 +69,7 @@ export const AddLift = () => {
         aria-label='Add a lift'
         placeholder='Add a lift e.g. Deadlift, 225lbs'
         type='text'
+        autoFocus
         className='w-full border-none focus:!bg-transparent'
         {...register('lift')}
       />

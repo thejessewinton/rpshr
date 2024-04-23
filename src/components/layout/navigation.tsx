@@ -4,13 +4,14 @@ import { useState } from 'react'
 import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check, CircleDashed, SignOut } from '@phosphor-icons/react'
+import { CaretUpDown, Check, CircleDashed, HouseSimple, SignOut } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
-import { classNames } from '~/utils/core'
+import { api } from '~/trpc/react'
+import { classNames, generateRandomHexCode } from '~/utils/core'
 
 const items: Array<{
   label: string
@@ -31,21 +32,40 @@ export const Navigation = () => {
   const pathname = usePathname()
   const [activeItem, setActiveItem] = useState<(typeof items)[number]>(items[0]!)
   const { theme, setTheme } = useTheme()
+  const { data } = api.lifts.getAll.useQuery()
 
-  useHotkeys(['1', '2', 'm', 'shift+q'], (_, handlers) => {
-    switch (handlers.keys?.join('')) {
-      case '1':
-        router.push('/')
-        break
-      case '2':
-        router.push('/login')
-        break
-      case 'q':
-        signOut().catch(console.error)
-        break
-      case 'm':
-        setTheme(theme === 'dark' ? 'light' : 'dark')
-        break
+  const liftKeys = data?.map((item, i) => {
+    return {
+      label: (i + 1).toString(),
+      hotkey: (i + 1).toString(),
+      slug: item.slug
+    }
+  })
+
+  useHotkeys(
+    ['l', 'm', 'meta+b'],
+    (_, handlers) => {
+      switch (handlers.keys?.join('')) {
+        case 'l':
+          router.push('/')
+          break
+        case 'm':
+          setTheme(theme === 'dark' ? 'light' : 'dark')
+          break
+        case 'b':
+          signOut().catch(console.error)
+          break
+      }
+    },
+    {
+      preventDefault: true
+    }
+  )
+
+  useHotkeys(liftKeys?.map((item) => item.hotkey) ?? [], (e) => {
+    const lift = data?.find((lift) => lift.slug === liftKeys?.find((key) => key.hotkey === e.key)?.slug)
+    if (lift) {
+      router.push(`/lift/${lift.slug}`)
     }
   })
 
@@ -57,36 +77,46 @@ export const Navigation = () => {
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
       <Dropdown.Content align='start'>
-        {items.map((item) => {
-          const isActive = item.pathname === pathname
-          return (
-            <Dropdown.Item
-              key={item.label}
-              onSelect={() => {
-                setActiveItem(item)
-                router.push(item.pathname)
-              }}
-            >
-              <div className='flex items-center gap-3'>
-                <div className={classNames('size-4 rounded-full', item.color)} />
-                {item.label}
-              </div>
-              {isActive ? (
-                <Check className='size-4' />
-              ) : (
-                <kbd
-                  className={classNames(
-                    'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-                    'bg-neutral-300/50',
-                    'dark:bg-neutral-700 dark:text-neutral-400'
-                  )}
-                >
-                  {item.hotkey}
-                </kbd>
-              )}
-            </Dropdown.Item>
-          )
-        })}
+        <Dropdown.Sub>
+          <Dropdown.SubTrigger>
+            <div className='flex items-center gap-3'>
+              <div className={classNames('size-4 rounded-full', activeItem.color)} />
+              Lifts
+            </div>
+          </Dropdown.SubTrigger>
+          <Dropdown.SubContent className='w-[200px]'>
+            {data &&
+              data.map((lift, index) => {
+                const isActive = lift.slug === pathname
+
+                return (
+                  <Dropdown.Item
+                    key={lift.id}
+                    onSelect={() => {
+                      router.push(`/lift/${lift.slug}`)
+                    }}
+                  >
+                    <div className='flex items-center gap-3'>
+                      <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>{lift.name}</span>
+                    </div>
+                    {isActive ? (
+                      <Check className='size-4' />
+                    ) : (
+                      <kbd
+                        className={classNames(
+                          'flex size-4 items-center justify-center rounded font-sans text-[10px]',
+                          'bg-neutral-300/50',
+                          'dark:bg-neutral-700 dark:text-neutral-400'
+                        )}
+                      >
+                        {index + 1}
+                      </kbd>
+                    )}
+                  </Dropdown.Item>
+                )
+              })}
+          </Dropdown.SubContent>
+        </Dropdown.Sub>
         <Dropdown.Separator />
         <Dropdown.Item
           onSelect={(e) => {
@@ -106,6 +136,21 @@ export const Navigation = () => {
             )}
           >
             M
+          </kbd>
+        </Dropdown.Item>
+        <Dropdown.Item onSelect={() => signOut()}>
+          <div className='flex items-center gap-3'>
+            <HouseSimple className='size-4 text-neutral-700 dark:text-white' />
+            Homepage
+          </div>
+          <kbd
+            className={classNames(
+              'flex h-4 items-center justify-center rounded px-1 font-sans text-[10px]',
+              'bg-neutral-300/50',
+              'dark:bg-neutral-700 dark:text-neutral-400'
+            )}
+          >
+            ⌘B
           </kbd>
         </Dropdown.Item>
         <Dropdown.Item onSelect={() => signOut()}>

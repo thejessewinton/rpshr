@@ -51,13 +51,17 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
     () => {
       setFocus('set')
     },
-    { preventDefault: true }
+    { preventDefault: true },
+    {
+      enableOnFormTags: ['input']
+    }
   )
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       autoComplete='off'
+      autoCorrect='off'
       className={classNames(
         'relative -mx-[2px] flex w-full max-w-lg items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
         'border-neutral-200/50 text-neutral-700 focus-within:border-neutral-200/90',
@@ -70,6 +74,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
         aria-label='Add a set'
         placeholder='5x5, 165lbs, Today, Felt light'
         type='text'
+        autoFocus
         className='w-full border-none focus:!bg-transparent'
         {...register('set')}
       />
