@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
 import { Input } from '~/components/shared/input'
-import { waitlist } from '~/server/actions/waitlist'
+import { waitlist } from '~/server/actions/marketing'
 
 export const Waitlist = () => {
   const { result, reset } = useAction(waitlist)
