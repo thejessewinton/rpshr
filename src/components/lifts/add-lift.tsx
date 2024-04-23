@@ -8,14 +8,11 @@ import { z } from 'zod'
 import { Input } from '~/components/shared/input'
 import { units } from '~/server/db/schema'
 import { api } from '~/trpc/react'
-import { RouterInputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
-
-type Values = RouterInputs['lifts']['createNew']
 
 export const AddLift = () => {
   const utils = api.useUtils()
-  const { register, handleSubmit, reset, setFocus } = useForm<Values>()
+  const { register, handleSubmit, reset, setFocus } = useForm<{ lift: string }>()
 
   const { mutate } = api.lifts.createNew.useMutation({
     onSuccess: async () => {
@@ -24,14 +21,22 @@ export const AddLift = () => {
     }
   })
 
-  const onSubmit = (values: Values) => {
-    mutate(values)
+  const onSubmit = (values: { lift: string }) => {
+    const liftSchema = z.object({
+      name: z.string(),
+      weight: z.string().transform(Number),
+      unit: z.enum(units)
+    })
+    const [name, weight, unit] = values.lift.split(',').map((v) => v.trim())
+    const lift = liftSchema.parse({ name, weight, unit })
+
+    mutate(lift)
   }
 
   useHotkeys(
     'meta+f',
     () => {
-      setFocus('name')
+      setFocus('lift')
     },
     { preventDefault: true }
   )
@@ -46,36 +51,15 @@ export const AddLift = () => {
         'border-neutral-700/50 dark:text-neutral-400 focus-within:dark:border-neutral-700/90'
       )}
     >
-      <div className='flex items-center gap-1'>
-        <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
-        <Input
-          required
-          aria-label='Name'
-          placeholder='Deadlift'
-          type='text'
-          className='max-w-[4.75rem] border-none focus:!bg-transparent'
-          tabIndex={1}
-          {...register('name')}
-        />
-        <Input
-          required
-          aria-label='Weight'
-          placeholder='225'
-          type='text'
-          className='max-w-[4.75rem] border-none focus:!bg-transparent'
-          tabIndex={2}
-          {...register('weight')}
-        />
-        <Input
-          required
-          aria-label='Unit (lbs, kg)'
-          placeholder='lbs'
-          type='text'
-          className='max-w-[4.75rem] border-none focus:!bg-transparent'
-          tabIndex={3}
-          {...register('unit')}
-        />
-      </div>
+      <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
+      <Input
+        required
+        aria-label='Add a lift'
+        placeholder='Add a lift e.g. Deadlift, 225, lbs'
+        type='text'
+        className='w-full border-none focus:!bg-transparent'
+        {...register('lift')}
+      />
       <div className='mr-4 flex gap-1'>
         <kbd
           className={classNames(
