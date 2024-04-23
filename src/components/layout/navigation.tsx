@@ -30,7 +30,6 @@ const items: Array<{
 export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
-  const [activeItem, setActiveItem] = useState<(typeof items)[number]>(items[0]!)
   const { theme, setTheme } = useTheme()
   const { data } = api.lifts.getAll.useQuery()
 
@@ -52,9 +51,6 @@ export const Navigation = () => {
         case 'm':
           setTheme(theme === 'dark' ? 'light' : 'dark')
           break
-        case 'b':
-          signOut().catch(console.error)
-          break
       }
     },
     {
@@ -72,7 +68,7 @@ export const Navigation = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <div className={classNames('size-4 rounded-full', activeItem.color)} />
+        <div className={classNames('size-4 rounded-full bg-sky-600 dark:bg-sky-800')} />
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Actions</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
@@ -80,7 +76,7 @@ export const Navigation = () => {
         <Dropdown.Sub>
           <Dropdown.SubTrigger>
             <div className='flex items-center gap-3'>
-              <div className={classNames('size-4 rounded-full', activeItem.color)} />
+              <div className={classNames('size-4 rounded-full bg-green-600 dark:bg-green-800')} />
               Lifts
             </div>
           </Dropdown.SubTrigger>
@@ -136,21 +132,6 @@ export const Navigation = () => {
             )}
           >
             M
-          </kbd>
-        </Dropdown.Item>
-        <Dropdown.Item onSelect={() => signOut()}>
-          <div className='flex items-center gap-3'>
-            <HouseSimple className='size-4 text-neutral-700 dark:text-white' />
-            Homepage
-          </div>
-          <kbd
-            className={classNames(
-              'flex h-4 items-center justify-center rounded px-1 font-sans text-[10px]',
-              'bg-neutral-300/50',
-              'dark:bg-neutral-700 dark:text-neutral-400'
-            )}
-          >
-            ⌘B
           </kbd>
         </Dropdown.Item>
         <Dropdown.Item onSelect={() => signOut()}>
