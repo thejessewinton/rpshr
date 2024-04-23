@@ -29,7 +29,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       weight: z.string().transform(Number),
       unit: z.enum(units),
       date: z.string(),
-      notes: z.string().max(255).optional()
+      notes: z.string().max(50).optional()
     })
 
     const pattern: RegExp =

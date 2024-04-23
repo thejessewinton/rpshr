@@ -6,18 +6,6 @@ export const classNames = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
 
-export const slugify = (text: string) => {
-  return text
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '')
-}
-
-export const getInitials = (name: string) => {
-  const [firstName, lastName] = name.split(' ')
-  return `${firstName![0]}${lastName![0]}`
-}
-
 export const getAllDaysInYear = () => {
   const year = dayjs().year()
   const currentDate = new Date(year, 0, 1)

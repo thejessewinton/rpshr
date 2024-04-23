@@ -22,7 +22,7 @@ export const setsRouter = createTRPCRouter({
         unit: z.enum(units),
         lift_id: z.number(),
         date: z.string(),
-        notes: z.string().max(255).optional()
+        notes: z.string().max(50).optional()
       })
     )
     .mutation(async ({ ctx, input }) => {
