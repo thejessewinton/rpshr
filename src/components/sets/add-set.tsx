@@ -32,10 +32,9 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       notes: z.string().max(50).optional()
     })
 
-    const pattern: RegExp =
-      /(\d+)x(\d+),\s*(\d+)(lbs|kgs)\.?,\s*((?:Today|(?:\w+\s+\d{1,2},?\s+\d{4})))\s*[:,]?\s*(.*$)/
+    const pattern = /(\d+)x(\d+),\s*(\d+)\s*(lbs|kgs)\.?,\s*((?:Today|(?:\w+\s+\d{1,2},?\s+\d{4})))\s*[:,]?\s*(.*$)/
 
-    const match: RegExpMatchArray | null = values.set.match(pattern)
+    const match = values.set.match(pattern)
 
     if (!match) return
 

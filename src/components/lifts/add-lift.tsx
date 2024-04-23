@@ -28,10 +28,9 @@ export const AddLift = () => {
       unit: z.enum(units)
     })
 
-    const pattern: RegExp =
-      /([A-Za-z]+),\s*(\d+)(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
+    const pattern = /([A-Za-z]+),\s*(\d+)\s*(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
 
-    const match: RegExpMatchArray | null = values.lift.match(pattern)
+    const match = values.lift.match(pattern)
 
     if (!match) return
 
