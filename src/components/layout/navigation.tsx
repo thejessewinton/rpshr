@@ -11,7 +11,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
 import { api } from '~/trpc/react'
-import { classNames, generateRandomHexCode } from '~/utils/core'
+import { classNames } from '~/utils/core'
 
 const items: Array<{
   label: string
