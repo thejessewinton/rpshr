@@ -4,32 +4,24 @@ import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 
 import { env } from '~/env'
+import { publicAction } from '~/server/actions'
 import { logsnag } from '~/server/logsnag'
-import { resend } from '../resend'
+import { resend } from '~/server/resend'
 
-type FormState = {
-  message: string
-  success?: boolean
-}
+const schema = zfd.formData({
+  email: z.string().email()
+})
 
-export const waitlistAction = async (prevState: FormState, formData: FormData) => {
-  const schema = zfd.formData({
-    email: z.string().email()
-  })
-
-  const { success, data } = await schema.safeParseAsync(formData)
-
-  if (!success) return { success: true, message: 'Please enter a valid email.' }
-
+export const waitlist = publicAction(schema, async ({ email }) => {
   await resend.contacts.create({
-    email: data.email,
+    email: email,
     audienceId: env.WAITLIST_AUDIENCE_ID
   })
 
   await logsnag.track({
     channel: 'waitlist',
     event: 'New Waitlist Signup',
-    user_id: data.email,
+    user_id: email,
     icon: '🚀',
     notify: true
   })
@@ -38,4 +30,4 @@ export const waitlistAction = async (prevState: FormState, formData: FormData) =
     success: true,
     message: `You'll be notified when rpshr launches.`
   }
-}
+})

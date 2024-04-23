@@ -19,7 +19,7 @@ export const LiftsTable = () => {
   if (!lifts.data) return null
 
   return (
-    <div className='animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto'>
+    <div className='mb-16 animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto'>
       {lifts.data.map((lift) => {
         return <Chart lift={lift} key={lift.id} />
       })}

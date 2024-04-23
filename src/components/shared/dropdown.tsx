@@ -67,9 +67,9 @@ const DropdownItem = forwardRef(
 
 DropdownItem.displayName = 'DropdownItem'
 
-const DropdownSub = forwardRef(({ ...props }: DropdownPrimitive.DropdownMenuSubProps) => {
+const DropdownSub = ({ ...props }: DropdownPrimitive.DropdownMenuSubProps) => {
   return <DropdownPrimitive.Sub {...props} />
-})
+}
 
 DropdownSub.displayName = 'DropdownSub'
 

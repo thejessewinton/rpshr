@@ -31,10 +31,16 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       date: z.string(),
       notes: z.string().max(255).optional()
     })
-    const [reps, sets, weight, unit, rawDate, notes] = values.set.split(',').map((v) => v.trim())
 
+    const pattern: RegExp =
+      /(\d+)x(\d+),\s*(\d+)(lbs|kgs)\.?,\s*((?:Today|(?:\w+\s+\d{1,2},?\s+\d{4})))\s*[:,]?\s*(.*$)/
+
+    const match: RegExpMatchArray | null = values.set.match(pattern)
+
+    if (!match) return
+
+    const [sets, reps, weight, unit, rawDate, notes] = match.slice(1)
     const date = rawDate === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs(rawDate).format('YYYY-MM-DD')
-
     const set = setSchema.parse({ reps, sets, weight, unit, date, notes })
 
     mutate({ ...set, lift_id: liftId })
@@ -62,7 +68,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       <Input
         required
         aria-label='Add a set'
-        placeholder='5, 5, 165, lbs, Today, Felt light'
+        placeholder='5x5, 165lbs, Today, Felt light'
         type='text'
         className='w-full border-none focus:!bg-transparent'
         {...register('set')}

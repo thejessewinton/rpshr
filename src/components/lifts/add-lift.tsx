@@ -27,7 +27,15 @@ export const AddLift = () => {
       weight: z.string().transform(Number),
       unit: z.enum(units)
     })
-    const [name, weight, unit] = values.lift.split(',').map((v) => v.trim())
+
+    const pattern: RegExp =
+      /([A-Za-z]+),\s*(\d+)(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
+
+    const match: RegExpMatchArray | null = values.lift.match(pattern)
+
+    if (!match) return
+
+    const [name, weight, unit] = match.slice(1)
     const lift = liftSchema.parse({ name, weight, unit })
 
     mutate(lift)
@@ -55,7 +63,7 @@ export const AddLift = () => {
       <Input
         required
         aria-label='Add a lift'
-        placeholder='Add a lift e.g. Deadlift, 225, lbs'
+        placeholder='Add a lift e.g. Deadlift, 225lbs'
         type='text'
         className='w-full border-none focus:!bg-transparent'
         {...register('lift')}
