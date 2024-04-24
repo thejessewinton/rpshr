@@ -11,18 +11,20 @@ import { Input } from '~/components/shared/input'
 import { api } from '~/trpc/react'
 import { RouterInputs } from '~/trpc/shared'
 
+type Values = RouterInputs['marketing']['signup']
+
 export const Waitlist = () => {
   const waitlist = api.marketing.signup.useMutation({
     onSuccess: (data) => toast.success(data.message)
   })
 
-  const { register, handleSubmit } = useForm<RouterInputs['marketing']['signup']>({
+  const { register, handleSubmit } = useForm<Values>({
     defaultValues: {
       email: ''
     }
   })
 
-  const onSubmit = (values: RouterInputs['marketing']['signup']) => {
+  const onSubmit = (values: Values) => {
     waitlist.mutate(values)
   }
 

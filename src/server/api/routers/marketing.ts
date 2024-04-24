@@ -36,7 +36,7 @@ export const marketingRouter = createTRPCRouter({
         message: z.string().max(255)
       })
     )
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       await resend.emails.send({
         from: 'Feedback Form <feedback@rpshr.app>',
         subject: 'On-site Feedback',
