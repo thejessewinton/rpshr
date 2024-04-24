@@ -9,6 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { Dropdown } from '~/components/shared/dropdown'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
+import { Marble } from '../shared/marble'
 
 export const Navigation = () => {
   const router = useRouter()
@@ -37,7 +38,7 @@ export const Navigation = () => {
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Lifts</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
-      <Dropdown.Content align='start'>
+      <Dropdown.Content align='start' className='w-[175px]'>
         {data &&
           data.map((lift, index) => {
             const isActive = lift.slug === pathname
@@ -50,6 +51,7 @@ export const Navigation = () => {
                 }}
               >
                 <div className='flex items-center gap-3'>
+                  <div className='size-4 rounded-full bg-green-900' />
                   <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>{lift.name}</span>
                 </div>
                 {isActive ? (
