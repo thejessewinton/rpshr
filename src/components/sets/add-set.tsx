@@ -71,8 +71,9 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       <Input
         required
         aria-label='Add a set'
-        placeholder='5x5, 165lbs, Today, Felt light'
+        placeholder='Add a set e.g. 5x5, 165lbs, Today, Felt light'
         type='text'
+        autoFocus
         className='w-full border-none focus:!bg-transparent'
         {...register('set')}
       />
