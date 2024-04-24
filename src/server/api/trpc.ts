@@ -8,10 +8,6 @@ import { db } from '~/server/db'
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await auth()
 
-  if (!session) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
-
   return {
     db,
     session: {

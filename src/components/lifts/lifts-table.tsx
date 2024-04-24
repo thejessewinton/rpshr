@@ -3,7 +3,7 @@
 import { type ComponentPropsWithoutRef } from 'react'
 import Link from 'next/link'
 
-import { Barbell, BatteryCharging } from '@phosphor-icons/react'
+import { Barbell, BatteryCharging, TrashSimple } from '@phosphor-icons/react'
 import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from 'recharts'
 import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
 import { sortBy } from 'remeda'
@@ -12,6 +12,7 @@ import { api } from '~/trpc/react'
 import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 import dayjs, { getDaysBetween } from '~/utils/date'
+import { ContextMenu } from '../shared/context-menu'
 
 export const LiftsTable = () => {
   const lifts = api.lifts.getAll.useQuery()
@@ -19,7 +20,7 @@ export const LiftsTable = () => {
   if (!lifts.data) return null
 
   return (
-    <div className='mb-16 animate-fade-in divide-y divide-neutral-700/30 overflow-x-auto'>
+    <div className='mb-16 animate-fade-in overflow-x-auto'>
       {lifts.data.map((lift) => {
         return <Chart lift={lift} key={lift.id} />
       })}
@@ -32,7 +33,13 @@ type ChartProps = {
 } & ComponentPropsWithoutRef<'div'>
 
 const Chart = ({ lift, className, ...props }: ChartProps) => {
+  const utils = api.useUtils()
   const dates = getDaysBetween(dayjs().subtract(60, 'days'), dayjs())
+  const deleteLift = api.lifts.deleteLift.useMutation({
+    onSuccess: () => {
+      utils.lifts.getAll.invalidate()
+    }
+  })
 
   const data = dates.map((date) => {
     const sets = lift.sets.filter((set) => dayjs(set.date).isSame(dayjs(date), 'day'))
@@ -50,20 +57,32 @@ const Chart = ({ lift, className, ...props }: ChartProps) => {
   })
 
   return (
-    <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
-      <Link
-        href={`/lift/${lift.slug}`}
-        className='w-fit text-nowrap font-mono text-xs text-neutral-400 dark:text-neutral-200'
-      >
-        {lift.name}
-      </Link>
-      <ResponsiveContainer className='relative h-full min-h-16 w-full pl-4'>
-        <BarChart defaultShowTooltip={false} data={data}>
-          <Tooltip position={{ y: -20 }} cursor={false} content={<CustomTooltip />} />
-          <Bar dataKey='weight' minPointSize={18} barSize={1} className='fill-neutral-400 dark:fill-neutral-700' />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <ContextMenu>
+      <ContextMenu.Trigger asChild>
+        <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
+          <Link
+            href={`/lift/${lift.slug}`}
+            className='w-fit text-nowrap text-xs text-neutral-700 dark:text-neutral-400'
+          >
+            {lift.name}
+          </Link>
+          <ResponsiveContainer className='relative h-full min-h-16 max-w-[75%] pl-4'>
+            <BarChart defaultShowTooltip={false} data={data}>
+              <Tooltip position={{ y: -20 }} cursor={false} content={<CustomTooltip />} />
+              <Bar dataKey='weight' minPointSize={18} barSize={1} className='fill-neutral-400 dark:fill-neutral-700' />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </ContextMenu.Trigger>
+      <ContextMenu.Content>
+        <ContextMenu.Item onSelect={() => deleteLift.mutate({ id: lift.id })}>
+          <div className='flex items-center gap-3'>
+            <TrashSimple className='size-4 text-neutral-700 dark:text-white' />
+            <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>Delete</span>
+          </div>
+        </ContextMenu.Item>
+      </ContextMenu.Content>
+    </ContextMenu>
   )
 }
 

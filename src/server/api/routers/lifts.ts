@@ -2,7 +2,6 @@ import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { lift, personalRecord, set, units } from '~/server/db/schema'
-import dayjs from '~/utils/date'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const liftsRouter = createTRPCRouter({
@@ -77,22 +76,6 @@ export const liftsRouter = createTRPCRouter({
       }
     })
   }),
-  updatePersonalRecord: protectedProcedure
-    .input(
-      z.object({
-        lift_id: z.number(),
-        weight: z.number(),
-        date: z.string()
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.db.insert(personalRecord).values({
-        weight: input.weight,
-        date: dayjs(input.date).toDate(),
-        user_id: ctx.session.user.id,
-        lift_id: input.lift_id
-      })
-    }),
   deleteLift: protectedProcedure
     .input(
       z.object({
