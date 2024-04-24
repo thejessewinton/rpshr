@@ -9,7 +9,6 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { Dropdown } from '~/components/shared/dropdown'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
-import { Marble } from '../shared/marble'
 
 export const Navigation = () => {
   const router = useRouter()
