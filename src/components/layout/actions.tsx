@@ -1,6 +1,8 @@
 'use client'
 
-import { CaretUpDown, CircleDashed, SignOut } from '@phosphor-icons/react'
+import { useRouter } from 'next/navigation'
+
+import { CaretUpDown, CircleDashed, SignOut, User } from '@phosphor-icons/react'
 import { signOut } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -10,16 +12,28 @@ import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
 
 export const Actions = () => {
+  const router = useRouter()
   const { theme, setTheme } = useTheme()
   const { isLoading, data } = api.user.getCurrent.useQuery()
 
-  useHotkeys(['shift+q', 'u'], (_, handler) => {
+  const handleToggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  const handleGoToProfile = () => {
+    router.push('/profile')
+  }
+
+  useHotkeys(['shift+q', 'm', 'p'], (_, handler) => {
     switch (handler.keys?.join('')) {
       case 'm':
-        setTheme(theme === 'dark' ? 'light' : 'dark')
+        handleToggleTheme()
+        break
+      case 'p':
+        handleGoToProfile()
         break
       case 'q':
-        signOut().catch(console.error)
+        signOut()
         break
     }
   })
@@ -29,15 +43,30 @@ export const Actions = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger className='animate-fade-in'>
-        <div className='size-4 rounded-full bg-slate-700' />
-        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>{data?.username}</span>
+        <div className='size-4 rounded-full bg-orange-900' />
+        <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch]'>{data?.name}</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
       <Dropdown.Content align='end'>
+        <Dropdown.Item onSelect={handleGoToProfile}>
+          <div className='flex items-center gap-3'>
+            <User className='size-4 text-neutral-700 dark:text-white' />
+            Profile
+          </div>
+          <kbd
+            className={classNames(
+              'flex size-4 items-center justify-center rounded font-sans text-[10px]',
+              'bg-neutral-300/50',
+              'dark:bg-neutral-700 dark:text-neutral-400'
+            )}
+          >
+            P
+          </kbd>
+        </Dropdown.Item>
         <Dropdown.Item
           onSelect={(e) => {
             e.preventDefault()
-            setTheme(theme === 'dark' ? 'light' : 'dark')
+            handleToggleTheme()
           }}
         >
           <div className='flex items-center gap-3'>
@@ -54,6 +83,7 @@ export const Actions = () => {
             M
           </kbd>
         </Dropdown.Item>
+        <Dropdown.Separator />
         <Dropdown.Item onSelect={() => signOut()}>
           <div className='flex items-center gap-3'>
             <SignOut className='size-4 text-neutral-700 dark:text-white' />

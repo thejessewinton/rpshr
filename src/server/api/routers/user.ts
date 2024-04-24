@@ -9,7 +9,8 @@ export const userRouter = createTRPCRouter({
     return ctx.db.query.users.findFirst({
       where: eq(users.id, ctx.session.user.id),
       columns: {
-        username: true
+        username: true,
+        name: true
       }
     })
   }),
