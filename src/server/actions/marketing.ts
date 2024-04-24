@@ -4,7 +4,6 @@ import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 
 import { env } from '~/env'
-import { publicAction } from '~/server/actions'
 import { logsnag } from '~/server/logsnag'
 import { resend } from '~/server/resend'
 
@@ -12,7 +11,14 @@ const waitlistSchema = zfd.formData({
   email: z.string().email()
 })
 
-export const waitlist = publicAction(waitlistSchema, async ({ email }) => {
+type FormState = {
+  message: string
+  success: boolean
+}
+
+export const waitlist = async (prevState: FormState, formData: FormData) => {
+  const { email } = waitlistSchema.parse(formData)
+
   await resend.contacts.create({
     email: email,
     audienceId: env.WAITLIST_AUDIENCE_ID
@@ -30,13 +36,15 @@ export const waitlist = publicAction(waitlistSchema, async ({ email }) => {
     success: true,
     message: `You'll be notified when rpshr launches.`
   }
-})
+}
 
 const feedbackSchema = zfd.formData({
   message: z.string()
 })
 
-export const feedbackAction = publicAction(feedbackSchema, async ({ message }) => {
+export const feedbackAction = async (prevState: FormState, formData: FormData) => {
+  const { message } = feedbackSchema.parse(formData)
+
   await resend.emails.send({
     from: 'Feedback Form <feedback@rpshr.app>',
     subject: 'On-site Feedback',
@@ -48,4 +56,4 @@ export const feedbackAction = publicAction(feedbackSchema, async ({ message }) =
     success: true,
     message: `Thanks for your feedback.`
   }
-})
+}

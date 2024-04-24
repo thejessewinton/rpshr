@@ -73,46 +73,37 @@ export const Navigation = () => {
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
       <Dropdown.Content align='start'>
-        <Dropdown.Sub>
-          <Dropdown.SubTrigger>
-            <div className='flex items-center gap-3'>
-              <div className={classNames('size-4 rounded-full bg-green-600 dark:bg-green-800')} />
-              Lifts
-            </div>
-          </Dropdown.SubTrigger>
-          <Dropdown.SubContent className='w-[200px]'>
-            {data &&
-              data.map((lift, index) => {
-                const isActive = lift.slug === pathname
-
-                return (
-                  <Dropdown.Item
-                    key={lift.id}
-                    onSelect={() => {
-                      router.push(`/lift/${lift.slug}`)
-                    }}
-                  >
-                    <div className='flex items-center gap-3'>
-                      <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>{lift.name}</span>
-                    </div>
-                    {isActive ? (
-                      <Check className='size-4' />
-                    ) : (
-                      <kbd
-                        className={classNames(
-                          'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-                          'bg-neutral-300/50',
-                          'dark:bg-neutral-700 dark:text-neutral-400'
-                        )}
-                      >
-                        {index + 1}
-                      </kbd>
+        {data &&
+          data.map((lift, index) => {
+            const isActive = lift.slug === pathname
+            const isLessThanTen = index < 9
+            return (
+              <Dropdown.Item
+                key={lift.id}
+                onSelect={() => {
+                  router.push(`/lift/${lift.slug}`)
+                }}
+              >
+                <div className='flex items-center gap-3'>
+                  <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>{lift.name}</span>
+                </div>
+                {isActive ? (
+                  <Check className='size-4' />
+                ) : isLessThanTen ? (
+                  <kbd
+                    className={classNames(
+                      'flex size-4 items-center justify-center rounded font-sans text-[10px]',
+                      'bg-neutral-300/50',
+                      'dark:bg-neutral-700 dark:text-neutral-400'
                     )}
-                  </Dropdown.Item>
-                )
-              })}
-          </Dropdown.SubContent>
-        </Dropdown.Sub>
+                  >
+                    {index + 1}
+                  </kbd>
+                ) : null}
+              </Dropdown.Item>
+            )
+          })}
+
         <Dropdown.Separator />
         <Dropdown.Item
           onSelect={(e) => {

@@ -45,14 +45,19 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             <TRPCReactProvider cookies={cookies().toString()}>
               <main className='flex min-h-screen w-full flex-row'>{children}</main>
               <Toaster
-                position='top-center'
+                duration={1000000}
+                position='bottom-center'
                 toastOptions={{
                   classNames: {
                     toast:
-                      'mx-auto justify-center border-neutral-200/70 flex items-center px-3 py-2 bg-neutral-100/70 text-neutral-700 rounded border dark:border-neutral-700/30 dark:bg-neutral-800/70 dark:text-neutral-400',
-                    icon: 'hidden',
+                      'mx-auto justify-center border-neutral-200/70 rounded-full flex items-center bg-neutral-100/70 text-neutral-700 rounded border dark:border-neutral-700/30 dark:bg-neutral-800/70 dark:text-neutral-400',
                     title: 'text-sm font-light'
                   }
+                }}
+                icons={{
+                  success: <div className='size-2 rounded-full bg-green-800 dark:bg-green-600' />,
+                  warning: <div className='size-2 rounded-full bg-orange-800 dark:bg-orange-600' />,
+                  error: <div className='size-2 rounded-full bg-red-800 dark:bg-red-600' />
                 }}
               />
             </TRPCReactProvider>

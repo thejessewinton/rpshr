@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 
 import { CaretUpDown, ChatTeardropText } from '@phosphor-icons/react'
-import { useAction } from 'next-safe-action/hooks'
 import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 
@@ -13,16 +12,13 @@ import { TextArea } from '~/components/shared/textarea'
 import { feedbackAction } from '~/server/actions/marketing'
 
 export const Feedback = () => {
-  const { result, reset } = useAction(feedbackAction)
+  const [state, action] = useFormState(feedbackAction, { message: '', success: false })
 
   useEffect(() => {
-    if (result.data?.success) {
-      toast.success(result.data?.message, {
-        icon: <></>
-      })
-      reset()
+    if (state.success) {
+      toast.success(state.message)
     }
-  }, [result.data?.success])
+  }, [state.success])
 
   return (
     <Popover>
@@ -32,7 +28,7 @@ export const Feedback = () => {
         <CaretUpDown className='size-3 text-inherit' />
       </Popover.Trigger>
       <Popover.Content align='end'>
-        <form action={feedbackAction}>
+        <form action={action}>
           <TextArea name='message' placeholder='Share your feedback...' className='w-full resize-none' />
           <Button type='submit' className='!mt-2'>
             Submit

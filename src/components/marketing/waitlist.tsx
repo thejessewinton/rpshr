@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import { useAction } from 'next-safe-action/hooks'
+import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
@@ -10,20 +10,17 @@ import { Input } from '~/components/shared/input'
 import { waitlist } from '~/server/actions/marketing'
 
 export const Waitlist = () => {
-  const { result, reset } = useAction(waitlist)
+  const [state, action] = useFormState(waitlist, { message: '', success: false })
 
   useEffect(() => {
-    if (result.data?.success) {
-      toast.success(result.data?.message, {
-        icon: <></>
-      })
-      reset()
+    if (state.success) {
+      toast.success(state.message)
     }
-  }, [result.data?.success])
+  }, [state.message])
 
   return (
     <form
-      action={waitlist}
+      action={action}
       autoComplete='off'
       className='!mt-16 flex w-full rounded border border-neutral-200/70 focus-within:border-neutral-200/90 hover:border-neutral-200/90 dark:border-neutral-700/30 focus-within:dark:border-neutral-700/70 hover:dark:border-neutral-700/70'
     >
