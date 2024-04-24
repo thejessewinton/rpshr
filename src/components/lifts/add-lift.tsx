@@ -66,7 +66,7 @@ export const AddLift = () => {
       <Input
         required
         aria-label='Add a lift'
-        placeholder='Add a lift e.g. Deadlift, 225lbs'
+        placeholder='Add a lift e.g. Deadlift, 225lbs, Today'
         type='text'
         autoFocus
         className='w-full border-none focus:!bg-transparent'
