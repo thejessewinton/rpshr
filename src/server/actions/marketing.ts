@@ -4,7 +4,6 @@ import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 
 import { env } from '~/env'
-import { logsnag } from '~/server/logsnag'
 import { resend } from '~/server/resend'
 
 const waitlistSchema = zfd.formData({
@@ -22,14 +21,6 @@ export const waitlist = async (prevState: FormState, formData: FormData) => {
   await resend.contacts.create({
     email: email,
     audienceId: env.WAITLIST_AUDIENCE_ID
-  })
-
-  await logsnag.track({
-    channel: 'waitlist',
-    event: 'New Waitlist Signup',
-    user_id: email,
-    icon: '🚀',
-    notify: true
   })
 
   return {
