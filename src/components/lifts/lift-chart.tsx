@@ -26,7 +26,7 @@ type ChartProps = {
 } & ComponentPropsWithoutRef<'div'>
 
 const Chart = ({ lift, className, ...props }: ChartProps) => {
-  const dates = getDaysBetween(dayjs().subtract(90, 'days'), dayjs())
+  const dates = getDaysBetween(dayjs().subtract(83, 'days'), dayjs().add(7, 'days'))
 
   const data = dates.map((date) => {
     const sets = lift.sets.filter((set) => dayjs(set.date).isSame(dayjs(date), 'date'))

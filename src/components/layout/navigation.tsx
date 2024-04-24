@@ -36,7 +36,7 @@ export const Navigation = () => {
     return {
       label: (i + 1).toString(),
       hotkey: (i + 1).toString(),
-      slug: item.slug
+      slug: item.slug as Route<string>
     }
   })
 

@@ -7,6 +7,7 @@ import { cookies } from 'next/headers'
 
 import { get } from '@vercel/edge-config'
 
+import { Ping } from '~/components/shared/ping'
 import { env } from '~/env'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
@@ -45,7 +46,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             <TRPCReactProvider cookies={cookies().toString()}>
               <main className='flex min-h-screen w-full flex-row'>{children}</main>
               <Toaster
-                duration={1000000}
                 position='bottom-center'
                 toastOptions={{
                   classNames: {
@@ -55,9 +55,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                   }
                 }}
                 icons={{
-                  success: <div className='size-2 rounded-full bg-green-800 dark:bg-green-600' />,
-                  warning: <div className='size-2 rounded-full bg-orange-800 dark:bg-orange-600' />,
-                  error: <div className='size-2 rounded-full bg-red-800 dark:bg-red-600' />
+                  success: <Ping data-variant='success' />,
+                  warning: <Ping data-variant='warning' />,
+                  error: <Ping data-variant='error' />
                 }}
               />
             </TRPCReactProvider>
