@@ -11,7 +11,7 @@ import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 import dayjs, { getDaysBetween } from '~/utils/date'
 
-export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getBySlug'] }) => {
+export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getLiftBySlug'] }) => {
   if (!lift) return null
 
   return (
@@ -22,7 +22,7 @@ export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getBySlug'] 
 }
 
 type ChartProps = {
-  lift: NonNullable<RouterOutputs['lifts']['getBySlug']>
+  lift: NonNullable<RouterOutputs['lifts']['getLiftBySlug']>
 } & ComponentPropsWithoutRef<'div'>
 
 const Chart = ({ lift, className, ...props }: ChartProps) => {
@@ -43,9 +43,8 @@ const Chart = ({ lift, className, ...props }: ChartProps) => {
 
   return (
     <div className={classNames('flex items-end justify-between pb-2 pt-6', className)} {...props}>
-      <div className='w-fit text-nowrap font-mono text-xs text-neutral-400 dark:text-neutral-200'></div>
       <ResponsiveContainer className='relative h-full min-h-32 w-full'>
-        <BarChart defaultShowTooltip={false} data={data}>
+        <BarChart defaultShowTooltip={false} data={data} accessibilityLayer className='outline-none'>
           <Tooltip cursor={false} content={<CustomTooltip />} />
           <Bar dataKey='weight' minPointSize={32} barSize={1} className='fill-neutral-400 dark:fill-neutral-700' />
         </BarChart>

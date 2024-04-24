@@ -21,12 +21,16 @@ export const userRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return await ctx.db
+      await ctx.db
         .update(users)
         .set({
           username: input.username
         })
         .where(eq(users.id, ctx.session.user.id))
+
+      return {
+        message: 'Username updated'
+      }
     }),
   updateWeightUnit: protectedProcedure
     .input(

@@ -13,7 +13,7 @@ import { classNames } from '~/utils/core'
 export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
-  const { data } = api.lifts.getAll.useQuery()
+  const { data } = api.lifts.getAllLifts.useQuery()
 
   const liftKeys = data?.map((item, i) => {
     return {

@@ -18,7 +18,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
   const { mutate } = api.sets.createNew.useMutation({
     onSuccess: async () => {
       reset()
-      await utils.lifts.getBySlug.invalidate({ slug: liftSlug })
+      await utils.lifts.getLiftBySlug.invalidate({ slug: liftSlug })
     }
   })
 

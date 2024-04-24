@@ -45,11 +45,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               <main className='flex min-h-screen w-full flex-row'>{children}</main>
               <Toaster
                 position='bottom-center'
-                className='max-w-[250px]'
+                className='w-[250px]'
                 toastOptions={{
                   classNames: {
                     toast:
-                      'mx-auto max-w-[250px] justify-center border-neutral-200/70 rounded-full flex items-center text-neutral-700 rounded border dark:border-neutral-700/30 backdrop-blur-sm bg-transparent dark:text-neutral-400',
+                      'mx-auto max-w-none w-[250px] justify-center border-neutral-200/70 rounded-full flex items-center text-neutral-700 rounded border dark:border-neutral-700/30 backdrop-blur-sm bg-transparent dark:text-neutral-400',
                     title: 'text-sm font-light'
                   }
                 }}

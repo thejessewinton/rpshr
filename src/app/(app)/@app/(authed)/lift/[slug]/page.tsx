@@ -11,7 +11,7 @@ type LiftPageParams = {
 }
 
 export default function LiftPage({ params }: LiftPageParams) {
-  const lift = api.lifts.getBySlug.useQuery({ slug: params.slug })
+  const lift = api.lifts.getLiftBySlug.useQuery({ slug: params.slug })
 
   if (!lift.data) return null
 

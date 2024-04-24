@@ -1,13 +1,15 @@
 import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
 
-import { env } from '~/env'
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
-import { resend } from '~/server/resend'
 import { stripe } from '~/server/stripe'
 
 export const plansRouter = createTRPCRouter({
-  getCheckoutSessionLink: protectedProcedure.mutation(async ({ input }) => {
+  getAllPlans: protectedProcedure.query(async () => {
+    const { data } = await stripe.plans.list()
+
+    return data
+  }),
+  getCheckoutSessionLink: protectedProcedure.query(async ({ input }) => {
     try {
       return await stripe.checkout.sessions.create({})
     } catch {
