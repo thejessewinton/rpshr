@@ -43,7 +43,7 @@ export const Actions = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger className='animate-fade-in'>
-        <div className='size-4 rounded-full bg-orange-900' />
+        <div className='size-4 rounded-full bg-orange-700' />
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch]'>{data?.name}</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Dropdown.Trigger>
