@@ -1,3 +1,5 @@
+import { TRPCClientError } from '@trpc/client'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { env } from '~/env'
@@ -12,13 +14,20 @@ export const marketingRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      await resend.contacts.create({
-        email: input.email,
-        audienceId: env.WAITLIST_AUDIENCE_ID
-      })
+      try {
+        await resend.contacts.create({
+          email: input.email,
+          audienceId: env.WAITLIST_AUDIENCE_ID
+        })
 
-      return {
-        message: "You'll be notified when rpshr launches."
+        return {
+          message: "You'll be notified when rpshr launches."
+        }
+      } catch {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Please try again.'
+        })
       }
     }),
   feedback: publicProcedure
