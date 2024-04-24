@@ -34,7 +34,8 @@ export const config = {
   },
   pages: {
     signIn: '/login',
-    signOut: '/login'
+    signOut: '/login',
+    error: '/login'
   },
   adapter: DrizzleAdapter(db),
   providers: [Google]

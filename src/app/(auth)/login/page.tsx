@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -11,12 +12,23 @@ export const metadata: Metadata = {
   title: 'Log In'
 }
 
-export default async function SignIn() {
+enum Error {
+  Configuration = 'Configuration',
+  AccessDenied = 'AccessDenied'
+}
+
+export default async function SignIn({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
   const session = await auth()
 
   if (session?.user) {
     redirect('/')
   }
+
+  const error = searchParams.error as Error | undefined
 
   const providers = [
     {
@@ -28,6 +40,11 @@ export default async function SignIn() {
       }
     }
   ]
+
+  const errorMap: Record<keyof typeof Error, string> = {
+    [Error.Configuration]: 'Configuration error',
+    [Error.AccessDenied]: 'Access denied'
+  }
 
   return (
     <div className='flex h-screen w-screen items-center justify-center dark:bg-neutral-900'>
@@ -42,6 +59,7 @@ export default async function SignIn() {
             </form>
           ))}
         </div>
+        <div className='max-auto text-sm font-light text-gray-700 dark:text-gray-400'>{errorMap[error as Error]}</div>
       </div>
     </div>
   )
