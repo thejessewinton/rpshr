@@ -7,7 +7,6 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, type TooltipProps } from '
 import { type NameType, type ValueType } from 'recharts/types/component/DefaultTooltipContent'
 import { sortBy } from 'remeda'
 
-import { AddSet } from '~/components/sets/add-set'
 import { type RouterOutputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 import dayjs, { getDaysBetween } from '~/utils/date'
