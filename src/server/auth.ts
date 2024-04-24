@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
+import { get } from '@vercel/edge-config'
 import NextAuth, { type DefaultSession, type NextAuthConfig } from 'next-auth'
 import Google from 'next-auth/providers/google'
 
@@ -14,9 +15,9 @@ declare module 'next-auth' {
 
 export const config = {
   callbacks: {
-    // limit sign ins to just me for now
     signIn: async ({ profile }) => {
-      return profile?.email === 'jrandallwinton@gmail.com'
+      const whitelist = (await get('whitelist')) as string[]
+      return whitelist?.includes(profile!.email!)
     },
     session: async ({ session, user }) => {
       return {

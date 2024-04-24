@@ -5,6 +5,8 @@ import { type Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
+import { get } from '@vercel/edge-config'
+
 import { env } from '~/env'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
@@ -34,7 +36,7 @@ const jetbrains = JetBrains_Mono({
   subsets: ['latin']
 })
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable, jetbrains.variable)}>
