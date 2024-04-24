@@ -1,31 +1,14 @@
 'use client'
 
-import { useState } from 'react'
 import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check, CircleDashed, HouseSimple, SignOut } from '@phosphor-icons/react'
-import { signOut } from 'next-auth/react'
-import { useTheme } from 'next-themes'
+import { CaretUpDown, Check } from '@phosphor-icons/react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
-
-const items: Array<{
-  label: string
-  color: string
-  pathname: Route<string>
-  hotkey: string
-}> = [
-  {
-    label: 'Lifts',
-    color: 'dark:bg-sky-800 bg-sky-600',
-    pathname: '/',
-    hotkey: '1'
-  }
-]
 
 export const Navigation = () => {
   const router = useRouter()

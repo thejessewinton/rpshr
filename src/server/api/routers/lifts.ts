@@ -49,6 +49,10 @@ export const liftsRouter = createTRPCRouter({
           user_id: ctx.session.user.id
         })
       })
+
+      return {
+        message: 'Lift added successfully'
+      }
     }),
   getBySlug: protectedProcedure.input(z.object({ slug: z.string() })).query(async ({ ctx, input }) => {
     return await ctx.db.query.lift.findFirst({

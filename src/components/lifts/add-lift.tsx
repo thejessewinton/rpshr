@@ -3,6 +3,7 @@
 import { Plus } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Input } from '~/components/shared/input'
@@ -15,7 +16,8 @@ export const AddLift = () => {
   const { register, handleSubmit, reset, setFocus } = useForm<{ lift: string }>()
 
   const { mutate } = api.lifts.createNew.useMutation({
-    onSuccess: async () => {
+    onSuccess: async (data) => {
+      toast.success(data.message)
       reset()
       await utils.lifts.getAll.invalidate()
     }
