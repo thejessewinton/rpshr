@@ -2,6 +2,7 @@
 
 import { Plus } from '@phosphor-icons/react'
 import dayjs from 'dayjs'
+import { date } from 'drizzle-orm/pg-core'
 import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { z } from 'zod'
@@ -9,13 +10,13 @@ import { z } from 'zod'
 import { Input } from '~/components/shared/input'
 import { units } from '~/server/db/schema'
 import { api } from '~/trpc/react'
-import { classNames } from '~/utils/core'
+import { classNames, transformSetString } from '~/utils/core'
 
 export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number }) => {
   const utils = api.useUtils()
   const { register, handleSubmit, reset, setFocus } = useForm<{ set: string }>()
 
-  const { mutate } = api.sets.createNew.useMutation({
+  const { mutate } = api.sets.addSets.useMutation({
     onSuccess: async () => {
       reset()
       await utils.lifts.getLiftBySlug.invalidate({ slug: liftSlug })
@@ -23,26 +24,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
   })
 
   const onSubmit = (values: { set: string }) => {
-    const setSchema = z.object({
-      reps: z.string().transform(Number),
-      sets: z.string().transform(Number),
-      weight: z.string().transform(Number),
-      unit: z.enum(units),
-      date: z.string(),
-      notes: z.string().max(50).optional()
-    })
-
-    const pattern = /(\d+)x(\d+),\s*(\d+)\s*(lbs|kgs)\.?,\s*((?:Today|(?:\w+\s+\d{1,2},?\s+\d{4})))\s*[:,]?\s*(.*$)/
-
-    const match = values.set.match(pattern)
-
-    if (!match) return
-
-    const [sets, reps, weight, unit, rawDate, notes] = match.slice(1)
-    const date = rawDate === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs(rawDate).format('YYYY-MM-DD')
-    const set = setSchema.parse({ reps, sets, weight, unit, date, notes })
-
-    mutate({ ...set, lift_id: liftId })
+    const data = transformSetString(values.set)
+    mutate({ sets: data?.sets!, date: data!.date!, notes: data!.note!, lift_id: liftId })
   }
 
   useHotkeys(

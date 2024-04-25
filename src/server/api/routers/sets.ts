@@ -44,6 +44,36 @@ export const setsRouter = createTRPCRouter({
         })
       })
     }),
+  addSets: protectedProcedure
+    .input(
+      z.object({
+        sets: z.array(z.object({ reps: z.number(), weight: z.number(), unit: z.enum(units) })),
+        date: z.string(),
+        lift_id: z.number(),
+        notes: z.string().max(50).optional()
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.transaction(async (db) => {
+        await db
+          .update(lift)
+          .set({
+            updated_at: dayjs().toDate()
+          })
+          .where(eq(lift.id, input.lift_id))
+
+        return await db.insert(set).values(
+          input.sets.map((set) => ({
+            user_id: ctx.session.user.id,
+            date: dayjs(input.date).toDate(),
+            reps: set.reps,
+            weight: set.weight,
+            unit: set.unit,
+            lift_id: input.lift_id
+          }))
+        )
+      })
+    }),
   deleteSet: protectedProcedure
     .input(
       z.object({
