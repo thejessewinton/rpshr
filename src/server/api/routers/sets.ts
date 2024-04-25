@@ -3,6 +3,7 @@ import { desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { lift, set, units } from '~/server/db/schema'
+import { setRegex, transformSetString } from '~/utils/sets'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
@@ -47,10 +48,8 @@ export const setsRouter = createTRPCRouter({
   addSets: protectedProcedure
     .input(
       z.object({
-        sets: z.array(z.object({ reps: z.number(), weight: z.number(), unit: z.enum(units) })),
-        date: z.string(),
-        lift_id: z.number(),
-        notes: z.string().max(50).optional()
+        sets: z.string().regex(setRegex),
+        lift_id: z.number()
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -62,10 +61,12 @@ export const setsRouter = createTRPCRouter({
           })
           .where(eq(lift.id, input.lift_id))
 
+        const setData = transformSetString(input.sets)
+
         return await db.insert(set).values(
-          input.sets.map((set) => ({
+          setData.sets.map((set) => ({
             user_id: ctx.session.user.id,
-            date: dayjs(input.date).toDate(),
+            date: dayjs(setData.date).toDate(),
             reps: set.reps,
             weight: set.weight,
             unit: set.unit,

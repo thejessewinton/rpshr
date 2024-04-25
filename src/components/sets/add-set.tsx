@@ -1,20 +1,19 @@
 'use client'
 
 import { Plus } from '@phosphor-icons/react'
-import dayjs from 'dayjs'
-import { date } from 'drizzle-orm/pg-core'
 import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { z } from 'zod'
 
 import { Input } from '~/components/shared/input'
-import { units } from '~/server/db/schema'
 import { api } from '~/trpc/react'
-import { classNames, transformSetString } from '~/utils/core'
+import { RouterInputs } from '~/trpc/shared'
+import { classNames } from '~/utils/core'
+
+type Values = RouterInputs['sets']['addSets']
 
 export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number }) => {
   const utils = api.useUtils()
-  const { register, handleSubmit, reset, setFocus } = useForm<{ set: string }>()
+  const { register, handleSubmit, reset, setFocus } = useForm<Values>()
 
   const { mutate } = api.sets.addSets.useMutation({
     onSuccess: async () => {
@@ -23,16 +22,14 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
     }
   })
 
-  const onSubmit = (values: { set: string }) => {
-    const data = transformSetString(values.set)
-
-    mutate({ sets: data?.sets!, date: data!.date!, notes: data!.note!, lift_id: liftId })
+  const onSubmit = (values: Values) => {
+    mutate({ sets: values.sets, lift_id: liftId })
   }
 
   useHotkeys(
     'meta+f',
     () => {
-      setFocus('set')
+      setFocus('sets')
     },
     { preventDefault: true },
     {
@@ -59,7 +56,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
         type='text'
         autoFocus
         className='w-full border-none focus:!bg-transparent'
-        {...register('set')}
+        {...register('sets')}
       />
       <div className='mr-4 flex gap-1'>
         <kbd
