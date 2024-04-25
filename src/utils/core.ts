@@ -25,12 +25,6 @@ export const getAllDaysInYear = () => {
   return daysArray
 }
 
-interface Exercise {
-  reps: number
-  weight: number
-  unit: (typeof units)[number]
-}
-
 const setSchema = z.object({
   reps: z.string().transform(Number),
   sets: z.string().transform(Number),
@@ -41,40 +35,34 @@ const setSchema = z.object({
 })
 
 export const transformSetString = (input: string) => {
-  const regex = /(\d+)x(\d+)@(\d+)(lbs|kgs)?\.?,?\s*/g
-  const matches = input.match(regex)
+  const regex =
+    /(\d+)x(\d+)@(\d+)(lbs|kgs)?\.?,?\s*((?:Today|(?:0?[1-9]|1[0-2])[- /.](?:0?[1-9]|[12][0-9]|3[01])[- /.](?:19|20)\d\d)?)(?:,\s*([\w\s]*))?/g
+
+  const matches = input.matchAll(regex)
   if (!matches) return null
 
-  const excercises: Omit<z.infer<typeof setSchema>, 'sets' | 'date'>[] = []
+  const exercises: Omit<z.infer<typeof setSchema>, 'sets' | 'date'>[] = []
   let note: string | null = null
   let date: string | null = null
 
   for (const match of matches) {
-    const exerciseMatch = match.match(/(\d+)x(\d+)@(\d+)(lbs|kgs)?\.?/)
-    if (exerciseMatch) {
-      const [sets, reps, weight, unit, rawDate, notes] = exerciseMatch.slice(1)
+    const [, sets, reps, weight, unit, dateString, notes] = match
+    console.log('notes', notes, dateString)
+    date = dateString === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs(dateString).format('YYYY-MM-DD')
+    note = notes ? notes.trim() : null
 
-      date = rawDate === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs(rawDate).format('YYYY-MM-DD')
+    const data = setSchema.parse({
+      reps,
+      weight,
+      sets,
+      date,
+      unit: unit ?? 'lbs'
+    })
 
-      const data = setSchema.parse({
-        reps,
-        weight,
-        sets,
-        date,
-        unit: unit ?? 'lbs',
-        notes
-      })
-
-      Array.from({ length: data.sets }).forEach(() => {
-        excercises.push({ reps: data.reps, weight: data.weight, unit: data.unit })
-      })
-    }
+    Array.from({ length: Number(data.sets) }).forEach(() => {
+      exercises.push({ reps: data.reps, weight: data.weight, unit: data.unit })
+    })
   }
 
-  const notesMatch = input.match(/Today,?\s*(.*)/)
-  if (notesMatch && notesMatch[1]) {
-    note = notesMatch[1].trim()
-  }
-
-  return { sets: excercises, date, note }
+  return { sets: exercises, date, note }
 }

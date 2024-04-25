@@ -25,7 +25,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
 
   const onSubmit = (values: { set: string }) => {
     const data = transformSetString(values.set)
-    mutate({ sets: data?.sets!, date: data!.date!, notes: data!.note!, lift_id: liftId })
+    console.log('data', data)
+    //mutate({ sets: data?.sets!, date: data!.date!, notes: data!.note!, lift_id: liftId })
   }
 
   useHotkeys(
@@ -53,8 +54,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
       <Input
         required
-        aria-label='Add a set'
-        placeholder='Add a set e.g. 5x5, 165lbs, Today, Felt light'
+        aria-label='Add sets'
+        placeholder='Add set e.g. 5x5@165lbs, 3x3@175lbs, Today, Felt light'
         type='text'
         autoFocus
         className='w-full border-none focus:!bg-transparent'
