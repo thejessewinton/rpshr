@@ -36,31 +36,34 @@ const setSchema = z.object({
 
 export const transformSetString = (input: string) => {
   const regex =
-    /(\d+)x(\d+)@(\d+)(lbs|kgs)?\.?,?\s*((?:Today|(?:0?[1-9]|1[0-2])[- /.](?:0?[1-9]|[12][0-9]|3[01])[- /.](?:19|20)\d\d)?)(?:,\s*([\w\s]*))?/g
+    /(\d+)x(\d+)@(\d+)(lbs|kgs)?\.?,?\s*((?:Today|(?:0?[1-9]|1[0-2])[- /.](?:0?[1-9]|[12][0-9]|3[01])[- /.](?:19|20)\d\d|(?:January|February|March|April|May|June|July|August|September|October|November|December)\s(?:0?[1-9]|[12][0-9]|3[01])(?:st|nd|rd|th)?,\s\d{4}))(?:,\s*(.*))?/g
 
-  const matches = input.matchAll(regex)
-  if (!matches) return null
-
-  const exercises: Omit<z.infer<typeof setSchema>, 'sets' | 'date'>[] = []
-  let note: string | null = null
+  let match
+  const exercises: Omit<
+    {
+      date: string
+      unit: 'kgs' | 'lbs'
+      sets: number
+      reps: number
+      weight: number
+      notes?: string | undefined
+    },
+    'date' | 'sets'
+  >[] = []
+  let note: string | undefined
   let date: string | null = null
 
-  for (const match of matches) {
-    const [, sets, reps, weight, unit, dateString, notes] = match
-    console.log('notes', notes, dateString)
+  while ((match = regex.exec(input)) !== null) {
+    console.log(match)
+    const [, , reps, weight, unit, dateString, notes] = match
     date = dateString === 'Today' ? dayjs().format('YYYY-MM-DD') : dayjs(dateString).format('YYYY-MM-DD')
-    note = notes ? notes.trim() : null
+    note = notes ? notes.trim() : undefined
 
-    const data = setSchema.parse({
-      reps,
-      weight,
-      sets,
-      date,
-      unit: unit ?? 'lbs'
-    })
-
-    Array.from({ length: Number(data.sets) }).forEach(() => {
-      exercises.push({ reps: data.reps, weight: data.weight, unit: data.unit })
+    exercises.push({
+      reps: Number(reps),
+      weight: Number(weight),
+      unit: unit as (typeof units)[number],
+      notes: note
     })
   }
 

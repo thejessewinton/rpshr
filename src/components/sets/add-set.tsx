@@ -25,8 +25,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
 
   const onSubmit = (values: { set: string }) => {
     const data = transformSetString(values.set)
-    console.log('data', data)
-    //mutate({ sets: data?.sets!, date: data!.date!, notes: data!.note!, lift_id: liftId })
+
+    mutate({ sets: data?.sets!, date: data!.date!, notes: data!.note!, lift_id: liftId })
   }
 
   useHotkeys(
