@@ -1,10 +1,12 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Input } from '~/components/shared/input'
+import { setSchema } from '~/server/api/validation/sets'
 import { api } from '~/trpc/react'
 import { RouterInputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
@@ -17,7 +19,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
     defaultValues: {
       sets: '',
       lift_id: liftId
-    }
+    },
+    resolver: zodResolver(setSchema)
   })
 
   const { mutate } = api.sets.addSets.useMutation({

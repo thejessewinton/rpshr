@@ -3,8 +3,9 @@ import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { lift, set, units } from '~/server/db/schema'
-import { generateSetInsertData, setRegex } from '~/utils/sets'
+import { generateSetInsertData } from '~/utils/sets'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
+import { setSchema } from '../validation/sets'
 
 export const setsRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async ({ ctx }) => {
@@ -45,38 +46,31 @@ export const setsRouter = createTRPCRouter({
         })
       })
     }),
-  addSets: protectedProcedure
-    .input(
-      z.object({
-        sets: z.string().regex(setRegex),
-        lift_id: z.number()
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (db) => {
-        await db
-          .update(lift)
-          .set({
-            updated_at: dayjs().toDate()
-          })
-          .where(eq(lift.id, input.lift_id))
+  addSets: protectedProcedure.input(setSchema).mutation(async ({ ctx, input }) => {
+    await ctx.db.transaction(async (db) => {
+      await db
+        .update(lift)
+        .set({
+          updated_at: dayjs().toDate()
+        })
+        .where(eq(lift.id, input.lift_id))
 
-        const setData = generateSetInsertData(input.sets)
+      const setData = generateSetInsertData(input.sets)
 
-        if (!setData) return
+      if (!setData) return
 
-        return await db.insert(set).values(
-          setData.sets.map((set) => ({
-            user_id: ctx.session.user.id,
-            date: dayjs().toDate(),
-            reps: set.reps,
-            weight: set.weight,
-            unit: set.unit,
-            lift_id: input.lift_id
-          }))
-        )
-      })
-    }),
+      return await db.insert(set).values(
+        setData.sets.map((set) => ({
+          user_id: ctx.session.user.id,
+          date: dayjs().toDate(),
+          reps: set.reps,
+          weight: set.weight,
+          unit: set.unit,
+          lift_id: input.lift_id
+        }))
+      )
+    })
+  }),
   deleteSet: protectedProcedure
     .input(
       z.object({

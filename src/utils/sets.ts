@@ -1,8 +1,7 @@
 import { z } from 'zod'
 
+import { setRegex } from '~/server/api/validation/sets'
 import { setInsertSchema } from '~/server/db/schema'
-
-export const setRegex = /(\d+)x(\d+)@(\d+)(lbs|kgs)?\.?,?\s*/g
 
 export const generateSetInsertData = (input: string) => {
   const matches = input.match(setRegex)
