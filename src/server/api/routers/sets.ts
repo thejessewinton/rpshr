@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
-import { desc, eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { lift, set, units } from '~/server/db/schema'
-import { setRegex, transformSetString } from '~/utils/sets'
+import { generateSetInsertData, setRegex } from '~/utils/sets'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
@@ -61,12 +61,14 @@ export const setsRouter = createTRPCRouter({
           })
           .where(eq(lift.id, input.lift_id))
 
-        const setData = transformSetString(input.sets)
+        const setData = generateSetInsertData(input.sets)
+
+        if (!setData) return
 
         return await db.insert(set).values(
           setData.sets.map((set) => ({
             user_id: ctx.session.user.id,
-            date: dayjs(setData.date).toDate(),
+            date: dayjs().toDate(),
             reps: set.reps,
             weight: set.weight,
             unit: set.unit,

@@ -13,7 +13,12 @@ type Values = RouterInputs['sets']['addSets']
 
 export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number }) => {
   const utils = api.useUtils()
-  const { register, handleSubmit, reset, setFocus } = useForm<Values>()
+  const { register, handleSubmit, reset, setFocus } = useForm<Values>({
+    defaultValues: {
+      sets: '',
+      lift_id: liftId
+    }
+  })
 
   const { mutate } = api.sets.addSets.useMutation({
     onSuccess: async () => {
@@ -23,7 +28,7 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
   })
 
   const onSubmit = (values: Values) => {
-    mutate({ sets: values.sets, lift_id: liftId })
+    mutate(values)
   }
 
   useHotkeys(
