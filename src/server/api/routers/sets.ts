@@ -2,10 +2,10 @@ import dayjs from 'dayjs'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
+import { setSchema } from '~/server/api/validation/sets'
 import { lift, set, units } from '~/server/db/schema'
 import { generateSetInsertData } from '~/utils/sets'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { setSchema } from '../validation/sets'
 
 export const setsRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async ({ ctx }) => {
