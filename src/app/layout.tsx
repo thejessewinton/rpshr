@@ -6,7 +6,6 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
 import { env } from '~/env'
-import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
 import { Toaster } from '~/providers/toaster'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -18,7 +17,6 @@ export const metadata: Metadata = {
     default: 'rpshr'
   },
   description: 'A better way to journal your workouts.',
-  icons: [{ rel: 'icon', url: '/favicon.ico' }],
   metadataBase: new URL(env.APP_URL)
 }
 
@@ -38,14 +36,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable, jetbrains.variable)}>
-        <SessionProvider>
-          <ThemeProvider attribute='class'>
-            <TRPCReactProvider cookies={cookies().toString()}>
-              <main className='flex min-h-screen w-full flex-col'>{children}</main>
-              <Toaster />
-            </TRPCReactProvider>
-          </ThemeProvider>
-        </SessionProvider>
+        <ThemeProvider attribute='class'>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            <main className='flex min-h-screen w-full flex-col justify-center'>{children}</main>
+            <Toaster />
+          </TRPCReactProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

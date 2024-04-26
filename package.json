@@ -68,8 +68,7 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-radix": "latest",
-    "zod": "^3.22.4",
-    "zod-form-data": "^2.0.2",
+    "zod": "latest",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
