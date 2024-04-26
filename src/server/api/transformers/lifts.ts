@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { liftRegex } from '~/server/api/schemas/lifts'
 import { liftInsertSchema } from '~/server/db/schema'
-import { normalizeDate } from '~/utils/date'
+import { normalizeDateString } from '~/utils/date'
 
 export const transformLiftString = (input: string) => {
   const match = input.match(liftRegex)
@@ -10,7 +10,7 @@ export const transformLiftString = (input: string) => {
   if (!match) return
 
   const [name, weight, unit, dateString] = match.slice(1)
-  const date = normalizeDate(dateString)
+  const date = normalizeDateString(dateString)
 
   const data = liftInsertSchema
     .omit({ user_id: true })

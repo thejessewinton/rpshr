@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { exerciseRegex, setRegex } from '~/server/api/schemas/sets'
 import { setInsertSchema } from '~/server/db/schema'
-import dayjs, { normalizeDate } from '~/utils/date'
+import dayjs, { normalizeDateString } from '~/utils/date'
 
 export const transformSetString = (input: string) => {
   const matches = input.match(setRegex)
@@ -19,7 +19,7 @@ export const transformSetString = (input: string) => {
       let date: Date = dayjs().toDate()
       let notes: string | undefined
 
-      date = normalizeDate(dateString)
+      date = normalizeDateString(dateString)
       notes = notesString
 
       const data = setInsertSchema.omit({ user_id: true }).parse({
