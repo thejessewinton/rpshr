@@ -5,7 +5,6 @@ import { type Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
-import { Ping } from '~/components/shared/ping'
 import { env } from '~/env'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
@@ -43,22 +42,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>
               <main className='flex min-h-screen w-full flex-row'>{children}</main>
-              <Toaster
-                position='bottom-center'
-                className='w-[250px]'
-                toastOptions={{
-                  classNames: {
-                    toast:
-                      'mx-auto max-w-none w-[250px] justify-center border-neutral-200/70 rounded-full flex items-center text-neutral-700 rounded border dark:border-neutral-700/30 backdrop-blur-sm bg-transparent dark:text-neutral-400',
-                    title: 'text-sm font-light'
-                  }
-                }}
-                icons={{
-                  success: <Ping data-variant='success' />,
-                  warning: <Ping data-variant='warning' />,
-                  error: <Ping data-variant='error' />
-                }}
-              />
+              <Toaster />
             </TRPCReactProvider>
           </ThemeProvider>
         </SessionProvider>
