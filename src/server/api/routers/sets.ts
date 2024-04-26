@@ -60,14 +60,18 @@ export const setsRouter = createTRPCRouter({
       if (!setData) return
 
       return await db.insert(set).values(
-        setData.sets.map((set) => ({
-          user_id: ctx.session.user.id,
-          date: dayjs().toDate(),
-          reps: set.reps,
-          weight: set.weight,
-          unit: set.unit,
-          lift_id: input.lift_id
-        }))
+        setData.sets.map((set) => {
+          console.log(set)
+          return {
+            user_id: ctx.session.user.id,
+            date: set.date,
+            notes: set.notes,
+            reps: set.reps,
+            weight: set.weight,
+            unit: set.unit,
+            lift_id: input.lift_id
+          }
+        })
       )
     })
   }),
