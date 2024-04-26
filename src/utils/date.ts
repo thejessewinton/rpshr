@@ -15,8 +15,10 @@ export const getDaysBetween = (start: Dayjs, end: Dayjs) => {
   return range
 }
 
-export const normalizeDate = (dateString?: string) => {
-  const normalizeDate = dateString?.toLowerCase().trim()
+export const normalizeDateString = (dateString?: string) => {
+  if (!dateString) return dayjs().toDate()
+
+  const normalizeDate = dateString.toLowerCase().trim()
   return normalizeDate === 'today'
     ? dayjs().toDate()
     : normalizeDate === 'yesterday'

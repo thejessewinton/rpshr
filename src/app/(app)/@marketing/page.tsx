@@ -3,7 +3,7 @@ import { Logo } from '~/components/shared/logo'
 
 export default function Marketing() {
   return (
-    <div className='w-full max-w-xl space-y-12 px-8'>
+    <div className='mx-auto w-full max-w-xl space-y-12 px-8'>
       <header className='flex items-center justify-between'>
         <Logo className='size-6 text-neutral-700 dark:text-white' />
 
