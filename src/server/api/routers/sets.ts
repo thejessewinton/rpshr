@@ -61,7 +61,6 @@ export const setsRouter = createTRPCRouter({
 
       return await db.insert(set).values(
         setData.sets.map((set) => {
-          console.log(set)
           return {
             user_id: ctx.session.user.id,
             date: set.date,
