@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
-import { exerciseRegex, setRegex } from '~/server/api/validation/sets'
+import { exerciseRegex, setRegex } from '~/server/api/schemas/sets'
 import { setInsertSchema } from '~/server/db/schema'
-import dayjs from './date'
+import dayjs, { normalizeDate } from '~/utils/date'
 
-export const generateSetInsertData = (input: string) => {
+export const transformSetString = (input: string) => {
   const matches = input.match(setRegex)
 
   if (!matches) return null
@@ -15,17 +15,11 @@ export const generateSetInsertData = (input: string) => {
 
     if (exerciseMatch) {
       const [numberOfSets, numberOfReps, weight, unit, dateString, notesString] = exerciseMatch.slice(1)
-      const normalizeDate = dateString?.toLowerCase().trim()
 
       let date: Date = dayjs().toDate()
       let notes: string | undefined
 
-      date =
-        normalizeDate === 'today'
-          ? dayjs().toDate()
-          : normalizeDate === 'yesterday'
-            ? dayjs().subtract(1, 'day').toDate()
-            : dayjs(dateString).toDate()
+      date = normalizeDate(dateString)
       notes = notesString
 
       const data = setInsertSchema.omit({ user_id: true }).parse({

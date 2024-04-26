@@ -2,6 +2,9 @@ import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { lift, personalRecord, set, units } from '~/server/db/schema'
+import { transformLiftString } from '~/utils/transformers/lifts'
+import { transformSetString } from '~/utils/transformers/sets'
+import { liftSchema } from '../schemas/lifts'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const liftsRouter = createTRPCRouter({
@@ -51,35 +54,32 @@ export const liftsRouter = createTRPCRouter({
       }
     })
   }),
-  createLift: protectedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        weight: z.number(),
-        unit: z.enum(units)
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (db) => {
-        const [newLift] = await db
-          .insert(lift)
-          .values({
-            name: input.name,
-            user_id: ctx.session.user.id
-          })
-          .returning({ id: lift.id })
+  createLift: protectedProcedure.input(liftSchema).mutation(async ({ ctx, input }) => {
+    await ctx.db.transaction(async (db) => {
+      const liftData = transformLiftString(input.lift)
 
-        await db.insert(personalRecord).values({
-          weight: input.weight,
-          lift_id: newLift!.id,
+      if (!liftData) return
+
+      const [newLift] = await db
+        .insert(lift)
+        .values({
+          name: liftData.name,
           user_id: ctx.session.user.id
         })
-      })
+        .returning({ id: lift.id })
 
-      return {
-        message: 'Lift added successfully'
-      }
-    }),
+      await db.insert(personalRecord).values({
+        weight: liftData.weight,
+        date: liftData.date,
+        lift_id: newLift!.id,
+        user_id: ctx.session.user.id
+      })
+    })
+
+    return {
+      message: 'Lift added successfully'
+    }
+  }),
   renameLift: protectedProcedure
     .input(z.object({ id: z.number(), name: z.string() }))
     .mutation(async ({ ctx, input }) => {

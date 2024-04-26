@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
-import { setSchema } from '~/server/api/validation/sets'
+import { setSchema } from '~/server/api/schemas/sets'
 import { lift, set, units } from '~/server/db/schema'
-import { generateSetInsertData } from '~/utils/sets'
+import { transformSetString } from '~/utils/transformers/sets'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
@@ -55,11 +55,11 @@ export const setsRouter = createTRPCRouter({
         })
         .where(eq(lift.id, input.lift_id))
 
-      const setData = generateSetInsertData(input.sets)
+      const setData = transformSetString(input.sets)
 
       if (!setData) return
 
-      return await db.insert(set).values(
+      await db.insert(set).values(
         setData.sets.map((set) => {
           return {
             user_id: ctx.session.user.id,
@@ -73,6 +73,10 @@ export const setsRouter = createTRPCRouter({
         })
       )
     })
+
+    return {
+      message: 'Set added successfully'
+    }
   }),
   deleteSet: protectedProcedure
     .input(

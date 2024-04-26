@@ -1,43 +1,39 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus } from '@phosphor-icons/react'
-import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { toast } from 'sonner'
 
 import { Input } from '~/components/shared/input'
-import { setSchema } from '~/server/api/validation/sets'
+import { setSchema } from '~/server/api/schemas/sets'
 import { api } from '~/trpc/react'
 import { RouterInputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
-
-type Values = RouterInputs['sets']['addSets']
+import { Form, useZodForm } from '../shared/form'
 
 export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number }) => {
   const utils = api.useUtils()
-  const { register, handleSubmit, reset, setFocus } = useForm<Values>({
+
+  const form = useZodForm({
+    schema: setSchema,
     defaultValues: {
       sets: '',
       lift_id: liftId
-    },
-    resolver: zodResolver(setSchema)
-  })
-
-  const { mutate } = api.sets.addSets.useMutation({
-    onSuccess: async () => {
-      await utils.lifts.getLiftBySlug.invalidate({ slug: liftSlug })
-      reset()
     }
   })
 
-  const onSubmit = (values: Values) => {
-    mutate(values)
-  }
+  const addSetMutation = api.sets.addSets.useMutation({
+    onSuccess: async (data) => {
+      toast.success(data.message)
+      await utils.lifts.getLiftBySlug.invalidate({ slug: liftSlug })
+      form.reset()
+    }
+  })
 
   useHotkeys(
     'meta+f',
     () => {
-      setFocus('sets')
+      form.setFocus('sets')
     },
     { preventDefault: true },
     {
@@ -46,8 +42,11 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
   )
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <Form
+      form={form}
+      handleSubmit={async (values) => {
+        await addSetMutation.mutateAsync(values)
+      }}
       autoComplete='off'
       autoCorrect='off'
       className={classNames(
@@ -60,11 +59,11 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       <Input
         required
         aria-label='Add sets'
-        placeholder='Add set e.g. 5 5 165lbs, Today, Felt light'
+        placeholder='Add a set e.g. 5 5 225lbs, Today, Felt light'
         type='text'
         autoFocus
         className='w-full border-none focus:!bg-transparent'
-        {...register('sets')}
+        {...form.register('sets')}
       />
       <div className='mr-4 flex gap-1'>
         <kbd
@@ -86,6 +85,6 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
           F
         </kbd>
       </div>
-    </form>
+    </Form>
   )
 }

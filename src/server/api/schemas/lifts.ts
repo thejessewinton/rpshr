@@ -1,0 +1,8 @@
+import { z } from 'zod'
+
+export const liftRegex =
+  /([A-Za-z]+),\s*(\d+)\s*(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
+
+export const liftSchema = z.object({
+  lift: z.string().regex(liftRegex)
+})

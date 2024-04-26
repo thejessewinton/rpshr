@@ -6,56 +6,44 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { Form, useZodForm } from '~/components/shared/form'
 import { Input } from '~/components/shared/input'
+import { liftSchema } from '~/server/api/schemas/lifts'
 import { units } from '~/server/db/schema'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
 
 export const AddLift = () => {
   const utils = api.useUtils()
-  const { register, handleSubmit, reset, setFocus } = useForm<{ lift: string }>()
-
-  const { mutate } = api.lifts.createLift.useMutation({
-    onSuccess: async (data) => {
-      toast.success(data.message)
-      reset()
-      await utils.lifts.getAllLifts.invalidate()
-    }
+  const form = useZodForm({
+    defaultValues: {
+      lift: ''
+    },
+    schema: liftSchema
   })
 
-  const onSubmit = (values: { lift: string }) => {
-    const liftSchema = z.object({
-      name: z.string(),
-      weight: z.string().transform(Number),
-      unit: z.enum(units)
-    })
-
-    const pattern = /([A-Za-z]+),\s*(\d+)\s*(lbs|kgs)\.?,\s*([A-Za-z]+(?:\s+\d{1,2}[-/]\d{1,2})?|\d{1,2}[-/]\d{1,2})/
-
-    const match = values.lift.match(pattern)
-
-    if (!match) return
-
-    const [name, weight, unit] = match.slice(1)
-    const lift = liftSchema.parse({ name, weight, unit })
-
-    mutate(lift)
-  }
+  const addLiftMutation = api.lifts.createLift.useMutation({
+    onSuccess: async (data) => {
+      toast.success(data.message)
+      await utils.lifts.getAllLifts.invalidate()
+      form.reset()
+    }
+  })
 
   useHotkeys(
     'meta+f',
     () => {
-      setFocus('lift')
+      form.setFocus('lift')
     },
-    { preventDefault: true },
-    {
-      enableOnFormTags: ['input']
-    }
+    { preventDefault: true }
   )
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <Form
+      form={form}
+      handleSubmit={async (values) => {
+        await addLiftMutation.mutateAsync(values)
+      }}
       autoComplete='off'
       autoCorrect='off'
       className={classNames(
@@ -72,7 +60,7 @@ export const AddLift = () => {
         type='text'
         autoFocus
         className='w-full border-none focus:!bg-transparent'
-        {...register('lift')}
+        {...form.register('lift')}
       />
       <div className='mr-4 flex gap-1'>
         <kbd
@@ -94,6 +82,6 @@ export const AddLift = () => {
           F
         </kbd>
       </div>
-    </form>
+    </Form>
   )
 }
