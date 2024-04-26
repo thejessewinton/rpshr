@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <SessionProvider>
           <ThemeProvider attribute='class'>
             <TRPCReactProvider cookies={cookies().toString()}>
-              <main className='flex min-h-screen w-full flex-row'>{children}</main>
+              <main className='flex min-h-screen w-full flex-col'>{children}</main>
               <Toaster />
             </TRPCReactProvider>
           </ThemeProvider>

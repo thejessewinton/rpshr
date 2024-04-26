@@ -17,15 +17,7 @@ export default function LiftPage({ params }: LiftPageParams) {
 
   return (
     <div className='flex animate-fade-in flex-col px-8 text-sm'>
-      <div className='flex items-center justify-between gap-5'>
-        <AddSet liftSlug={params.slug} liftId={lift.data.id} />
-        <div className='space-y-2 text-right'>
-          {lift.data.name}
-          <div className='text-nowrap font-mono text-neutral-700 dark:text-neutral-400'>
-            {lift.data.sets.length} Sets
-          </div>
-        </div>
-      </div>
+      <AddSet liftSlug={params.slug} liftId={lift.data.id} />
       <LiftChart lift={lift.data} />
     </div>
   )

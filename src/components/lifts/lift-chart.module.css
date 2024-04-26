@@ -1,0 +1,9 @@
+.line:has(+ .line:hover),
+.line:hover + .line {
+  @apply scale-y-[1.2];
+}
+
+.line:has(+ .line + .line:hover),
+.line:hover + .line + .line {
+  @apply scale-y-105;
+}
