@@ -73,7 +73,6 @@ export const Navigation = () => {
             })}
         </Dropdown.Content>
       </Dropdown>
-      <button onClick={() => toast.success('Coolio')}>Toast</button>
     </>
   )
 }

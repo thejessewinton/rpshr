@@ -1,9 +1,8 @@
 import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
-import { lift, personalRecord, set, units } from '~/server/db/schema'
-import { transformLiftString } from '~/utils/transformers/lifts'
-import { transformSetString } from '~/utils/transformers/sets'
+import { transformLiftString } from '~/server/api/transformers/lifts'
+import { lift, personalRecord, set } from '~/server/db/schema'
 import { liftSchema } from '../schemas/lifts'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 

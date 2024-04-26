@@ -3,8 +3,8 @@ import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { setSchema } from '~/server/api/schemas/sets'
+import { transformSetString } from '~/server/api/transformers/sets'
 import { lift, set, units } from '~/server/db/schema'
-import { transformSetString } from '~/utils/transformers/sets'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
