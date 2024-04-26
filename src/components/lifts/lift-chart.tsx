@@ -15,10 +15,7 @@ export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getLiftBySlu
         return (
           <label
             key={date.date.toString()}
-            className={classNames(
-              'line h-20 shrink-0 px-1 transition-transform duration-200 hover:scale-y-125',
-              s.line
-            )}
+            className={classNames('line h-20 shrink-0 px-1 transition-all duration-200 hover:scale-y-125', s.line)}
           >
             <input type='radio' name='line' className='absolute m-0 h-0 w-0 p-0' />
             <div

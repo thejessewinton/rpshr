@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 
 import { Header } from '~/components/layout/header'
 
-export default async function AppLayout({ children }: { children: ReactNode }) {
+export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />
