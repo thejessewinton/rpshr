@@ -16,7 +16,7 @@ export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getLiftBySlu
           <label
             key={date.date.toString()}
             className={classNames(
-              'line h-20 shrink-0 px-1 transition-transform duration-200 hover:scale-y-125 has-[peer:hover]:hidden',
+              'line h-20 shrink-0 px-1 transition-transform duration-200 hover:scale-y-125',
               s.line
             )}
           >
