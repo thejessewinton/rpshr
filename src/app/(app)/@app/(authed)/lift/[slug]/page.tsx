@@ -16,7 +16,7 @@ export default function LiftPage({ params }: LiftPageParams) {
   if (!lift.data) return null
 
   return (
-    <div className='flex animate-fade-in flex-col px-8 text-sm'>
+    <div className='relative flex animate-fade-in flex-col px-8 text-sm'>
       <AddSet liftSlug={params.slug} liftId={lift.data.id} />
       <LiftChart lift={lift.data} />
     </div>

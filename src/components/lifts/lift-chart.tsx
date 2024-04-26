@@ -2,7 +2,6 @@
 
 import { type RouterOutputs } from '~/trpc/shared'
 import { classNames, getAllDaysInYear } from '~/utils/core'
-import s from './lift-chart.module.css'
 
 export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getLiftBySlug'] }) => {
   if (!lift) return null
@@ -10,21 +9,17 @@ export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getLiftBySlu
   const dates = getAllDaysInYear()
 
   return (
-    <div className='flex flex-nowrap'>
+    <div className='flex flex-nowrap overflow-x-scroll'>
       {dates.map((date) => {
         return (
-          <label
-            key={date.date.toString()}
-            className={classNames('line h-20 shrink-0 px-1 transition-all duration-200 hover:scale-y-125', s.line)}
-          >
-            <input type='radio' name='line' className='absolute m-0 h-0 w-0 p-0' />
+          <div key={date.date.toISOString()} className='group peer h-20 shrink-0 px-1 transition-colors'>
             <div
               className={classNames('h-full w-px', {
-                'bg-orange-700': date.isFirstOfMonth,
-                'dark:bg-neutral-700/70': !date.isFirstOfMonth
+                'bg-orange-700 group-hover:bg-orange-500': date.isFirstOfMonth,
+                'group-hover:bg-neutral-500/70 dark:bg-neutral-700/70': !date.isFirstOfMonth
               })}
             ></div>
-          </label>
+          </div>
         )
       })}
     </div>

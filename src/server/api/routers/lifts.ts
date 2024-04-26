@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { transformLiftString } from '~/server/api/transformers/lifts'
 import { lift, personalRecord, set } from '~/server/db/schema'
+import { getAllDaysInYear } from '~/utils/core'
 import { liftSchema } from '../schemas/lifts'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
