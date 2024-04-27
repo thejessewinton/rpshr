@@ -2,13 +2,15 @@ import { NextResponse } from 'next/server'
 
 import { auth } from '~/server/auth'
 
+const whitelist = ['/', '/how', '/login']
+
 export default auth((req) => {
   if (req.auth && req.nextUrl.pathname === '/') {
     return NextResponse.rewrite(new URL('/overview', req.url))
   }
-  // if (!req.auth && req.nextUrl.pathname !== '/login') {
-  //   return NextResponse.redirect(new URL('/login', req.url))
-  // }
+  if (!req.auth && !whitelist.includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL('/login', req.url))
+  }
 
   return NextResponse.next()
 })
