@@ -23,6 +23,7 @@ export default function LiftsPage() {
             {lifts.data.map((lift) => {
               return (
                 <Link
+                  key={lift.id}
                   href={`/lift/${lift.slug}`}
                   className='flex items-center justify-between py-3 text-sm font-light text-neutral-700 dark:text-neutral-400'
                 >

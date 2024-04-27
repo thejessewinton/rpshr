@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef } from 'react'
 
 import { classNames } from '~/utils/core'
 

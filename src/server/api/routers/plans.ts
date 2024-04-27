@@ -9,7 +9,7 @@ export const plansRouter = createTRPCRouter({
 
     return data
   }),
-  getCheckoutSessionLink: protectedProcedure.query(async ({ input }) => {
+  getCheckoutSessionLink: protectedProcedure.query(async () => {
     try {
       return await stripe.checkout.sessions.create({})
     } catch {

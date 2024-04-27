@@ -17,7 +17,7 @@ export const LiftsTable = () => {
   return (
     <div className='mb-16 animate-fade-in overflow-x-auto'>
       {lifts.data.map((lift) => {
-        return <LiftRow lift={lift} />
+        return <LiftRow key={lift.id} lift={lift} />
       })}
     </div>
   )
@@ -26,9 +26,9 @@ export const LiftsTable = () => {
 export const LiftRow = ({ lift }: { lift: RouterOutputs['lifts']['getAllLifts'][number] }) => {
   const utils = api.useUtils()
   const deleteLift = api.lifts.deleteLift.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success(data.message)
-      utils.lifts.getAllLifts.invalidate()
+      await utils.lifts.getAllLifts.invalidate()
     }
   })
 

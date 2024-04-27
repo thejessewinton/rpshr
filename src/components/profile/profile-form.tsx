@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 import { Input } from '~/components/shared/input'
 import { api } from '~/trpc/react'
-import { RouterInputs } from '~/trpc/shared'
+import { type RouterInputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
 
 type Values = RouterInputs['user']['updateUsername']
@@ -18,8 +18,8 @@ export const ProfileForm = () => {
   const utils = api.useUtils()
   const user = api.user.getCurrent.useQuery()
   const updateUser = api.user.updateUsername.useMutation({
-    onSuccess: (data) => {
-      utils.user.getCurrent.invalidate()
+    onSuccess: async (data) => {
+      await utils.user.getCurrent.invalidate()
       toast.success(data.message)
     }
   })
@@ -31,8 +31,10 @@ export const ProfileForm = () => {
   })
 
   useEffect(() => {
-    setValue('username', user.data?.username ?? '')
-  }, [user.data])
+    if (user.data) {
+      setValue('username', user.data?.username ?? '')
+    }
+  }, [setValue, user.data])
 
   useHotkeys(
     'meta+f',

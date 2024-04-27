@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -20,7 +19,7 @@ enum Error {
 export default async function SignIn({
   searchParams
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Record<string, string | string[] | undefined>
 }) {
   const session = await auth()
 
@@ -59,7 +58,7 @@ export default async function SignIn({
             </form>
           ))}
         </div>
-        <div className='max-auto text-sm font-light text-gray-700 dark:text-gray-400'>{errorMap[error as Error]}</div>
+        <div className='max-auto text-sm font-light text-gray-700 dark:text-gray-400'>{errorMap[error!]}</div>
       </div>
     </div>
   )

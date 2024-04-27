@@ -1,15 +1,13 @@
 'use client'
 
 import { Plus } from '@phosphor-icons/react'
-import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 import { Form, useZodForm } from '~/components/shared/form'
 import { Input } from '~/components/shared/input'
+import { KBD } from '~/components/shared/kbd'
 import { liftSchema } from '~/server/api/schemas/lifts'
-import { units } from '~/server/db/schema'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
 
@@ -63,24 +61,8 @@ export const AddLift = () => {
         {...form.register('lift')}
       />
       <div className='mr-4 flex gap-1'>
-        <kbd
-          className={classNames(
-            'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-            'bg-neutral-300/50',
-            'dark:bg-neutral-700 dark:text-neutral-400'
-          )}
-        >
-          ⌘
-        </kbd>
-        <kbd
-          className={classNames(
-            'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-            'bg-neutral-300/50',
-            'dark:bg-neutral-700 dark:text-neutral-400'
-          )}
-        >
-          F
-        </kbd>
+        <KBD>⌘</KBD>
+        <KBD>F</KBD>
       </div>
     </Form>
   )

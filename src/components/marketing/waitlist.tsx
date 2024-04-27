@@ -1,15 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
-
-import { useFormState } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
 import { Input } from '~/components/shared/input'
 import { api } from '~/trpc/react'
-import { RouterInputs } from '~/trpc/shared'
+import { type RouterInputs } from '~/trpc/shared'
 
 type Values = RouterInputs['marketing']['signup']
 

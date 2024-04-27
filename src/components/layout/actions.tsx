@@ -9,7 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
 import { api } from '~/trpc/react'
-import { classNames } from '~/utils/core'
+import { KBD } from '../shared/kbd'
 
 export const Actions = () => {
   const router = useRouter()
@@ -33,7 +33,7 @@ export const Actions = () => {
         handleGoToProfile()
         break
       case 'q':
-        signOut()
+        void signOut()
         break
     }
   })
@@ -55,15 +55,7 @@ export const Actions = () => {
             <User className='size-4 text-neutral-700 dark:text-white' />
             Profile
           </div>
-          <kbd
-            className={classNames(
-              'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-              'bg-neutral-300/50',
-              'dark:bg-neutral-700 dark:text-neutral-400'
-            )}
-          >
-            P
-          </kbd>
+          <KBD>P</KBD>
         </Dropdown.Item>
         <Dropdown.Item
           onSelect={(e) => {
@@ -75,15 +67,7 @@ export const Actions = () => {
             <CircleDashed className='size-4 text-neutral-700 dark:text-white' />
             Theme
           </div>
-          <kbd
-            className={classNames(
-              'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-              'bg-neutral-300/50',
-              'dark:bg-neutral-700 dark:text-neutral-400'
-            )}
-          >
-            M
-          </kbd>
+          <KBD>M</KBD>
         </Dropdown.Item>
         <Dropdown.Separator />
         <Dropdown.Item onSelect={() => signOut()}>
@@ -91,15 +75,7 @@ export const Actions = () => {
             <SignOut className='size-4 text-neutral-700 dark:text-white' />
             Logout
           </div>
-          <kbd
-            className={classNames(
-              'flex h-4 items-center justify-center rounded px-1 font-sans text-[10px]',
-              'bg-neutral-300/50',
-              'dark:bg-neutral-700 dark:text-neutral-400'
-            )}
-          >
-            ⇧Q
-          </kbd>
+          <KBD>⇧Q</KBD>
         </Dropdown.Item>
       </Dropdown.Content>
     </Dropdown>

@@ -1,9 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-
 import { CaretUpDown, ChatTeardropText } from '@phosphor-icons/react'
-import { useFormState } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -11,7 +8,7 @@ import { Button } from '~/components/shared/button'
 import { Popover } from '~/components/shared/popover'
 import { TextArea } from '~/components/shared/textarea'
 import { api } from '~/trpc/react'
-import { RouterInputs } from '~/trpc/shared'
+import { type RouterInputs } from '~/trpc/shared'
 
 type Values = RouterInputs['marketing']['feedback']
 
