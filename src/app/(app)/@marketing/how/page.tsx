@@ -5,7 +5,8 @@ import { Waitlist } from '~/components/marketing/waitlist'
 import { Logo } from '~/components/shared/logo'
 
 export const metadata: Metadata = {
-  title: 'how'
+  title: 'how',
+  description: 'learn how rpshr helps you track you progress with beautiful simplicity.'
 }
 
 export default function HelpPage() {
