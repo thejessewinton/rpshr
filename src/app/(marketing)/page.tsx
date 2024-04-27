@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { Waitlist } from '~/components/marketing/waitlist'
 import { Logo } from '~/components/shared/logo'
 
@@ -5,7 +7,9 @@ export default function IndexPage() {
   return (
     <div className='mx-auto w-full max-w-xl space-y-12 px-8'>
       <header className='flex items-center justify-between'>
-        <Logo className='size-6 text-neutral-700 dark:text-white' />
+        <Link href='/'>
+          <Logo className='size-6 text-neutral-700 dark:text-white' />
+        </Link>
 
         <h1 className='text-sm text-neutral-700 dark:text-neutral-400'>rpshr</h1>
       </header>
@@ -23,7 +27,9 @@ export default function IndexPage() {
           what it does well.
         </p>
 
-        <p>Might add more, might not.</p>
+        <p>
+          Might add more, might not. Join the waitlist. In the meantime, <Link href='/how'>learn how rpshr works.</Link>
+        </p>
 
         <Waitlist />
       </div>

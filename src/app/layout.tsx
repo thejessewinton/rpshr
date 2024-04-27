@@ -13,7 +13,7 @@ import { classNames } from '~/utils/core'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s · rpshr',
+    template: '%s — rpshr',
     default: 'rpshr'
   },
   description: 'A better way to journal your workouts.',
