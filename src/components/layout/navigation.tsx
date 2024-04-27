@@ -27,7 +27,7 @@ export const Navigation = () => {
   useHotkeys(liftKeys?.map((item) => item.hotkey) ?? [], (e) => {
     const lift = data?.find((lift) => lift.slug === liftKeys?.find((key) => key.hotkey === e.key)?.slug)
     if (lift) {
-      router.push(`/lift/${lift.slug}`)
+      router.push(`/app/lift/${lift.slug}`)
     }
   })
 

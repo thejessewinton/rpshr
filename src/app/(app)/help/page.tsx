@@ -11,11 +11,14 @@ export default function HelpPage() {
       </header>
 
       <div className='space-y-4 text-sm font-light leading-loose text-neutral-700 dark:text-neutral-400'>
-        <p>A better way to journal your workouts.</p>
+        <p>Write your lifts and sets like a sentence.</p>
+
+        <h2>New Lift</h2>
 
         <p>
-          Track your lifts, progressive overload, and progress. Add a new lift, and include your PR. Add a set. Update
-          your PR when you break it. Keep getting stronger.
+          rpshr expects a string for new lifts, containing the name of the lift, your current 1RM with the unit i.e.
+          lbs, or kgs, and the date you set that max, formatted as `Today`, `Yesterday`, or a traditional date string.
+          An example would be: <code>Squat, 315lbs, Today</code>
         </p>
 
         <p>
