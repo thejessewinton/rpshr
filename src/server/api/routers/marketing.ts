@@ -2,33 +2,28 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { env } from '~/env'
+import { waitlistSchema } from '~/server/api/schemas/marketing'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { resend } from '~/server/resend'
 
 export const marketingRouter = createTRPCRouter({
-  signup: publicProcedure
-    .input(
-      z.object({
-        email: z.string().email()
+  signup: publicProcedure.input(waitlistSchema).mutation(async ({ input }) => {
+    try {
+      await resend.contacts.create({
+        email: input.email,
+        audienceId: env.WAITLIST_AUDIENCE_ID
       })
-    )
-    .mutation(async ({ input }) => {
-      try {
-        await resend.contacts.create({
-          email: input.email,
-          audienceId: env.WAITLIST_AUDIENCE_ID
-        })
 
-        return {
-          message: "You'll be notified when rpshr launches."
-        }
-      } catch {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Please try again.'
-        })
+      return {
+        message: "You'll be notified when rpshr launches."
       }
-    }),
+    } catch {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Please try again.'
+      })
+    }
+  }),
   feedback: publicProcedure
     .input(
       z.object({
