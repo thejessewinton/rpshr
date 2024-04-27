@@ -1,12 +1,9 @@
 import { type ReactNode } from 'react'
 
-import { Header } from '~/components/layout/header'
+import { auth } from '~/server/auth'
 
-export default function AppLayout({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <Header />
-      <div className='relative mt-8 flex flex-1'>{children}</div>
-    </>
-  )
+export default async function AppLayout({ marketing, app }: { marketing: ReactNode; app: ReactNode }) {
+  const session = await auth()
+
+  return <>{session ? app : marketing}</>
 }
