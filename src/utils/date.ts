@@ -15,6 +15,22 @@ export const getDaysBetween = (start: Dayjs, end: Dayjs) => {
   return range
 }
 
+export const getAllDaysInYear = () => {
+  const year = dayjs().year()
+  const currentDate = new Date(year, 0, 1)
+  const daysArray: Array<{ date: Dayjs; isFirstOfMonth: boolean }> = []
+
+  while (currentDate.getFullYear() === year) {
+    daysArray.push({
+      date: dayjs(currentDate),
+      isFirstOfMonth: currentDate.getDate() === 1
+    })
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+
+  return daysArray
+}
+
 export const normalizeDateString = (dateString?: string) => {
   if (!dateString) return dayjs().toDate()
 

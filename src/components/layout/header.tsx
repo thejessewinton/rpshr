@@ -4,7 +4,7 @@ import { Actions } from '~/components/layout/actions'
 import { Navigation } from '~/components/layout/navigation'
 import { Logo } from '~/components/shared/logo'
 
-export const Header = async () => {
+export const Header = () => {
   return (
     <header className='flex items-center justify-between px-8 py-4'>
       <div className='mx-auto flex w-full items-center gap-4'>

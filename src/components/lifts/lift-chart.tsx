@@ -1,30 +1,34 @@
 'use client'
 
-import { type RouterOutputs } from '~/trpc/shared'
-import { classNames, getAllDaysInYear } from '~/utils/core'
-import s from './lift-chart.module.css'
+import { type ComponentProps } from 'react'
 
-export const LiftChart = ({ lift }: { lift: RouterOutputs['lifts']['getLiftBySlug'] }) => {
+import { type RouterOutputs } from '~/trpc/shared'
+import { classNames } from '~/utils/core'
+import { getAllDaysInYear } from '~/utils/date'
+
+type LiftChartProps = { lift: RouterOutputs['lifts']['getLiftBySlug'] } & ComponentProps<'div'>
+
+export const LiftChart = ({ lift, className, ...props }: LiftChartProps) => {
   if (!lift) return null
 
   const dates = getAllDaysInYear()
 
   return (
-    <div className='flex flex-nowrap'>
+    <div className='flex flex-nowrap justify-self-center overflow-x-hidden'>
       {dates.map((date) => {
         return (
-          <label
-            key={date.date.toString()}
-            className={classNames('line h-20 shrink-0 px-1 transition-all duration-200 hover:scale-y-125', s.line)}
+          <div
+            key={date.date.toISOString()}
+            className={classNames('group peer h-20 shrink-0 px-1 transition-colors', className)}
+            {...props}
           >
-            <input type='radio' name='line' className='absolute m-0 h-0 w-0 p-0' />
             <div
               className={classNames('h-full w-px', {
-                'bg-orange-700': date.isFirstOfMonth,
-                'dark:bg-neutral-700/70': !date.isFirstOfMonth
+                'bg-orange-700 group-hover:bg-orange-500': date.isFirstOfMonth,
+                'group-hover:bg-neutral-500/70 dark:bg-neutral-700/70': !date.isFirstOfMonth
               })}
-            ></div>
-          </label>
+            />
+          </div>
         )
       })}
     </div>

@@ -1,4 +1,4 @@
-import Stripe from 'stripe'
+import type Stripe from 'stripe'
 
 import { env } from '~/env'
 import { stripe } from '~/server/stripe'
@@ -12,7 +12,7 @@ const relevantEvents = new Set([
 
 export const POST = async (req: Request) => {
   const body = await req.text()
-  const sig = req.headers.get('stripe-signature') as string
+  const sig = req.headers.get('stripe-signature')!
   let event: Stripe.Event
 
   try {
@@ -27,14 +27,14 @@ export const POST = async (req: Request) => {
       switch (event.type) {
         case 'customer.subscription.created':
         case 'customer.subscription.updated':
-        case 'customer.subscription.deleted':
-          const subscription = event.data.object as Stripe.Subscription
+        // case 'customer.subscription.deleted':
+        //   const subscription = event.data.object
 
-          break
-        case 'checkout.session.completed':
-          const checkoutSession = event.data.object as Stripe.Checkout.Session
+        //   break
+        // case 'checkout.session.completed':
+        //   const checkoutSession = event.data.object
 
-          break
+        //   break
         default:
           throw new Error('Unhandled event')
       }

@@ -1,17 +1,20 @@
 'use client'
 
+import { type ComponentProps } from 'react'
+
 import { Plus } from '@phosphor-icons/react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'sonner'
 
+import { Form, useZodForm } from '~/components/shared/form'
 import { Input } from '~/components/shared/input'
+import { KBD } from '~/components/shared/kbd'
 import { setSchema } from '~/server/api/schemas/sets'
 import { api } from '~/trpc/react'
-import { RouterInputs } from '~/trpc/shared'
-import { classNames } from '~/utils/core'
-import { Form, useZodForm } from '../shared/form'
 
-export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number }) => {
+type AddSetProps = { liftSlug: string; liftId: number } & ComponentProps<'form'>
+
+export const AddSet = ({ liftSlug, liftId, ...props }: AddSetProps) => {
   const utils = api.useUtils()
 
   const form = useZodForm({
@@ -49,11 +52,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
       }}
       autoComplete='off'
       autoCorrect='off'
-      className={classNames(
-        'relative -mx-[2px] flex w-full max-w-lg items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
-        'border-neutral-200/50 text-neutral-700 focus-within:border-neutral-200/90',
-        'border-neutral-700/50 dark:text-neutral-400 focus-within:dark:border-neutral-700/90'
-      )}
+      className='max-w-lg'
+      {...props}
     >
       <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
       <Input
@@ -66,24 +66,8 @@ export const AddSet = ({ liftSlug, liftId }: { liftSlug: string; liftId: number 
         {...form.register('sets')}
       />
       <div className='mr-4 flex gap-1'>
-        <kbd
-          className={classNames(
-            'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-            'bg-neutral-300/50',
-            'dark:bg-neutral-700 dark:text-neutral-400'
-          )}
-        >
-          ⌘
-        </kbd>
-        <kbd
-          className={classNames(
-            'flex size-4 items-center justify-center rounded font-sans text-[10px]',
-            'bg-neutral-300/50',
-            'dark:bg-neutral-700 dark:text-neutral-400'
-          )}
-        >
-          F
-        </kbd>
+        <KBD>⌘</KBD>
+        <KBD>F</KBD>
       </div>
     </Form>
   )

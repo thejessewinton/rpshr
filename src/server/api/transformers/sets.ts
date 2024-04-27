@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { type z } from 'zod'
 
 import { exerciseRegex, setRegex } from '~/server/api/schemas/sets'
 import { setInsertSchema } from '~/server/db/schema'
@@ -14,13 +14,11 @@ export const transformSetString = (input: string) => {
     const exerciseMatch = match.match(exerciseRegex)
 
     if (exerciseMatch) {
-      const [numberOfSets, numberOfReps, weight, unit, dateString, notesString] = exerciseMatch.slice(1)
+      const [numberOfSets, numberOfReps, weight, unit, dateString, notes] = exerciseMatch.slice(1)
 
       let date: Date = dayjs().toDate()
-      let notes: string | undefined
 
       date = normalizeDateString(dateString)
-      notes = notesString
 
       const data = setInsertSchema.omit({ user_id: true }).parse({
         reps: parseInt(numberOfReps!),
