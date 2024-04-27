@@ -31,7 +31,7 @@ export default function HelpPage() {
         </p>
 
         <p>
-          {`Navigate to a lift and add new sets by entering any number of sets, reps, with it's weight and unit, the date of the workout, and, optionally, a short note. For example:`}{' '}
+          {`Navigate to a lift and add new sets by entering any number of sets, reps, it's weight and unit, the date of the workout, and, optionally, a short note. For example:`}{' '}
           <span className='font-normal text-neutral-900 dark:text-neutral-200'>
             3 5 315lbs, 3 5 365lbs, 2 5 415lbs, Today, Felt great
           </span>
