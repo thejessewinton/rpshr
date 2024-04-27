@@ -7,7 +7,7 @@ export default function IndexPage() {
       <header className='flex items-center justify-between'>
         <Logo className='size-6 text-neutral-700 dark:text-white' />
 
-        <h2 className='text-sm text-neutral-700 dark:text-neutral-400'>rpshr</h2>
+        <h1 className='text-sm text-neutral-700 dark:text-neutral-400'>rpshr</h1>
       </header>
 
       <div className='space-y-4 text-sm font-light leading-loose text-neutral-700 dark:text-neutral-400'>
