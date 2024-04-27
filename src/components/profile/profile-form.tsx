@@ -3,20 +3,19 @@
 import { useEffect } from 'react'
 
 import { User } from '@phosphor-icons/react'
-import { useForm } from 'react-hook-form'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { toast } from 'sonner'
 
+import { Form, useZodForm } from '~/components/shared/form'
 import { Input } from '~/components/shared/input'
+import { updateUserSchema } from '~/server/api/schemas/user'
 import { api } from '~/trpc/react'
-import { type RouterInputs } from '~/trpc/shared'
 import { classNames } from '~/utils/core'
-
-type Values = RouterInputs['user']['updateUsername']
 
 export const ProfileForm = () => {
   const utils = api.useUtils()
   const user = api.user.getCurrent.useQuery()
+
   const updateUser = api.user.updateUsername.useMutation({
     onSuccess: async (data) => {
       await utils.user.getCurrent.invalidate()
@@ -24,22 +23,23 @@ export const ProfileForm = () => {
     }
   })
 
-  const { register, handleSubmit, setValue, setFocus } = useForm<Values>({
+  const form = useZodForm({
     defaultValues: {
       username: user.data?.username ?? ''
-    }
+    },
+    schema: updateUserSchema
   })
 
   useEffect(() => {
     if (user.data) {
-      setValue('username', user.data?.username ?? '')
+      form.setValue('username', user.data?.username ?? '')
     }
-  }, [setValue, user.data])
+  }, [form, user.data])
 
   useHotkeys(
     'meta+f',
     () => {
-      setFocus('username')
+      form.setFocus('username')
     },
     { preventDefault: true },
     {
@@ -47,22 +47,14 @@ export const ProfileForm = () => {
     }
   )
 
-  const onSubmit = (values: Values) => {
-    updateUser.mutate(values)
-  }
-
   if (!user.data) return null
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <Form
+      form={form}
+      handleSubmit={async (values) => updateUser.mutateAsync(values)}
       autoComplete='off'
       autoCorrect='off'
-      className={classNames(
-        'relative -mx-[2px] flex w-full items-center justify-between gap-1 rounded-md border p-[2px] font-light transition-colors',
-        'border-neutral-200/50 text-neutral-700 focus-within:border-neutral-200/90',
-        'border-neutral-700/50 dark:text-neutral-400 focus-within:dark:border-neutral-700/90'
-      )}
     >
       <User className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
       <Input
@@ -72,7 +64,7 @@ export const ProfileForm = () => {
         type='text'
         autoFocus
         className='w-full border-none focus:!bg-transparent'
-        {...register('username')}
+        {...form.register('username')}
       />
       <div className='mr-4 flex gap-1'>
         <kbd
@@ -94,6 +86,6 @@ export const ProfileForm = () => {
           F
         </kbd>
       </div>
-    </form>
+    </Form>
   )
 }

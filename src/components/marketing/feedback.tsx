@@ -1,31 +1,26 @@
 'use client'
 
 import { CaretUpDown, ChatTeardropText } from '@phosphor-icons/react'
-import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
+import { Form, useZodForm } from '~/components/shared/form'
 import { Popover } from '~/components/shared/popover'
 import { TextArea } from '~/components/shared/textarea'
+import { feedbackSchema } from '~/server/api/schemas/marketing'
 import { api } from '~/trpc/react'
-import { type RouterInputs } from '~/trpc/shared'
-
-type Values = RouterInputs['marketing']['feedback']
 
 export const Feedback = () => {
   const feedback = api.marketing.feedback.useMutation({
     onSuccess: (data) => toast.success(data.message)
   })
 
-  const { register, handleSubmit } = useForm<Values>({
+  const form = useZodForm({
     defaultValues: {
       message: ''
-    }
+    },
+    schema: feedbackSchema
   })
-
-  const onSubmit = (values: Values) => {
-    feedback.mutate(values)
-  }
 
   return (
     <Popover>
@@ -35,12 +30,12 @@ export const Feedback = () => {
         <CaretUpDown className='size-3 text-inherit' />
       </Popover.Trigger>
       <Popover.Content align='end'>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TextArea {...register('message')} placeholder='Share your feedback...' className='w-full resize-none' />
+        <Form form={form} handleSubmit={async (values) => feedback.mutateAsync(values)}>
+          <TextArea {...form.register('message')} placeholder='Share your feedback...' className='w-full resize-none' />
           <Button type='submit' className='!mt-2'>
             Submit
           </Button>
-        </form>
+        </Form>
       </Popover.Content>
     </Popover>
   )

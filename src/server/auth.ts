@@ -16,8 +16,8 @@ declare module 'next-auth' {
 export const config = {
   callbacks: {
     signIn: async ({ profile }) => {
-      const whitelist = (await get('whitelist')) as string[]
-      return whitelist?.includes(profile!.email!)
+      const accountWhitelist = (await get('accountWhitelist')) as string[]
+      return accountWhitelist?.includes(profile!.email!)
     },
     session: async ({ session, user }) => {
       return {
