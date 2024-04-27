@@ -1,41 +1,33 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
+import { Form, useZodForm } from '~/components/shared/form'
 import { Input } from '~/components/shared/input'
+import { waitlistSchema } from '~/server/api/schemas/marketing'
 import { api } from '~/trpc/react'
-import { type RouterInputs } from '~/trpc/shared'
-
-type Values = RouterInputs['marketing']['signup']
 
 export const Waitlist = () => {
   const waitlist = api.marketing.signup.useMutation({
-    onSuccess: (data) => toast.success(data.message)
+    onSuccess: (data) => toast.success(data.message),
+    onError: () => toast.error('There was an error.')
   })
 
-  const { register, handleSubmit } = useForm<Values>({
+  const form = useZodForm({
     defaultValues: {
       email: ''
-    }
+    },
+    schema: waitlistSchema
   })
 
-  const onSubmit = (values: Values) => {
-    waitlist.mutate(values)
-  }
-
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      autoComplete='off'
-      className='!mt-16 flex w-full rounded border border-neutral-200/70 focus-within:border-neutral-200/90 hover:border-neutral-200/90 dark:border-neutral-700/30 focus-within:dark:border-neutral-700/70 hover:dark:border-neutral-700/70'
-    >
+    <Form form={form} handleSubmit={async (values) => waitlist.mutateAsync(values)} autoComplete='off'>
       <Input
         type='email'
         placeholder='Join the waitlist...'
         className='flex-1 rounded-r-none border-0'
-        {...register('email')}
+        {...form.register('email')}
       />
       <Button
         type='submit'
@@ -43,6 +35,6 @@ export const Waitlist = () => {
       >
         Sign up
       </Button>
-    </form>
+    </Form>
   )
 }
