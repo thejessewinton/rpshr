@@ -42,7 +42,7 @@ type FormProps<TInput extends FieldValues> = Omit<React.ComponentProps<'form'>, 
   form: UseZodForm<TInput>
 }
 
-export function Form<TInput extends FieldValues>({ form, className, handleSubmit, ...props }: FormProps<TInput>) {
+export const Form = <TInput extends FieldValues>({ form, className, handleSubmit, ...props }: FormProps<TInput>) => {
   return (
     <FormProvider {...form}>
       <form

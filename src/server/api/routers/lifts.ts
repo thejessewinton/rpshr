@@ -2,9 +2,10 @@ import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { transformLiftString } from '~/server/api/transformers/lifts'
+import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
 import { lift, personalRecord, set } from '~/server/db/schema'
+import dayjs, { getDaysBetween } from '~/utils/date'
 import { liftSchema } from '../schemas/lifts'
-import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const liftsRouter = createTRPCRouter({
   getAllLifts: protectedProcedure.query(async ({ ctx }) => {
@@ -28,17 +29,17 @@ export const liftsRouter = createTRPCRouter({
     })
   }),
   getLiftBySlug: protectedProcedure.input(z.object({ slug: z.string() })).query(async ({ ctx, input }) => {
-    return await ctx.db.query.lift.findFirst({
+    const liftQuery = await ctx.db.query.lift.findFirst({
       where: and(eq(lift.slug, input.slug), eq(lift.user_id, ctx.session.user.id)),
       with: {
         sets: {
-          with: {
-            lift: {
-              columns: {
-                slug: true
-              }
-            }
-          }
+          columns: {
+            id: true,
+            date: true,
+            weight: true,
+            reps: true
+          },
+          orderBy: [desc(set.weight)]
         },
         personal_records: {
           where({ lift_id, user_id }, { and, eq }) {
@@ -52,6 +53,18 @@ export const liftsRouter = createTRPCRouter({
         }
       }
     })
+
+    const dates = getDaysBetween(dayjs().subtract(2, 'months'), dayjs().add(10, 'months'))
+
+    return {
+      ...liftQuery!,
+      dates: dates.map((date) => {
+        return {
+          date: date.format('YYYY-MM-DD'),
+          sets: liftQuery!.sets.filter((set) => dayjs(set.date).format('MM DD, YYYY') === date.format('MM DD, YYYY'))
+        }
+      })
+    }
   }),
   createLift: protectedProcedure.input(liftSchema).mutation(async ({ ctx, input }) => {
     await ctx.db.transaction(async (db) => {
