@@ -5,6 +5,8 @@ import { type Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 
+import { Analytics } from '@vercel/analytics/react'
+
 import { env } from '~/env'
 import { ThemeProvider } from '~/providers/theme'
 import { Toaster } from '~/providers/toaster'
@@ -42,6 +44,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             <Toaster />
           </TRPCReactProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )

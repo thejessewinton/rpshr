@@ -39,6 +39,7 @@
     "@trpc/next": "latest",
     "@trpc/react-query": "latest",
     "@trpc/server": "latest",
+    "@vercel/analytics": "^1.2.2",
     "@vercel/edge-config": "^1.1.0",
     "clsx": "^2.1.0",
     "crypto-hash": "^3.0.0",
