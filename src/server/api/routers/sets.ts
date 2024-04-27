@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { setSchema } from '~/server/api/schemas/sets'
 import { transformSetString } from '~/server/api/transformers/sets'
-import { lift, set, units } from '~/server/db/schema'
+import { lift, personalRecord, set, units } from '~/server/db/schema'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
@@ -54,6 +54,7 @@ export const setsRouter = createTRPCRouter({
           updated_at: dayjs().toDate()
         })
         .where(eq(lift.id, input.lift_id))
+        .returning({ personal_record: lift.id })
 
       const setData = transformSetString(input.sets)
 
@@ -72,6 +73,25 @@ export const setsRouter = createTRPCRouter({
           }
         })
       )
+
+      const currentPR = await db.query.personalRecord.findFirst({
+        where: eq(personalRecord.lift_id, input.lift_id)
+      })
+
+      const setWithHighestWeight = setData.sets.reduce((acc, set) => {
+        return set.weight > acc.weight ? set : acc
+      }, setData.sets[0]!)
+
+      console.log({ setWithHighestWeight, currentPR })
+
+      if (currentPR && setWithHighestWeight.weight > currentPR.weight) {
+        await db.insert(personalRecord).values({
+          weight: setWithHighestWeight.weight,
+          date: setWithHighestWeight.date,
+          lift_id: input.lift_id,
+          user_id: ctx.session.user.id
+        })
+      }
     })
 
     return {

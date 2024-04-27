@@ -28,7 +28,10 @@ export default function IndexPage() {
         </p>
 
         <p>
-          Might add more, might not. Join the waitlist. In the meantime, <Link href='/how'>learn how rpshr works.</Link>
+          Might add more, might not. Join the waitlist. In the meantime,{' '}
+          <Link href='/how' className='dark:text-neutral-200'>
+            learn how rpshr works.
+          </Link>
         </p>
 
         <Waitlist />

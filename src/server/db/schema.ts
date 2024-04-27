@@ -127,7 +127,7 @@ export const lift = pgTable(
   {
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 255 }).notNull(),
-    unit: unitEmum('value').notNull().default('lbs'),
+    unit: unitEmum('unit').notNull().default('lbs'),
     slug: varchar('slug', { length: 255 }).$default(nanoid).notNull(),
     user_id: varchar('user_id', { length: 255 })
       .notNull()
@@ -179,7 +179,7 @@ export const set = pgTable(
       .references(() => users.id),
     reps: bigint('reps', { mode: 'number' }).notNull(),
     weight: bigint('weight', { mode: 'number' }).notNull(),
-    unit: unitEmum('value').notNull().default('lbs'),
+    unit: unitEmum('unit').notNull().default('lbs'),
     date: timestamp('date', {
       mode: 'date'
     })
