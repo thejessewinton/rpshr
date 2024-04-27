@@ -35,12 +35,10 @@ export default function HelpPage() {
           <span className='font-normal text-neutral-900 dark:text-neutral-200'>
             3 5 315lbs, 3 5 365lbs, 2 5 415lbs, Today, Felt great
           </span>
-          .
+          . If you enter any sets with a weight higher than your PR, rpshr will automatically update it for you.
         </p>
 
-        <p>rpshr is built to be simple and lightweight by default.</p>
-
-        <p>Join the waitlist.</p>
+        <p>Simple and lightweight by default. Join the waitlist.</p>
 
         <Waitlist />
       </div>
