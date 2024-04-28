@@ -4,6 +4,7 @@ import type { AdapterAccount } from '@auth/core/adapters'
 import { relations, sql } from 'drizzle-orm'
 import {
   bigint,
+  boolean,
   index,
   integer,
   pgEnum,
@@ -34,7 +35,8 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   sessions: many(sessions),
   unit: one(unit, { fields: [users.id], references: [unit.user_id] }),
   lifts: many(lift),
-  sets: many(set)
+  sets: many(set),
+  customer: one(customer, { fields: [users.id], references: [customer.user_id] })
 }))
 
 export const accounts = pgTable(
@@ -98,6 +100,22 @@ export const verificationTokens = pgTable(
   })
 )
 
+export const customer = pgTable('customer', {
+  id: serial('id').primaryKey(),
+  paid_plan_active: boolean('paid_plan_active').default(false),
+  stripe_price_id: varchar('stripe_price_id', { length: 255 }),
+  stripe_customer_id: varchar('stripe_customer_id', { length: 255 }).notNull(),
+  user_id: varchar('user_id', { length: 255 }).references(() => users.id, { onDelete: 'cascade' }),
+  created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
+  updated_at: timestamp('updated_at')
+    .default(sql`CURRENT_TIMESTAMP(3)`)
+    .$onUpdate(() => new Date())
+})
+
+export const customerRelations = relations(customer, ({ one }) => ({
+  user: one(users, { fields: [customer.user_id], references: [users.id] })
+}))
+
 // Units, Lifts, and Sets
 export const units = ['kgs', 'lbs'] as const
 export const unitEmum = pgEnum('value', units)
@@ -111,7 +129,9 @@ export const unit = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-    updated_at: timestamp('updated_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`)
+    updated_at: timestamp('updated_at')
+      .default(sql`CURRENT_TIMESTAMP(3)`)
+      .$onUpdate(() => new Date())
   },
   (unit) => ({
     userIdIdx: index('unit_userId_idx').on(unit.user_id)
@@ -133,7 +153,9 @@ export const lift = pgTable(
       .notNull()
       .references(() => users.id),
     created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-    updated_at: timestamp('updated_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`)
+    updated_at: timestamp('updated_at')
+      .default(sql`CURRENT_TIMESTAMP(3)`)
+      .$onUpdate(() => new Date())
   },
   (lift) => ({
     userIdIdx: index('lift_userId_idx').on(lift.user_id)
@@ -157,7 +179,9 @@ export const personalRecord = pgTable('personal_record', {
   weight: bigint('weight', { mode: 'number' }).notNull(),
   date: timestamp('date', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
   created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-  updated_at: timestamp('updated_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`)
+  updated_at: timestamp('updated_at')
+    .default(sql`CURRENT_TIMESTAMP(3)`)
+    .$onUpdate(() => new Date())
 })
 
 export const personalRecordInsertSchema = createInsertSchema(personalRecord)
@@ -187,7 +211,9 @@ export const set = pgTable(
       .default(sql`CURRENT_TIMESTAMP`),
     notes: text('notes'),
     created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-    updated_at: timestamp('updated_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
+    updated_at: timestamp('updated_at')
+      .default(sql`CURRENT_TIMESTAMP(3)`)
+      .$onUpdate(() => new Date()),
     lift_id: bigint('lift_id', { mode: 'number' }).references(() => lift.id, { onDelete: 'cascade' })
   },
   (set) => ({

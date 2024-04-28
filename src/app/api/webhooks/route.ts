@@ -1,6 +1,9 @@
+import { eq } from 'drizzle-orm'
 import type Stripe from 'stripe'
 
 import { env } from '~/env'
+import { db } from '~/server/db'
+import { customer } from '~/server/db/schema'
 import { stripe } from '~/server/stripe'
 
 const relevantEvents = new Set([
@@ -26,15 +29,18 @@ export const POST = async (req: Request) => {
     try {
       switch (event.type) {
         case 'customer.subscription.created':
+          console.log('Subscription created')
         case 'customer.subscription.updated':
-        // case 'customer.subscription.deleted':
-        //   const subscription = event.data.object
-
-        //   break
-        // case 'checkout.session.completed':
-        //   const checkoutSession = event.data.object
-
-        //   break
+          console.log('Subscription updated')
+        case 'checkout.session.completed':
+          const checkoutSession = event.data.object
+          await db
+            .update(customer)
+            .set({
+              paid_plan_active: true
+            })
+            .where(eq(customer.stripe_customer_id, checkoutSession.customer as string))
+          break
         default:
           throw new Error('Unhandled event')
       }

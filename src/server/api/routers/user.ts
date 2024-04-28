@@ -5,12 +5,15 @@ import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
 import { users } from '~/server/db/schema'
 
 export const userRouter = createTRPCRouter({
-  getCurrent: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.users.findFirst({
+  getCurrent: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.query.users.findFirst({
       where: eq(users.id, ctx.session.user.id),
       columns: {
         username: true,
         name: true
+      },
+      with: {
+        customer: true
       }
     })
   }),

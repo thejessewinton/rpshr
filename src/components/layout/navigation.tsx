@@ -10,6 +10,7 @@ import { Dropdown } from '~/components/shared/dropdown'
 import { KBD } from '~/components/shared/kbd'
 import { api } from '~/trpc/react'
 import { classNames } from '~/utils/core'
+import { Marble } from '../shared/marble'
 
 export const Navigation = () => {
   const router = useRouter()
@@ -51,7 +52,7 @@ export const Navigation = () => {
                 }}
               >
                 <div className='flex items-center gap-3'>
-                  <div className='size-4 rounded-full bg-green-900' />
+                  <Marble>{lift.name}</Marble>
                   <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>{lift.name}</span>
                 </div>
                 {isActive ? <Check className='size-4' /> : isLessThanTen ? <KBD>{index + 1}</KBD> : null}

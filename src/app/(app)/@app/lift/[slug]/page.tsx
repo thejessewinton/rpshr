@@ -17,7 +17,7 @@ export default function LiftPage({ params }: LiftPageParams) {
   if (!lift.data) return null
 
   return (
-    <div className='flex h-screen flex-col px-8'>
+    <div className='flex min-h-screen flex-col px-8'>
       <AddSet liftSlug={params.slug} liftId={lift.data.id} />
       <div className='flex flex-nowrap items-end justify-end overflow-x-hidden'>
         {lift.data.dates.map((date) => {

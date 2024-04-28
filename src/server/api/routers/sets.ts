@@ -29,13 +29,6 @@ export const setsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
-        await db
-          .update(lift)
-          .set({
-            updated_at: dayjs().toDate()
-          })
-          .where(eq(lift.id, input.lift_id))
-
         return await db.insert(set).values({
           user_id: ctx.session.user.id,
           date: dayjs(input.date).toDate(),
@@ -48,14 +41,6 @@ export const setsRouter = createTRPCRouter({
     }),
   addSets: protectedProcedure.input(setSchema).mutation(async ({ ctx, input }) => {
     await ctx.db.transaction(async (db) => {
-      await db
-        .update(lift)
-        .set({
-          updated_at: dayjs().toDate()
-        })
-        .where(eq(lift.id, input.lift_id))
-        .returning({ personal_record: lift.id })
-
       const setData = transformSetString(input.sets)
 
       if (!setData) return
@@ -81,8 +66,6 @@ export const setsRouter = createTRPCRouter({
       const setWithHighestWeight = setData.sets.reduce((acc, set) => {
         return set.weight > acc.weight ? set : acc
       }, setData.sets[0]!)
-
-      console.log({ setWithHighestWeight, currentPR })
 
       if (currentPR && setWithHighestWeight.weight > currentPR.weight) {
         await db.insert(personalRecord).values({

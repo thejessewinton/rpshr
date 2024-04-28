@@ -12,6 +12,7 @@ export const env = createEnv({
     LOGSNAG_API_KEY: z.string(),
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     RESEND_API_KEY: z.string(),
+    STRIPE_PRICE_ID: z.string(),
     STRIPE_SECRET_KEY: z.string(),
     STRIPE_WEBHOOK_SECRET: z.string(),
     WAITLIST_AUDIENCE_ID: z.string()
@@ -30,6 +31,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
     NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    STRIPE_PRICE_ID: process.env.STRIPE_PRICE_ID,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     WAITLIST_AUDIENCE_ID: process.env.WAITLIST_AUDIENCE_ID
