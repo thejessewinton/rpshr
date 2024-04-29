@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Link from 'next/link'
 
 import { User } from '@phosphor-icons/react'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -16,7 +15,6 @@ import { classNames } from '~/utils/core'
 export const ProfileForm = () => {
   const utils = api.useUtils()
   const user = api.user.getCurrent.useQuery()
-  const checkoutLink = api.plans.getCheckoutSessionLink.useQuery()
 
   const updateUser = api.user.updateUsername.useMutation({
     onSuccess: async (data) => {
@@ -49,7 +47,7 @@ export const ProfileForm = () => {
     }
   )
 
-  if (!user.data || !checkoutLink.data) return null
+  if (!user.data) return null
 
   return (
     <div className='space-y-4'>
@@ -90,14 +88,6 @@ export const ProfileForm = () => {
           </kbd>
         </div>
       </Form>
-
-      <div>
-        <h2>Upgrade to premium</h2>
-
-        <Link href={checkoutLink.data.url!} target='_blank'>
-          Checkout
-        </Link>
-      </div>
     </div>
   )
 }
