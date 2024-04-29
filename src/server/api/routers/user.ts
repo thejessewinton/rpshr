@@ -11,9 +11,6 @@ export const userRouter = createTRPCRouter({
       columns: {
         username: true,
         name: true
-      },
-      with: {
-        customer: true
       }
     })
   }),
