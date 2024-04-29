@@ -20,7 +20,7 @@ export const transformLiftString = (input: string) => {
     .parse({
       name,
       weight: parseInt(weight!),
-      unit,
+      unit: unit ?? 'lbs',
       date: date
     })
 

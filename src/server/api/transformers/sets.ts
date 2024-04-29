@@ -28,7 +28,7 @@ export const transformSetString = (input: string) => {
       })
 
       Array.from({ length: parseInt(numberOfSets!) }).forEach(() => {
-        sets.push({ reps: data.reps, weight: data.weight, unit: data.unit, notes, date })
+        sets.push({ reps: data.reps, weight: data.weight, unit: data.unit ?? 'lbs', notes, date })
       })
     }
   })
