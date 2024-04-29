@@ -8,6 +8,7 @@ import { cookies } from 'next/headers'
 import { Analytics } from '@vercel/analytics/react'
 
 import { env } from '~/env'
+import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
 import { Toaster } from '~/providers/toaster'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -38,12 +39,14 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable, jetbrains.variable)}>
-        <ThemeProvider attribute='class'>
-          <TRPCReactProvider cookies={cookies().toString()}>
-            <main className='min-w-screen flex min-h-screen w-full flex-col justify-center'>{children}</main>
-            <Toaster />
-          </TRPCReactProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider attribute='class'>
+            <TRPCReactProvider cookies={cookies().toString()}>
+              <main className='min-w-screen flex min-h-screen w-full flex-col justify-center'>{children}</main>
+              <Toaster />
+            </TRPCReactProvider>
+          </ThemeProvider>
+        </SessionProvider>
         <Analytics />
       </body>
     </html>

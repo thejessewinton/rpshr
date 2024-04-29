@@ -9,7 +9,6 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { Dropdown } from '~/components/shared/dropdown'
 import { KBD } from '~/components/shared/kbd'
 import { api } from '~/trpc/react'
-import { classNames } from '~/utils/core'
 import { Marble } from '../shared/marble'
 
 export const Navigation = () => {
@@ -28,7 +27,7 @@ export const Navigation = () => {
   useHotkeys(liftKeys?.map((item) => item.hotkey) ?? [], (e) => {
     const lift = data?.find((lift) => lift.slug === liftKeys?.find((key) => key.hotkey === e.key)?.slug)
     if (lift) {
-      router.push(`/app/lift/${lift.slug}`)
+      router.push(`/lift/${lift.slug}`)
     }
   })
 
@@ -36,7 +35,7 @@ export const Navigation = () => {
     <>
       <Dropdown>
         <Dropdown.Trigger>
-          <div className={classNames('size-4 rounded-full bg-sky-600 dark:bg-sky-800')} />
+          <Marble>Lifts</Marble>
           <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Lifts</span>
           <CaretUpDown className='size-3 text-inherit' />
         </Dropdown.Trigger>

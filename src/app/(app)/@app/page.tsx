@@ -5,6 +5,7 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 
 import { AddLift } from '~/components/lifts/add-lift'
+import { Marble } from '~/components/shared/marble'
 import { api } from '~/trpc/react'
 
 export default function LiftsPage() {
@@ -27,8 +28,8 @@ export default function LiftsPage() {
                   href={`/lift/${lift.slug}`}
                   className='flex items-center justify-between py-3 text-sm font-light text-neutral-700 dark:text-neutral-400'
                 >
-                  <div className='flex items-center space-x-2'>
-                    <div className='size-3 rounded-full bg-green-900' />
+                  <div className='flex items-center gap-4'>
+                    <Marble>{lift.name}</Marble>
                     <span>{lift.name}</span>
                   </div>
                   <time dateTime={lift.updated_at ? lift.updated_at.toDateString() : lift.created_at?.toDateString()}>

@@ -1,31 +1,20 @@
 export const Marble = ({ children, size = 15 }: { children: string; size?: number }) => {
-  const colors = [
-    '#334155',
-    '#b91c1c',
-    '#c2410c',
-    '#65a30d',
-    '#166534',
-    '#14b8a6',
-    '#7e22ce',
-    '#881337',
-    '#0ea5e9',
-    '#083344',
-    '#134e4a',
-    '#fef08a',
-    '#fca5a5',
-    '#a5f3fc',
-    '#f472b6'
-  ]
-
   const getColor = (string: string) => {
-    const hash = string.split('').reduce((acc, char) => {
-      return char.charCodeAt(0) + ((acc << 5) - acc)
-    }, 0)
+    const hslColor = 'hsl(201, 96%, 32%)'
+    const hslMatch = hslColor.match(/(\d+\.?\d*),\s*(\d+\.?\d*%),\s*(\d+\.?\d*%)/)
 
-    return Math.abs(hash)
+    if (!hslMatch) {
+      console.error('Invalid HSL color format.')
+      return hslColor
+    }
+
+    const [, h, s, l] = hslMatch.map(parseFloat)
+    const lengthFactor = Math.min(string.length) / 10
+
+    const adjustedL = l! + (lengthFactor * 50 - l!)
+
+    return `hsl(${h}, ${s}%, ${adjustedL}%)`
   }
-
-  const colorIndex = getColor(children) % colors.length
 
   return (
     <svg
@@ -36,8 +25,8 @@ export const Marble = ({ children, size = 15 }: { children: string; size?: numbe
       aria-label={children}
       className='rounded-full'
     >
-      <circle cx={size / 2} cy={size / 2} r='45' fill={colors[colorIndex]} />
-      <title>{children} avatar</title>
+      <circle cx={size / 2} cy={size / 2} r='45' fill={getColor(children.replace(' ', ''))} />
+      <title>avatar fallback</title>
     </svg>
   )
 }
