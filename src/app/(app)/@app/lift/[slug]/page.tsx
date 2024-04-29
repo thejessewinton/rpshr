@@ -35,7 +35,7 @@ export default function LiftPage({ params }: LiftPageParams) {
                       key={set.id}
                       className='w-px flex-shrink-0 rounded bg-white'
                       style={{
-                        height: `${(set.reps * set.weight) / 20}px`
+                        height: `${(set.reps * set.weight) / 60}px`
                       }}
                     />
                   )
