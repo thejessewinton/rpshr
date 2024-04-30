@@ -26,15 +26,18 @@ export default function LiftPage({ params }: LiftPageParams) {
       <AddSet liftSlug={params.slug} liftId={lift.data?.id} />
       <div className='h-full self-stretch'>
         <div className='flex items-center justify-between text-sm font-light'>
-          <div className='flex items-center gap-4 font-mono'>
+          <div className='flex flex-col gap-2 font-mono'>
             <span>{lift.data.name}</span>
-            <time className='text-neutral-700 dark:text-neutral-400' dateTime={lift.data.updated_at?.toDateString()}>
+            <time
+              className='text-xs text-neutral-700 dark:text-neutral-400'
+              dateTime={lift.data.updated_at?.toDateString()}
+            >
               {dayjs(lift.data.updated_at).format('MMM DD')}
             </time>
           </div>
-          <div className='flex items-center gap-4 font-mono text-neutral-700 dark:text-neutral-400'>
-            <span>{totalWeight} lbs</span>
+          <div className='flex flex-col gap-2 text-right font-mono'>
             <span>{totalSets} sets</span>
+            <span className='text-xs text-neutral-700 dark:text-neutral-400'>{totalWeight} lbs</span>
           </div>
         </div>
         <div className='mt-32 flex flex-nowrap items-end overflow-x-auto'>
