@@ -1,33 +1,35 @@
 'use client'
 
-import { type Route } from 'next'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CaretUpDown, Check } from '@phosphor-icons/react'
+import { CaretUpDown, Check, CircleDashed, SignOut } from '@phosphor-icons/react'
+import { signOut } from 'next-auth/react'
+import { useTheme } from 'next-themes'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Dropdown } from '~/components/shared/dropdown'
 import { KBD } from '~/components/shared/kbd'
 import { api } from '~/trpc/react'
-import { Marble } from '../shared/marble'
 
 export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { data } = api.lifts.getAllLifts.useQuery()
+  const { theme, setTheme } = useTheme()
 
-  const liftKeys = data?.map((item, i) => {
-    return {
-      label: (i + 1).toString(),
-      hotkey: (i + 1).toString(),
-      slug: item.slug as Route<string>
-    }
-  })
+  const handleToggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
-  useHotkeys(liftKeys?.map((item) => item.hotkey) ?? [], (e) => {
-    const lift = data?.find((lift) => lift.slug === liftKeys?.find((key) => key.hotkey === e.key)?.slug)
-    if (lift) {
-      router.push(`/lift/${lift.slug}`)
+  useHotkeys(['shift+q', 'm'], (_, handler) => {
+    switch (handler.keys?.join('')) {
+      case 'm':
+        handleToggleTheme()
+        break
+
+      case 'q':
+        void signOut()
+        break
     }
   })
 
@@ -35,14 +37,13 @@ export const Navigation = () => {
     <>
       <Dropdown>
         <Dropdown.Trigger>
-          <Marble>Lifts</Marble>
-          <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Lifts</span>
+          <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Navigation</span>
           <CaretUpDown className='size-3 text-inherit' />
         </Dropdown.Trigger>
         <Dropdown.Content align='start' className='w-[175px]'>
-          {data?.map((lift, index) => {
-            const isActive = lift.slug === pathname
-            const isLessThanTen = index < 9
+          {data?.map((lift) => {
+            const isActive = pathname?.includes(lift.slug)
+
             return (
               <Dropdown.Item
                 key={lift.id}
@@ -51,13 +52,33 @@ export const Navigation = () => {
                 }}
               >
                 <div className='flex items-center gap-3'>
-                  <Marble>{lift.name}</Marble>
                   <span className='max-w-[20ch] overflow-hidden text-ellipsis text-nowrap'>{lift.name}</span>
                 </div>
-                {isActive ? <Check className='size-4' /> : isLessThanTen ? <KBD>{index + 1}</KBD> : null}
+                {isActive ? <Check className='size-4' /> : null}
               </Dropdown.Item>
             )
           })}
+          <Dropdown.Separator />
+          <Dropdown.Item
+            onSelect={(e) => {
+              e.preventDefault()
+              handleToggleTheme()
+            }}
+          >
+            <div className='flex items-center gap-3'>
+              <CircleDashed className='size-4 text-neutral-700 dark:text-white' />
+              Theme
+            </div>
+            <KBD>M</KBD>
+          </Dropdown.Item>
+
+          <Dropdown.Item onSelect={() => signOut()}>
+            <div className='flex items-center gap-3'>
+              <SignOut className='size-4 text-neutral-700 dark:text-white' />
+              Logout
+            </div>
+            <KBD>⇧Q</KBD>
+          </Dropdown.Item>
         </Dropdown.Content>
       </Dropdown>
     </>
