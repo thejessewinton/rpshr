@@ -52,7 +52,6 @@ export const AddSet = ({ liftSlug, liftId, ...props }: AddSetProps) => {
       }}
       autoComplete='off'
       autoCorrect='off'
-      className='max-w-lg'
       {...props}
     >
       <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />

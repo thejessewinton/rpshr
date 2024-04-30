@@ -16,10 +16,6 @@ export default function LiftsPage() {
       <AddLift />
       {!lifts.data ? null : (
         <div className='mb-16 animate-fade-in overflow-x-auto'>
-          <div className='flex items-center justify-between border-b border-neutral-200/70 py-2 text-sm font-light text-neutral-900 dark:border-neutral-700/30 dark:text-neutral-200'>
-            <span>Lift</span>
-            <span>Last updated</span>
-          </div>
           <div className='flex flex-col'>
             {lifts.data.map((lift) => {
               return (
