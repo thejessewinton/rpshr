@@ -16,11 +16,28 @@ export default function LiftPage({ params }: LiftPageParams) {
 
   if (!lift.data) return null
 
+  const totalSets = lift.data.dates.reduce((acc, date) => acc + date.sets.length, 0)
+  const totalWeight = lift.data.dates.reduce((acc, date) => {
+    return acc + date.sets.reduce((acc, set) => acc + set.weight, 0)
+  }, 0)
+
   return (
     <div className='mx-auto w-full max-w-4xl flex-1 animate-fade-in space-y-8 px-8'>
       <AddSet liftSlug={params.slug} liftId={lift.data?.id} />
       <div className='h-full self-stretch'>
-        <div className='mt-64 flex flex-nowrap items-end overflow-x-auto'>
+        <div className='flex items-center justify-between text-sm font-light'>
+          <div className='flex items-center gap-4 font-mono'>
+            <span>{lift.data.name}</span>
+            <time className='text-neutral-700 dark:text-neutral-400' dateTime={lift.data.updated_at?.toDateString()}>
+              {dayjs(lift.data.updated_at).format('MMM DD')}
+            </time>
+          </div>
+          <div className='flex items-center gap-4 font-mono text-neutral-700 dark:text-neutral-400'>
+            <span>{totalWeight} lbs</span>
+            <span>{totalSets} sets</span>
+          </div>
+        </div>
+        <div className='mt-32 flex flex-nowrap items-end overflow-x-auto'>
           {lift.data.dates.map((date) => {
             return (
               <div key={date.date} className='group min-h-8 shrink-0 px-1 transition-colors'>
