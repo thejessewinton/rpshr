@@ -37,10 +37,10 @@ export const Navigation = () => {
     <>
       <Dropdown>
         <Dropdown.Trigger>
-          <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch] '>Navigation</span>
+          <span className='max-w-[16ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[24ch] '>Navigation</span>
           <CaretUpDown className='size-3 text-inherit' />
         </Dropdown.Trigger>
-        <Dropdown.Content align='start' className='w-[175px]'>
+        <Dropdown.Content align='end' className='w-[175px]'>
           {data?.map((lift) => {
             const isActive = pathname?.includes(lift.slug)
 

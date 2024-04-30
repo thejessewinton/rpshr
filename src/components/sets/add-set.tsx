@@ -54,20 +54,22 @@ export const AddSet = ({ liftSlug, liftId, ...props }: AddSetProps) => {
       autoCorrect='off'
       {...props}
     >
-      <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
       <Input
         required
         aria-label='Add sets'
         placeholder='Add a set e.g. 5 5 225lbs, Today, Felt light'
         type='text'
         autoFocus
-        className='w-full border-none focus:!bg-transparent'
+        icon={<Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />}
+        kbd={
+          <>
+            <KBD>⌘</KBD>
+            <KBD>F</KBD>
+          </>
+        }
+        className='w-full border-none focus:bg-transparent'
         {...form.register('sets')}
       />
-      <div className='mr-4 flex gap-1'>
-        <KBD>⌘</KBD>
-        <KBD>F</KBD>
-      </div>
     </Form>
   )
 }

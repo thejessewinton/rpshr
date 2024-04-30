@@ -21,6 +21,7 @@ export const liftsRouter = createTRPCRouter({
             return and(eq(personalRecord.lift_id, lift_id), eq(personalRecord.user_id, user_id))
           },
           orderBy: [desc(personalRecord.date)],
+          limit: 1,
           columns: {
             weight: true
           }
@@ -48,7 +49,8 @@ export const liftsRouter = createTRPCRouter({
           orderBy: [desc(personalRecord.date)],
           columns: {
             weight: true,
-            date: true
+            date: true,
+            unit: true
           }
         }
       }
@@ -84,6 +86,7 @@ export const liftsRouter = createTRPCRouter({
         weight: liftData.weight,
         date: liftData.date,
         lift_id: newLift!.id,
+        unit: liftData.unit,
         user_id: ctx.session.user.id
       })
     })

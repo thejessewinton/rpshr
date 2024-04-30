@@ -50,20 +50,22 @@ export const AddLift = () => {
         'border-neutral-700/50 dark:text-neutral-400 focus-within:dark:border-neutral-700/90'
       )}
     >
-      <Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />
       <Input
         required
         aria-label='Add a lift'
         placeholder='Add a lift e.g. Deadlift, 225lbs, Today'
         type='text'
         autoFocus
-        className='w-full border-none focus:!bg-transparent'
+        className='w-full border-none focus:bg-transparent'
+        icon={<Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />}
+        kbd={
+          <>
+            <KBD>⌘</KBD>
+            <KBD>F</KBD>
+          </>
+        }
         {...form.register('lift')}
       />
-      <div className='mr-4 flex gap-1'>
-        <KBD>⌘</KBD>
-        <KBD>F</KBD>
-      </div>
     </Form>
   )
 }

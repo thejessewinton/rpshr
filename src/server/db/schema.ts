@@ -159,6 +159,7 @@ export const personalRecord = pgTable('personal_record', {
     .references(() => users.id, { onDelete: 'cascade' }),
   lift_id: bigint('lift_id', { mode: 'number' }).references(() => lift.id, { onDelete: 'cascade' }),
   weight: bigint('weight', { mode: 'number' }).notNull(),
+  unit: unitEmum('unit').notNull().default('lbs'),
   date: timestamp('date', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
   created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
   updated_at: timestamp('updated_at')

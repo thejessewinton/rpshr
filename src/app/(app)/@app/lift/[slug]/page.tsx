@@ -17,9 +17,7 @@ export default function LiftPage({ params }: LiftPageParams) {
   if (!lift.data) return null
 
   const totalSets = lift.data.dates.reduce((acc, date) => acc + date.sets.length, 0)
-  const totalWeight = lift.data.dates.reduce((acc, date) => {
-    return acc + date.sets.reduce((acc, set) => acc + set.weight, 0)
-  }, 0)
+  const [currentPR] = lift.data.personal_records
 
   return (
     <div className='mx-auto w-full max-w-4xl flex-1 animate-fade-in space-y-8 px-8'>
@@ -37,7 +35,10 @@ export default function LiftPage({ params }: LiftPageParams) {
           </div>
           <div className='flex flex-col gap-2 text-right font-mono'>
             <span>{totalSets} sets</span>
-            <span className='text-xs text-neutral-700 dark:text-neutral-400'>{totalWeight} lbs</span>
+            <span className='text-xs text-neutral-700 dark:text-neutral-400'>
+              Your latest PR is {currentPR?.weight}
+              {currentPR?.unit}
+            </span>
           </div>
         </div>
         <div className='mt-32 flex flex-nowrap items-end overflow-x-auto'>
