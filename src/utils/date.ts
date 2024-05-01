@@ -1,7 +1,9 @@
 import dayjs, { type Dayjs } from 'dayjs'
 import relative from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(relative)
+dayjs.extend(utc)
 
 export default dayjs
 
@@ -35,6 +37,7 @@ export const normalizeDateString = (dateString?: string) => {
   if (!dateString) return dayjs().toDate()
 
   const normalizeDate = dateString.toLowerCase().trim()
+
   return normalizeDate === 'today'
     ? dayjs().toDate()
     : normalizeDate === 'yesterday'
