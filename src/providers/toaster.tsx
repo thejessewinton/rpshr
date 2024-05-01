@@ -14,7 +14,7 @@ export const Toaster = ({ ...props }: ComponentProps<typeof Sonner>) => {
       toastOptions={{
         classNames: {
           toast:
-            'border-neutral-200/70 rounded-full flex items-center justify-center text-neutral-700 rounded border dark:border-neutral-700/30 backdrop-blur-sm bg-transparent dark:text-neutral-400',
+            'transform-gpu border-neutral-200/70 rounded-full flex items-center justify-center text-neutral-700 rounded border dark:border-neutral-700/30 backdrop-blur-sm bg-transparent dark:text-neutral-400',
           title: 'text-sm font-light'
         }
       }}
