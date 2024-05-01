@@ -41,40 +41,42 @@ export const setsRouter = createTRPCRouter({
     }),
   addSets: protectedProcedure.input(setSchema).mutation(async ({ ctx, input }) => {
     await ctx.db.transaction(async (db) => {
-      const setData = transformSetString(input.sets)
+      const sets = transformSetString(input.sets)
 
-      if (!setData) return
+      if (!sets) return
 
-      await db.insert(set).values(
-        setData.sets.map((set) => {
-          return {
-            user_id: ctx.session.user.id,
-            date: set.date,
-            notes: set.notes,
-            reps: set.reps,
-            weight: set.weight,
-            unit: set.unit,
-            lift_id: input.lift_id
-          }
-        })
-      )
+      console.log({ sets })
 
-      const currentPR = await db.query.personalRecord.findFirst({
-        where: eq(personalRecord.lift_id, input.lift_id)
-      })
+      // await db.insert(set).values(
+      //   sets.map((set) => {
+      //     return {
+      //       user_id: ctx.session.user.id,
+      //       date: set.date,
+      //       notes: set.notes,
+      //       reps: set.reps,
+      //       weight: set.weight,
+      //       unit: set.unit,
+      //       lift_id: input.lift_id
+      //     }
+      //   })
+      // )
 
-      const setWithHighestWeight = setData.sets.reduce((acc, set) => {
-        return set.weight > acc.weight ? set : acc
-      }, setData.sets[0]!)
+      // const currentPR = await db.query.personalRecord.findFirst({
+      //   where: eq(personalRecord.lift_id, input.lift_id)
+      // })
 
-      if (currentPR && setWithHighestWeight.weight > currentPR.weight) {
-        await db.insert(personalRecord).values({
-          weight: setWithHighestWeight.weight,
-          date: setWithHighestWeight.date,
-          lift_id: input.lift_id,
-          user_id: ctx.session.user.id
-        })
-      }
+      // const setWithHighestWeight = sets.reduce((acc, set) => {
+      //   return set.weight > acc.weight ? set : acc
+      // }, sets[0]!)
+
+      // if (currentPR && setWithHighestWeight.weight > currentPR.weight) {
+      //   await db.insert(personalRecord).values({
+      //     weight: setWithHighestWeight.weight,
+      //     date: setWithHighestWeight.date,
+      //     lift_id: input.lift_id,
+      //     user_id: ctx.session.user.id
+      //   })
+      // }
     })
 
     return {
