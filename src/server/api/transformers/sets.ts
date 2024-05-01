@@ -7,13 +7,13 @@ import dayjs, { normalizeDateString } from '~/utils/date'
 export const transformSetString = (input: string) => {
   const sets: Omit<z.infer<typeof setInsertSchema>, 'sets' | 'user_id'>[] = []
 
-  const exerciseMatch = input.match(workoutRegex)
+  const workoutMatch = input.match(workoutRegex)
 
-  if (exerciseMatch) {
-    const [firstMatch] = exerciseMatch
+  if (workoutMatch) {
+    const [exerciseMatch] = workoutMatch
 
-    const exercises = firstMatch.match(setsRegex)
-    const dateAndNotes = firstMatch.match(dateAndNotesRegex)
+    const exercises = exerciseMatch.match(setsRegex)
+    const dateAndNotes = exerciseMatch.match(dateAndNotesRegex)
 
     if (!exercises) return sets
 
