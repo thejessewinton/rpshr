@@ -45,38 +45,36 @@ export const setsRouter = createTRPCRouter({
 
       if (!sets) return
 
-      console.log({ sets })
+      await db.insert(set).values(
+        sets.map((set) => {
+          return {
+            user_id: ctx.session.user.id,
+            date: set.date,
+            notes: set.notes,
+            reps: set.reps,
+            weight: set.weight,
+            unit: set.unit,
+            lift_id: input.lift_id
+          }
+        })
+      )
 
-      // await db.insert(set).values(
-      //   sets.map((set) => {
-      //     return {
-      //       user_id: ctx.session.user.id,
-      //       date: set.date,
-      //       notes: set.notes,
-      //       reps: set.reps,
-      //       weight: set.weight,
-      //       unit: set.unit,
-      //       lift_id: input.lift_id
-      //     }
-      //   })
-      // )
+      const currentPR = await db.query.personalRecord.findFirst({
+        where: eq(personalRecord.lift_id, input.lift_id)
+      })
 
-      // const currentPR = await db.query.personalRecord.findFirst({
-      //   where: eq(personalRecord.lift_id, input.lift_id)
-      // })
+      const setWithHighestWeight = sets.reduce((acc, set) => {
+        return set.weight > acc.weight ? set : acc
+      }, sets[0]!)
 
-      // const setWithHighestWeight = sets.reduce((acc, set) => {
-      //   return set.weight > acc.weight ? set : acc
-      // }, sets[0]!)
-
-      // if (currentPR && setWithHighestWeight.weight > currentPR.weight) {
-      //   await db.insert(personalRecord).values({
-      //     weight: setWithHighestWeight.weight,
-      //     date: setWithHighestWeight.date,
-      //     lift_id: input.lift_id,
-      //     user_id: ctx.session.user.id
-      //   })
-      // }
+      if (currentPR && setWithHighestWeight.weight > currentPR.weight) {
+        await db.insert(personalRecord).values({
+          weight: setWithHighestWeight.weight,
+          date: setWithHighestWeight.date,
+          lift_id: input.lift_id,
+          user_id: ctx.session.user.id
+        })
+      }
     })
 
     return {
