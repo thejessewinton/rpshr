@@ -26,5 +26,4 @@ The date can be formatted as `Today`, `Yesterday`, or `MM/DD/YYYY`, and rpshr wi
 
 **Roadmap**
 
-- Allow users to input multiple sets/reps as a part of the single string, i.e. `5 5 245lbs, 3 5 255lbs, 1 5 265lbs, Today, Felt great`.
 - Allow users to input the weight as a percentage of their PR and automatically calculate it, i.e. `5 5 80%, Today, Felt great`.
