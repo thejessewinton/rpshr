@@ -29,10 +29,9 @@ export const users = pgTable('user', {
   username: varchar('username', { length: 255 })
 })
 
-export const usersRelations = relations(users, ({ one, many }) => ({
+export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
-  unit: one(unit, { fields: [users.id], references: [unit.user_id] }),
   lifts: many(lift),
   sets: many(set)
 }))
@@ -102,34 +101,11 @@ export const verificationTokens = pgTable(
 export const units = ['kgs', 'lbs'] as const
 export const unitEmum = pgEnum('value', units)
 
-export const unit = pgTable(
-  'unit',
-  {
-    id: serial('id').primaryKey(),
-    value: unitEmum('value').notNull().default('lbs'),
-    user_id: varchar('user_id', { length: 255 })
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
-    created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-    updated_at: timestamp('updated_at')
-      .default(sql`CURRENT_TIMESTAMP(3)`)
-      .$onUpdate(() => new Date())
-  },
-  (unit) => ({
-    userIdIdx: index('unit_userId_idx').on(unit.user_id)
-  })
-)
-
-export const unitRelations = relations(unit, ({ one }) => ({
-  user: one(users, { fields: [unit.user_id], references: [users.id] })
-}))
-
 export const lift = pgTable(
   'lift',
   {
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 255 }).notNull(),
-    unit: unitEmum('unit').notNull().default('lbs'),
     slug: varchar('slug', { length: 255 }).$default(nanoid).notNull(),
     user_id: varchar('user_id', { length: 255 })
       .notNull()

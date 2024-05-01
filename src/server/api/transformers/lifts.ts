@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { liftRegex } from '~/server/api/schemas/lifts'
-import { liftInsertSchema } from '~/server/db/schema'
+import { liftInsertSchema, units } from '~/server/db/schema'
 import { normalizeDateString } from '~/utils/date'
 
 export const transformLiftString = (input: string) => {
@@ -15,7 +15,8 @@ export const transformLiftString = (input: string) => {
   const data = liftInsertSchema
     .omit({ user_id: true })
     .extend({
-      weight: z.number()
+      weight: z.number(),
+      unit: z.enum(units)
     })
     .parse({
       name,
