@@ -12,25 +12,20 @@ type LiftPageParams = {
 }
 
 export default function LiftPage({ params }: LiftPageParams) {
-  const lift = api.lifts.getLiftBySlug.useQuery({ slug: params.slug })
+  const [lift] = api.lifts.getLiftBySlug.useSuspenseQuery({ slug: params.slug })
 
-  if (!lift.data) return null
-
-  const totalSets = lift.data.dates.reduce((acc, date) => acc + date.sets.length, 0)
-  const [currentPR] = lift.data.personal_records
+  const totalSets = lift.dates.reduce((acc, date) => acc + date.sets.length, 0)
+  const [currentPR] = lift.personal_records
 
   return (
     <div className='mx-auto w-full max-w-4xl flex-1 animate-fade-in space-y-8 px-8'>
-      <AddSet liftSlug={params.slug} liftId={lift.data?.id} />
+      <AddSet liftSlug={params.slug} liftId={lift?.id} />
       <div className='h-full self-stretch'>
         <div className='flex items-center justify-between text-sm font-light'>
           <div className='flex flex-col gap-2 font-mono'>
-            <span>{lift.data.name}</span>
-            <time
-              className='text-xs text-neutral-700 dark:text-neutral-400'
-              dateTime={lift.data.updated_at?.toDateString()}
-            >
-              {dayjs(lift.data.updated_at).format('MMM DD')}
+            <span>{lift.name}</span>
+            <time className='text-xs text-neutral-700 dark:text-neutral-400' dateTime={lift.updated_at?.toDateString()}>
+              {dayjs(lift.updated_at).format('MMM DD')}
             </time>
           </div>
           <div className='flex flex-col gap-2 text-right font-mono'>
@@ -42,7 +37,7 @@ export default function LiftPage({ params }: LiftPageParams) {
           </div>
         </div>
         <div className='mt-32 flex flex-nowrap items-end overflow-x-auto'>
-          {lift.data.dates.map((date) => {
+          {lift.dates.map((date) => {
             return (
               <div key={date.date} className='group min-h-8 shrink-0 px-1 transition-colors'>
                 <div
