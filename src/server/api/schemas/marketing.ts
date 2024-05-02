@@ -5,5 +5,6 @@ export const waitlistSchema = z.object({
 })
 
 export const feedbackSchema = z.object({
-  message: z.string().max(255)
+  message: z.string().max(255),
+  pathname: z.string()
 })

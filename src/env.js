@@ -11,7 +11,7 @@ export const env = createEnv({
     EDGE_CONFIG: z.string(),
     LOGSNAG_API_KEY: z.string(),
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-    RESEND_API_KEY: z.string(),
+    AUTH_RESEND_KEY: z.string(),
     WAITLIST_AUDIENCE_ID: z.string()
   },
   client: {},
@@ -24,7 +24,7 @@ export const env = createEnv({
     EDGE_CONFIG: process.env.EDGE_CONFIG,
     LOGSNAG_API_KEY: process.env.LOGSNAG_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    AUTH_RESEND_KEY: process.env.AUTH_RESEND_KEY,
     WAITLIST_AUDIENCE_ID: process.env.WAITLIST_AUDIENCE_ID
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

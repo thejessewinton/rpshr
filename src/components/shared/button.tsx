@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'cva'
 import { classNames } from '~/utils/core'
 
 const button = cva(
-  'flex min-h-8 w-fit relative overflow-hidden cursor-pointer items-center justify-center transition-colors gap-3 rounded px-6 text-sm outline-none focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
+  'flex min-h-8 w-fit relative overflow-hidden cursor-pointer items-center justify-center transition-colors gap-3 rounded-lg px-6 text-xs outline-none focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
   {
     variants: {
       variant: {

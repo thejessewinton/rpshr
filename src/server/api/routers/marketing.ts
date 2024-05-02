@@ -23,12 +23,12 @@ export const marketingRouter = createTRPCRouter({
       })
     }
   }),
-  feedback: publicProcedure.input(feedbackSchema).mutation(async ({ input }) => {
+  feedback: publicProcedure.input(feedbackSchema).mutation(async ({ ctx, input }) => {
     await resend.emails.send({
-      from: 'Feedback Form <feedback@rpshr.app>',
+      from: `Feedback <feedback@rpshr.app>`,
       subject: 'On-site Feedback',
       to: 'jrandallwinton@gmail.com',
-      text: input.message
+      html: `${input.message} <br /><br /> Pathname: ${input.pathname} <br /><br /> User: ${ctx.session.user?.name}`
     })
 
     return {
