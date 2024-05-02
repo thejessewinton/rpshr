@@ -30,12 +30,19 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
   }
 })
 
+/**
+ * Create a server-side caller.
+ *
+ * @see https://trpc.io/docs/server/server-side-calls
+ */
+export const createCallerFactory = t.createCallerFactory
+
 export const createTRPCRouter = t.router
 
 export const publicProcedure = t.procedure
 
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
+export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
   return next({
@@ -45,5 +52,3 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
     }
   })
 })
-
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)

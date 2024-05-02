@@ -14,7 +14,7 @@ import { api } from '~/trpc/react'
 export const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
-  const { data } = api.lifts.getAllLifts.useQuery()
+  const [lifts] = api.lifts.getAllLifts.useSuspenseQuery()
   const { theme, setTheme } = useTheme()
 
   const handleToggleTheme = () => {
@@ -41,7 +41,7 @@ export const Navigation = () => {
           <CaretUpDown className='size-3 text-inherit' />
         </Dropdown.Trigger>
         <Dropdown.Content align='end' className='w-[175px]'>
-          {data?.map((lift) => {
+          {lifts.map((lift) => {
             const isActive = pathname?.includes(lift.slug)
 
             return (
