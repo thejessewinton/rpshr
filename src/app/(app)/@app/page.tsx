@@ -9,7 +9,9 @@ import { Marble } from '~/components/shared/marble'
 import { api } from '~/trpc/react'
 
 export default function LiftsPage() {
-  const [lifts] = api.lifts.getAllLifts.useSuspenseQuery()
+  const lifts = api.lifts.getAllLifts.useQuery()
+
+  if (!lifts.data) return null
 
   return (
     <div className='mx-auto w-full max-w-4xl flex-1 space-y-8 px-8'>
@@ -17,7 +19,7 @@ export default function LiftsPage() {
 
       <div className='mb-16 animate-fade-in overflow-x-auto'>
         <div className='flex flex-col'>
-          {lifts.map((lift) => {
+          {lifts.data.map((lift) => {
             return (
               <Link
                 key={lift.id}

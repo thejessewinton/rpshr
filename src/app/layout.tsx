@@ -3,7 +3,6 @@ import '~/styles/globals.css'
 import { type ReactNode } from 'react'
 import { type Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
-import { cookies } from 'next/headers'
 
 import { Analytics } from '@vercel/analytics/react'
 
