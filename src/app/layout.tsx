@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable, jetbrains.variable)}>
         <SessionProvider>
           <ThemeProvider attribute='class'>
-            <TRPCReactProvider cookies={cookies().toString()}>
+            <TRPCReactProvider>
               <main className='min-w-screen flex min-h-screen w-full flex-col justify-center'>{children}</main>
               <Toaster />
             </TRPCReactProvider>
