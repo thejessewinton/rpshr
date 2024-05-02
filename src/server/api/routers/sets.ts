@@ -45,8 +45,6 @@ export const setsRouter = createTRPCRouter({
 
       if (!sets) return
 
-      console.log({ sets })
-
       await db.insert(set).values(
         sets.map((set) => {
           return {
