@@ -15,7 +15,6 @@ import {
   varchar
 } from 'drizzle-orm/pg-core'
 import { createInsertSchema } from 'drizzle-zod'
-import { nanoid } from 'nanoid'
 
 // Necessary for Next Auth
 export const users = pgTable('user', {
@@ -25,8 +24,7 @@ export const users = pgTable('user', {
   emailVerified: timestamp('emailVerified', {
     mode: 'date'
   }).default(sql`CURRENT_TIMESTAMP`),
-  image: varchar('image', { length: 255 }),
-  username: varchar('username', { length: 255 })
+  image: varchar('image', { length: 255 })
 })
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -106,7 +104,7 @@ export const lift = pgTable(
   {
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 255 }).notNull(),
-    slug: varchar('slug', { length: 255 }).$default(nanoid).notNull(),
+    slug: varchar('slug', { length: 255 }).$default(randomUUID).notNull(),
     user_id: varchar('user_id', { length: 255 })
       .notNull()
       .references(() => users.id),
