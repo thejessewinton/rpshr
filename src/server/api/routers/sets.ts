@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { setSchema } from '~/server/api/schemas/sets'
 import { transformSetString } from '~/server/api/transformers/sets'
 import { lift, personalRecord, set, units } from '~/server/db/schema'
+import { pluralize } from '~/utils/core'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const setsRouter = createTRPCRouter({
@@ -78,7 +79,7 @@ export const setsRouter = createTRPCRouter({
     })
 
     return {
-      message: 'Set added successfully'
+      message: `${pluralize('Set', input.sets.length)} added successfully.`
     }
   }),
   deleteSet: protectedProcedure

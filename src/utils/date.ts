@@ -1,9 +1,7 @@
 import dayjs, { type Dayjs } from 'dayjs'
 import relative from 'dayjs/plugin/relativeTime'
-import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(relative)
-dayjs.extend(utc)
 
 export default dayjs
 
@@ -19,7 +17,7 @@ export const getDaysBetween = (start: Dayjs, end: Dayjs) => {
 
 export const getAllDaysInYear = () => {
   const year = dayjs().year()
-  const currentDate = new Date(year, 0, 1)
+  const currentDate = dayjs().startOf('year').toDate()
   const daysArray: Array<{ date: Dayjs; isFirstOfMonth: boolean }> = []
 
   while (currentDate.getFullYear() === year) {
