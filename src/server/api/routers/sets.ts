@@ -60,6 +60,13 @@ export const setsRouter = createTRPCRouter({
         })
       )
 
+      await db
+        .update(lift)
+        .set({
+          updated_at: new Date()
+        })
+        .where(eq(lift.id, input.lift_id))
+
       const currentPR = await db.query.personalRecord.findFirst({
         where: eq(personalRecord.lift_id, input.lift_id)
       })

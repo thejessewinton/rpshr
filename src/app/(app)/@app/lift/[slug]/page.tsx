@@ -41,14 +41,14 @@ export default function LiftPage({ params }: LiftPageParams) {
             </span>
           </div>
         </div>
-        <div className='mt-32 flex flex-nowrap items-end overflow-x-auto'>
+        <div className='mt-32 flex flex-nowrap items-center overflow-x-auto'>
           {lift.data.dates.map((date) => {
             return (
               <div key={date.date} className='group min-h-8 shrink-0 px-1 transition-colors'>
                 <div
                   className={classNames('flex min-h-8 w-px flex-col gap-1 rounded', {
                     'bg-neutral-700': dayjs(date.date).date() !== 1,
-                    'bg-orange-800': dayjs(date.date).date() === 1
+                    'bg-sky-800 shadow shadow-sky-800': dayjs(date.date).date() === 1
                   })}
                 >
                   {date.sets.map((set) => {
@@ -57,7 +57,7 @@ export default function LiftPage({ params }: LiftPageParams) {
                         key={set.id}
                         className='w-px flex-shrink-0 rounded bg-white'
                         style={{
-                          height: `${(set.reps * set.weight) / 60}px`
+                          height: `${(set.reps * set.weight) / 80}px`
                         }}
                       />
                     )
