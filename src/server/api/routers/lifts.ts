@@ -1,4 +1,5 @@
 import { and, desc, eq } from 'drizzle-orm'
+import { groupBy } from 'remeda'
 import { z } from 'zod'
 
 import { transformLiftString } from '~/server/api/transformers/lifts'
@@ -56,14 +57,26 @@ export const liftsRouter = createTRPCRouter({
       }
     })
 
-    const dates = getDaysBetween(dayjs().subtract(2, 'months'), dayjs().add(10, 'months'))
+    if (!liftQuery) return null
+
+    const dates = getDaysBetween(dayjs().subtract(60, 'days'), dayjs().add(305, 'days'))
 
     return {
-      ...liftQuery!,
+      name: liftQuery.name,
+      id: liftQuery.id,
+      personal_records: liftQuery.personal_records,
+      updated_at: liftQuery.updated_at,
+      created_at: liftQuery.created_at,
       dates: dates.map((date) => {
+        const sets = liftQuery.sets.filter(
+          (set) => dayjs(set.date).format('MM DD, YYYY') === date.format('MM DD, YYYY')
+        )
+        const setsGroupedByWeight = groupBy(sets, (set) => set.weight)
+
         return {
+          numberOfSets: sets.length,
           date: date.format('YYYY-MM-DD'),
-          sets: liftQuery!.sets.filter((set) => dayjs(set.date).format('MM DD, YYYY') === date.format('MM DD, YYYY'))
+          groups: Object.entries(setsGroupedByWeight)
         }
       })
     }
