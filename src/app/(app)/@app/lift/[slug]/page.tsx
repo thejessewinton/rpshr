@@ -45,7 +45,7 @@ export default function LiftPage({ params }: LiftPageParams) {
         </div>
       </div>
       <div className='flex min-h-96 items-center overflow-x-auto'>
-        <div className='flex flex-nowrap items-end pl-32'>
+        <div className='flex flex-nowrap items-end px-4 md:pl-32'>
           {lift.data.dates.map((date) => {
             return (
               <div key={date.date} className='group min-h-8 shrink-0 px-1 transition-colors'>
