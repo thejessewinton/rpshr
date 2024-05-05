@@ -57,19 +57,19 @@ export default function LiftPage({ params }: LiftPageParams) {
                 >
                   {date.groups.map(([key, values]) => {
                     return (
-                      <>
+                      <div className='group relative' key={key}>
                         {values.map((set) => {
                           return (
                             <div
-                              key={key}
+                              key={set.id}
                               className='w-px flex-shrink-0 rounded bg-white'
                               style={{
-                                height: `${(set.reps * set.weight) / 25}px`
+                                height: `${(set.reps * set.weight) / 20}px`
                               }}
                             />
                           )
                         })}
-                      </>
+                      </div>
                     )
                   })}
                 </div>
