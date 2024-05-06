@@ -28,7 +28,7 @@ export const Navigation = () => {
         break
 
       case 'q':
-        void signOut()
+        void signOut({ callbackUrl: '/login' })
         break
     }
   })
@@ -72,7 +72,7 @@ export const Navigation = () => {
             <KBD>M</KBD>
           </Dropdown.Item>
 
-          <Dropdown.Item onSelect={() => signOut()}>
+          <Dropdown.Item onSelect={() => signOut({ callbackUrl: '/login' })}>
             <div className='flex items-center gap-3'>
               <SignOut className='size-4 text-neutral-700 dark:text-white' />
               Logout
