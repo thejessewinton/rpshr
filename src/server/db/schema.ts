@@ -95,6 +95,13 @@ export const verificationTokens = pgTable(
   })
 )
 
+const lifecycleDates = {
+  created_at: timestamp('created_at', { mode: 'date' }).$defaultFn(() => new Date()),
+  updated_at: timestamp('updated_at')
+    .default(sql`CURRENT_TIMESTAMP(3)`)
+    .$onUpdateFn(() => new Date())
+}
+
 // Units, Lifts, and Sets
 export const units = ['kgs', 'lbs'] as const
 export const unitEmum = pgEnum('value', units)
@@ -108,10 +115,7 @@ export const lift = pgTable(
     user_id: varchar('user_id', { length: 255 })
       .notNull()
       .references(() => users.id),
-    created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-    updated_at: timestamp('updated_at')
-      .default(sql`CURRENT_TIMESTAMP(3)`)
-      .$onUpdate(() => new Date())
+    ...lifecycleDates
   },
   (lift) => ({
     userIdIdx: index('lift_userId_idx').on(lift.user_id)
@@ -135,10 +139,7 @@ export const personalRecord = pgTable('personal_record', {
   weight: bigint('weight', { mode: 'number' }).notNull(),
   unit: unitEmum('unit').notNull().default('lbs'),
   date: timestamp('date', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-  created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-  updated_at: timestamp('updated_at')
-    .default(sql`CURRENT_TIMESTAMP(3)`)
-    .$onUpdate(() => new Date())
+  ...lifecycleDates
 })
 
 export const personalRecordInsertSchema = createInsertSchema(personalRecord)
@@ -167,11 +168,8 @@ export const set = pgTable(
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
     notes: text('notes'),
-    created_at: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`),
-    updated_at: timestamp('updated_at')
-      .default(sql`CURRENT_TIMESTAMP(3)`)
-      .$onUpdate(() => new Date()),
-    lift_id: bigint('lift_id', { mode: 'number' }).references(() => lift.id, { onDelete: 'cascade' })
+    lift_id: bigint('lift_id', { mode: 'number' }).references(() => lift.id, { onDelete: 'cascade' }),
+    ...lifecycleDates
   },
   (set) => ({
     userIdIdx: index('set_userId_idx').on(set.user_id),
