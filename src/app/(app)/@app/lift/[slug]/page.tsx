@@ -25,20 +25,20 @@ export default function LiftPage({ params }: LiftPageParams) {
         <AddSet liftSlug={params.slug} liftId={lift.data.id} />
         <div className='h-full self-stretch'>
           <div className='flex items-center justify-between text-sm font-light'>
-            <div className='flex flex-col gap-2 font-mono'>
+            <div className='flex flex-col gap-2'>
               <span>{lift.data.name}</span>
               <time
                 className='text-xs text-neutral-700 dark:text-neutral-400'
                 dateTime={lift.data.updated_at?.toDateString()}
               >
-                {dayjs(lift.data.updated_at).format('MMM DD')}
+                Last updated {dayjs(lift.data.updated_at).format('MM/DD')}
               </time>
             </div>
-            <div className='flex flex-col gap-2 text-right font-mono'>
+            <div className='flex flex-col gap-2 text-right'>
               <span>{totalSets} sets</span>
               <span className='text-xs text-neutral-700 dark:text-neutral-400'>
                 Your latest PR is {currentPR?.weight}
-                {currentPR?.unit}
+                <span className='font-mono'>{currentPR?.unit}</span>
               </span>
             </div>
           </div>

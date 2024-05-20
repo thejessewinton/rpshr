@@ -36,7 +36,6 @@ export const Feedback = () => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <Popover.Trigger>
-        <ChatTeardropText className='size-4 text-neutral-700 dark:text-neutral-400' />
         <span className='max-w-[8ch] overflow-hidden text-ellipsis text-nowrap md:max-w-[20ch]'>Feedback</span>
         <CaretUpDown className='size-3 text-inherit' />
       </Popover.Trigger>

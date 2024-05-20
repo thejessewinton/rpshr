@@ -29,7 +29,7 @@ export const AddLift = () => {
   })
 
   useHotkeys(
-    '/',
+    'meta+f',
     () => {
       form.setFocus('lift')
     },
@@ -58,7 +58,12 @@ export const AddLift = () => {
         autoFocus
         className='w-full border-none focus:bg-transparent'
         icon={<Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />}
-        kbd={<KBD>/</KBD>}
+        kbd={
+          <>
+            <KBD>⌘</KBD>
+            <KBD>F</KBD>
+          </>
+        }
         {...form.register('lift')}
       />
     </Form>

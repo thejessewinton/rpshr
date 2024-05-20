@@ -2,9 +2,10 @@ import '~/styles/globals.css'
 
 import { type ReactNode } from 'react'
 import { type Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/react'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
 
 import { env } from '~/env'
 import { SessionProvider } from '~/providers/session'
@@ -22,22 +23,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(env.APP_URL)
 }
 
-const inter = Inter({
-  display: 'fallback',
-  variable: '--font-inter',
-  subsets: ['latin']
-})
-
-const jetbrains = JetBrains_Mono({
-  display: 'fallback',
-  variable: '--font-jetbrains-mono',
-  subsets: ['latin']
-})
-
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={classNames('bg-neutral-50 font-sans dark:bg-neutral-900', inter.variable, jetbrains.variable)}>
+      <body
+        className={classNames(
+          'bg-neutral-50 font-sans tracking-wide dark:bg-neutral-900',
+          GeistSans.variable,
+          GeistMono.variable
+        )}
+      >
         <SessionProvider>
           <ThemeProvider attribute='class'>
             <TRPCReactProvider>

@@ -34,7 +34,7 @@ export const AddSet = ({ liftSlug, liftId, ...props }: AddSetProps) => {
   })
 
   useHotkeys(
-    '/',
+    'meta+f',
     () => {
       form.setFocus('sets')
     },
@@ -61,7 +61,12 @@ export const AddSet = ({ liftSlug, liftId, ...props }: AddSetProps) => {
         type='text'
         autoFocus
         icon={<Plus className='ml-2 size-4 text-neutral-400 dark:text-neutral-500' />}
-        kbd={<KBD>/</KBD>}
+        kbd={
+          <>
+            <KBD>⌘</KBD>
+            <KBD>F</KBD>
+          </>
+        }
         className='w-full border-none focus:bg-transparent'
         {...form.register('sets')}
       />

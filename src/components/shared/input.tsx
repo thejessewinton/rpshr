@@ -26,7 +26,7 @@ export const Input = forwardRef(
           )}
           {...props}
         />
-        {kbd && <div className='mr-4 flex gap-1'>{kbd}</div>}
+        {kbd && <div className='mr-4 hidden gap-1 md:flex'>{kbd}</div>}
       </>
     )
   }
