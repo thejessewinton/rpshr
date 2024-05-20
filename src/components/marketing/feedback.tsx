@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 
-import { CaretUpDown, ChatTeardropText } from '@phosphor-icons/react'
+import { CaretUpDown } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 
 import { Button } from '~/components/shared/button'
