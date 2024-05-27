@@ -11,28 +11,23 @@ export default function LiftsPage() {
   if (!lifts.data) return null
 
   return (
-    <div className='mx-auto w-full max-w-4xl flex-1 space-y-8 px-8'>
+    <div className='mx-auto flex-1 space-y-2 px-8'>
       <AddLift />
 
       <div className='mb-16 animate-fade-in'>
-        <div className='mb-4 flex items-center justify-between border-b border-neutral-200/70 px-4 pb-4 text-xs dark:border-neutral-700/20'>
-          <span>Lift</span>
-          <span>PR</span>
-        </div>
-        <div className='-mx-[2px] flex flex-col gap-4'>
+        <div className='-mx-[2px] space-x-4 space-y-4'>
           {lifts.data.map((lift) => {
             return (
               <Link
                 key={lift.id}
                 href={`/lift/${lift.slug}`}
-                className='flex items-center justify-between rounded p-4 text-sm font-light outline-none transition-colors hover:dark:bg-neutral-700/20 focus:dark:bg-neutral-700/20'
+                className='group relative inline-flex cursor-help items-center justify-center overflow-hidden rounded-full border border-neutral-700/90 px-8 py-2 text-sm font-light outline-none transition-colors'
               >
-                <div className='flex items-center gap-4'>
-                  <span className='text-neutral-700 dark:text-white'>{lift.name}</span>
-                </div>
-                <span className='font-mono font-light text-neutral-700 dark:text-neutral-400'>
+                <span className='text-3xl'>{lift.name}</span>
+
+                <div className='invisible absolute flex h-full w-full items-center justify-center bg-orange-800/80 font-mono font-light text-neutral-700 opacity-0 backdrop-blur-xl transition-all group-hover:visible group-hover:opacity-100'>
                   {lift.personal_records[0]?.weight}lbs
-                </span>
+                </div>
               </Link>
             )
           })}

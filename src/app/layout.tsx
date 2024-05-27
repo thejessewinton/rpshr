@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang='en' suppressHydrationWarning>
       <body
         className={classNames(
-          'bg-neutral-50 font-sans tracking-wide dark:bg-neutral-900',
+          'bg-neutral-50 font-sans tracking-tight dark:bg-neutral-900',
           inter.variable,
           jetbrains.variable
         )}
