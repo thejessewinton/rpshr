@@ -12,7 +12,7 @@ export const Cursor = () => {
 
   return (
     <motion.div
-      className='pointer-events-none fixed left-0 top-0 flex size-12 items-center justify-center rounded-full bg-white mix-blend-difference'
+      className='pointer-events-none fixed left-0 top-0 hidden size-12 items-center justify-center rounded-full bg-white mix-blend-difference md:block'
       style={{
         translateX: x,
         translateY: y

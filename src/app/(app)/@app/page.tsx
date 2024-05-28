@@ -30,7 +30,7 @@ export default function LiftsPage() {
                 )}
                 onMouseOver={() => setText(`${lift.personal_records[0]?.weight}`)}
               >
-                <h2 className='text-3xl leading-tight transition-all group-hover/parent:opacity-40 group-hover:!opacity-100 group-hover/parent:blur-sm group-hover:!blur-none'>
+                <h2 className='text-3xl leading-tight transition-all group-hover/parent:md:opacity-40 group-hover:md:!opacity-100 group-hover/parent:md:blur-sm group-hover:md:!blur-none'>
                   {lift.name}
                 </h2>
               </Link>
