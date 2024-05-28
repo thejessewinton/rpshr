@@ -33,7 +33,10 @@ export const Waitlist = () => {
         className='flex-1 rounded-r-none border-0'
         {...form.register('email')}
       />
-      <Button type='submit' className='rounded-l-none border-0 hover:text-neutral-400 hover:dark:text-neutral-100'>
+      <Button
+        type='submit'
+        className='rounded-sm rounded-l-none border-y-0 border-r-0 border-neutral-200/50 dark:border-neutral-700/50 hover:dark:text-neutral-100'
+      >
         Sign up
       </Button>
     </Form>

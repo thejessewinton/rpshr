@@ -30,8 +30,8 @@
     "@trpc/server": "next",
     "@vercel/analytics": "^1.2.2",
     "@vercel/edge-config": "^1.1.0",
-    "clsx": "^2.1.0",
-    "dayjs": "^1.11.10",
+    "clsx": "latest",
+    "dayjs": "latest",
     "drizzle-orm": "latest",
     "drizzle-zod": "^0.5.1",
     "eslint-plugin-drizzle": "^0.2.3",
@@ -53,7 +53,8 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-radix": "latest",
-    "zod": "latest"
+    "zod": "latest",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "latest",
@@ -65,8 +66,8 @@
     "@typescript-eslint/parser": "latest",
     "autoprefixer": "^10.4.17",
     "drizzle-kit": "latest",
-    "eslint": "8.57.0",
-    "eslint-config-next": "^14.1.3",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
     "eslint-plugin-import": "^2.29.1",
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
