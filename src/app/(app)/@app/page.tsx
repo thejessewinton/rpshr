@@ -15,17 +15,17 @@ export default function LiftsPage() {
       <AddLift />
 
       <div className='mb-16 animate-fade-in'>
-        <div className='-mx-[2px] space-x-4 space-y-4'>
+        <div className='-mx-[2px] grid gap-4'>
           {lifts.data.map((lift) => {
             return (
               <Link
                 key={lift.id}
                 href={`/lift/${lift.slug}`}
-                className='group relative inline-flex cursor-help items-center justify-center overflow-hidden rounded-full border border-neutral-700/90 px-8 py-2 text-sm font-light outline-none transition-colors'
+                className='group relative inline-flex max-w-fit cursor-help items-center justify-center text-sm font-light outline-none transition-colors'
               >
                 <span className='text-3xl'>{lift.name}</span>
 
-                <div className='invisible absolute flex h-full w-full items-center justify-center bg-orange-800/80 font-mono font-light text-neutral-700 opacity-0 backdrop-blur-xl transition-all group-hover:visible group-hover:opacity-100'>
+                <div className='absolute flex h-full w-full items-center justify-center font-mono font-light text-white opacity-0 backdrop-blur-sm transition-all duration-700 group-hover:visible group-hover:opacity-100'>
                   {lift.personal_records[0]?.weight}lbs
                 </div>
               </Link>
