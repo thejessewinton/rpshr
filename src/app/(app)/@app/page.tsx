@@ -3,10 +3,13 @@
 import Link from 'next/link'
 
 import { AddLift } from '~/components/lifts/add-lift'
+import { useCursorStore } from '~/state/use-cursor-store'
 import { api } from '~/trpc/react'
+import { classNames } from '~/utils/core'
 
 export default function LiftsPage() {
   const lifts = api.lifts.getAllLifts.useQuery()
+  const { setText } = useCursorStore()
 
   if (!lifts.data) return null
 
@@ -15,19 +18,22 @@ export default function LiftsPage() {
       <AddLift />
 
       <div className='mb-16 animate-fade-in'>
-        <div className='-mx-[2px] grid gap-4'>
+        <div className='group/parent -mx-[2px] grid max-w-fit gap-4 overflow-hidden'>
           {lifts.data.map((lift) => {
             return (
               <Link
                 key={lift.id}
                 href={`/lift/${lift.slug}`}
-                className='group relative inline-flex max-w-fit cursor-help items-center justify-center text-sm font-light outline-none transition-colors'
+                className={classNames(
+                  'group relative inline-flex w-full items-end font-light outline-none',
+                  'after:absolute after:-right-1/2 after:h-full after:w-full'
+                )}
+                onMouseOver={() => setText(`${lift.personal_records[0]?.weight}lbs`)}
+                onMouseOut={() => setText('')}
               >
-                <span className='text-3xl'>{lift.name}</span>
-
-                <div className='absolute flex h-full w-full items-center justify-center font-mono font-light text-white opacity-0 backdrop-blur-sm transition-all duration-700 group-hover:visible group-hover:opacity-100'>
-                  {lift.personal_records[0]?.weight}lbs
-                </div>
+                <h2 className='text-3xl leading-tight transition-all group-hover/parent:opacity-40 group-hover:!opacity-100 group-hover/parent:blur-sm group-hover:!blur-none'>
+                  {lift.name}
+                </h2>
               </Link>
             )
           })}

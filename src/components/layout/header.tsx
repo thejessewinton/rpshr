@@ -11,8 +11,6 @@ export const Header = () => {
         <Link href='/'>
           <Logo className='size-6' />
         </Link>
-        <div className='h-4 w-px rotate-[16deg] bg-neutral-400 dark:bg-neutral-700' />
-        <Navigation />
       </div>
 
       <Feedback />

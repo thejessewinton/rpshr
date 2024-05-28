@@ -4,17 +4,22 @@ import { useEffect } from 'react'
 
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
+import { useCursorStore } from '~/state/use-cursor-store'
+
 export const Cursor = () => {
   const { x, y } = useCursor()
+  const { text } = useCursorStore()
 
   return (
     <motion.div
-      className='pointer-events-none fixed left-0 top-0 size-12 rounded-full bg-white mix-blend-difference'
+      className='pointer-events-none fixed left-0 top-0 flex size-24 items-center justify-center rounded-full bg-white mix-blend-difference'
       style={{
         translateX: x,
         translateY: y
       }}
-    />
+    >
+      <span className='text-black'>{text}</span>
+    </motion.div>
   )
 }
 
