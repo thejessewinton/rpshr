@@ -18,7 +18,7 @@ export default function LiftsPage() {
       <AddLift />
 
       <div className='mb-16 animate-fade-in'>
-        <div className='group/parent -mx-[2px] grid max-w-fit gap-4 overflow-hidden'>
+        <div className='group/parent -mx-[2px] grid max-w-fit gap-4 overflow-hidden' onMouseOut={() => setText('')}>
           {lifts.data.map((lift) => {
             return (
               <Link
@@ -28,8 +28,7 @@ export default function LiftsPage() {
                   'group relative inline-flex w-full items-end font-light outline-none',
                   'after:absolute after:-right-1/2 after:h-full after:w-full'
                 )}
-                onMouseOver={() => setText(`${lift.personal_records[0]?.weight}lbs`)}
-                onMouseOut={() => setText('')}
+                onMouseOver={() => setText(`${lift.personal_records[0]?.weight}`)}
               >
                 <h2 className='text-3xl leading-tight transition-all group-hover/parent:opacity-40 group-hover:!opacity-100 group-hover/parent:blur-sm group-hover:!blur-none'>
                   {lift.name}

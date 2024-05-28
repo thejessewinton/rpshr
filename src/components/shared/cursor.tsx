@@ -12,14 +12,12 @@ export const Cursor = () => {
 
   return (
     <motion.div
-      className='pointer-events-none fixed left-0 top-0 flex size-24 items-center justify-center rounded-full bg-white mix-blend-difference'
+      className='pointer-events-none fixed left-0 top-0 flex size-12 items-center justify-center rounded-full bg-white mix-blend-difference'
       style={{
         translateX: x,
         translateY: y
       }}
-    >
-      <span className='text-black'>{text}</span>
-    </motion.div>
+    />
   )
 }
 
