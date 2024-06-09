@@ -6,7 +6,6 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/react'
 
-import { Cursor } from '~/components/shared/cursor'
 import { env } from '~/env'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
@@ -50,7 +49,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             <TRPCReactProvider>
               <main className='min-w-screen flex min-h-screen w-full flex-col justify-center'>{children}</main>
               <Toaster />
-              <Cursor />
             </TRPCReactProvider>
           </ThemeProvider>
         </SessionProvider>
