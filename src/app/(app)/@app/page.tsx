@@ -3,36 +3,36 @@
 import Link from 'next/link'
 
 import { AddLift } from '~/components/lifts/add-lift'
-import { useCursorStore } from '~/state/use-cursor-store'
 import { api } from '~/trpc/react'
-import { classNames } from '~/utils/core'
 
 export default function LiftsPage() {
   const lifts = api.lifts.getAllLifts.useQuery()
-  const { setText } = useCursorStore()
 
   if (!lifts.data) return null
 
   return (
-    <div className='mx-auto flex-1 space-y-2 px-8'>
+    <div className='mx-auto w-full max-w-4xl flex-1 space-y-8 px-8'>
       <AddLift />
 
       <div className='mb-16 animate-fade-in'>
-        <div className='group/parent -mx-[2px] grid max-w-fit gap-4 overflow-hidden' onMouseOut={() => setText('')}>
+        <div className='mb-4 flex items-center justify-between border-b border-neutral-200/70 px-4 pb-4 text-xs dark:border-neutral-700/20'>
+          <span>Lift</span>
+          <span>PR</span>
+        </div>
+        <div className='-mx-[2px] flex flex-col gap-4'>
           {lifts.data.map((lift) => {
             return (
               <Link
                 key={lift.id}
                 href={`/lift/${lift.slug}`}
-                className={classNames(
-                  'group relative inline-flex w-full items-end font-light outline-none',
-                  'after:absolute after:-right-1/2 after:h-full after:w-full'
-                )}
-                onMouseOver={() => setText(`${lift.personal_records[0]?.weight}`)}
+                className='flex items-center justify-between rounded p-4 text-sm font-light outline-none transition-colors hover:dark:bg-neutral-700/20 focus:dark:bg-neutral-700/20'
               >
-                <h2 className='text-3xl leading-tight transition-all group-hover/parent:md:opacity-40 group-hover:md:!opacity-100 group-hover/parent:md:blur-sm group-hover:md:!blur-none'>
-                  {lift.name}
-                </h2>
+                <div className='flex items-center gap-4'>
+                  <span className='text-neutral-700 dark:text-white'>{lift.name}</span>
+                </div>
+                <span className='font-mono font-light text-neutral-700 dark:text-neutral-400'>
+                  {lift.personal_records[0]?.weight}lbs
+                </span>
               </Link>
             )
           })}
