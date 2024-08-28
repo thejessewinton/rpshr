@@ -46,26 +46,28 @@ export const setsRouter = createTRPCRouter({
 
       if (!sets) return
 
-      await db.insert(set).values(
-        sets.map((set) => {
-          return {
-            user_id: ctx.session.user.id,
-            date: set.date,
-            notes: set.notes,
-            reps: set.reps,
-            weight: set.weight,
-            unit: set.unit,
-            lift_id: input.lift_id
-          }
-        })
-      )
+      await Promise.all([
+        db.insert(set).values(
+          sets.map((set) => {
+            return {
+              user_id: ctx.session.user.id,
+              date: set.date,
+              notes: set.notes,
+              reps: set.reps,
+              weight: set.weight,
+              unit: set.unit,
+              lift_id: input.lift_id
+            }
+          })
+        ),
 
-      await db
-        .update(lift)
-        .set({
-          updated_at: new Date()
-        })
-        .where(eq(lift.id, input.lift_id))
+        db
+          .update(lift)
+          .set({
+            updated_at: new Date()
+          })
+          .where(eq(lift.id, input.lift_id))
+      ])
 
       const currentPR = await db.query.personalRecord.findFirst({
         where: eq(personalRecord.lift_id, input.lift_id)
