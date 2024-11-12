@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 import { api } from '~/trpc/server'
 
 type TagPageParams = {
@@ -9,8 +11,8 @@ type TagPageParams = {
 export default async function Tag({ params }: TagPageParams) {
   const notes = await api.notes.getAllByTag({ tag: (await params).tag })
 
-  if (!notes.length) {
-    return <div>No notes found</div>
+  if (!notes) {
+    return notFound()
   }
 
   console.log(notes)

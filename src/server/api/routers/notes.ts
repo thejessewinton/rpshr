@@ -36,7 +36,7 @@ export const notesRouter = createTRPCRouter({
     })
   }),
   getAllByTag: protectedProcedure.input(z.object({ tag: z.string() })).query(async ({ ctx, input }) => {
-    return await ctx.db.query.tag.findMany({
+    return await ctx.db.query.tag.findFirst({
       where({ slug, user_id }, { eq, and }) {
         return and(eq(slug, input.tag), eq(user_id, ctx.session.user.id))
       },

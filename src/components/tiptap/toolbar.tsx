@@ -7,6 +7,7 @@ import * as Tooltip from '@radix-ui/react-tooltip'
 import { useCurrentEditor } from '@tiptap/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { isShallowEqual } from 'remeda'
 import { toast } from 'sonner'
 
 import { useWritingStore } from '~/state/use-writing-store'
@@ -38,7 +39,7 @@ export const Toolbar = () => {
           }}
         >
           <div className='flex items-center gap-1.5'>
-            <span className='font-mono text-xs'>0 words</span>
+            <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
             <FocusSwitcher />
             <SaveButton />
           </div>
@@ -94,7 +95,7 @@ const SaveButton = () => {
     }
 
     mutate({
-      title: 'note title',
+      title: editor.view.state.doc.firstChild!.textContent.trim()!,
       body: editor.getHTML()
     })
   }
