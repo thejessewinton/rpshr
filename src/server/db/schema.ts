@@ -16,7 +16,8 @@ export const users = pgTable('user', {
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
-  notes: many(note)
+  notes: many(note),
+  tags: many(tag)
 }))
 
 export const accounts = pgTable(
@@ -101,11 +102,14 @@ export const noteRelations = relations(note, ({ one, many }) => ({
 export const tag = pgTable('tag', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
+  slug: varchar('slug', { length: 255 }).notNull(),
+  user_id: varchar('user_id', { length: 255 }),
   ...lifecycleDates
 })
 
-export const tagRelations = relations(tag, ({ many }) => ({
-  notes: many(notesToTags)
+export const tagRelations = relations(tag, ({ many, one }) => ({
+  notes: many(notesToTags),
+  user: one(users, { fields: [tag.user_id], references: [users.id] })
 }))
 
 export const notesToTags = pgTable('note_tags', {

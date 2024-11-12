@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
-import { note } from '~/server/db/schema'
+import { note, tag } from '~/server/db/schema'
 
 export const notesRouter = createTRPCRouter({
   create: protectedProcedure
@@ -34,5 +34,27 @@ export const notesRouter = createTRPCRouter({
         return and(eq(id, input.id), eq(user_id, ctx.session.user.id))
       }
     })
+  }),
+  getAllByTag: protectedProcedure.input(z.object({ tag: z.string() })).query(async ({ ctx, input }) => {
+    return await ctx.db.query.tag.findMany({
+      where({ slug, user_id }, { eq, and }) {
+        return and(eq(slug, input.tag), eq(user_id, ctx.session.user.id))
+      },
+      with: {
+        notes: true
+      }
+    })
+  }),
+  createTag: protectedProcedure.input(z.object({ name: z.string().min(1) })).mutation(async ({ ctx, input }) => {
+    return await ctx.db
+      .insert(tag)
+      .values({
+        name: input.name,
+        slug: input.name.toLowerCase().replace(/\s+/g, '-'),
+        user_id: ctx.session.user.id
+      })
+      .returning({
+        id: note.id
+      })
   })
 })
