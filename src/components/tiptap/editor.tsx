@@ -7,7 +7,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import { EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
-import { Toolbar } from './toolbar'
+import { Toolbar } from '~/components/tiptap/toolbar'
 
 const extensions = [
   StarterKit,

@@ -38,7 +38,7 @@ export const Toolbar = () => {
           }}
         >
           <div className='flex items-center gap-1.5'>
-            <span className='font-mono text-xs'>{editor.storage.characterCount.words() as number} words</span>
+            <span className='font-mono text-xs'>0 words</span>
             <FocusSwitcher />
             <SaveButton />
           </div>
