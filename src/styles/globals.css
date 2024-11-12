@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .editor p.is-editor-empty {
+    @apply first:before:pointer-events-none first:before:float-left first:before:h-0 first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
+  }
+}

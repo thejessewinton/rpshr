@@ -5,13 +5,10 @@ import { useRouter } from "next/navigation";
 
 export const Hotkeys = () => {
   const router = useRouter();
-  useHotkeys(
-    "c",
-    () => {
-      router.push("/notes/new");
-    },
-    { preventDefault: true },
-  );
+
+  useHotkeys("c", () => {
+    router.push("/new");
+  });
 
   return null;
 };

@@ -21,7 +21,7 @@ const PopoverTrigger = forwardRef(
     return (
       <PopoverPrimitive.Trigger
         className={cn(
-          "flex cursor-pointer items-center gap-2 rounded-full px-3 py-2 text-xs font-light tracking-wide outline-none transition-colors focus:ring-2",
+          "flex cursor-pointer items-center gap-2 rounded-full px-3 py-2 text-xs font-light outline-none transition-colors focus:ring-2",
           "text-neutral-700 hover:bg-neutral-200/70 focus:ring-neutral-200/70",
           "dark:text-neutral-400 hover:dark:bg-neutral-800/70 focus:dark:ring-neutral-700/30",
           className,

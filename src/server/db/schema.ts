@@ -92,7 +92,9 @@ const lifecycleDates = {
 
 // Notes and tags
 export const note = pgTable("note", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   user_id: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
@@ -103,7 +105,7 @@ export const note = pgTable("note", {
 
 export const noteRelations = relations(note, ({ one, many }) => ({
   user: one(users, { fields: [note.user_id], references: [users.id] }),
-  tags: many(tag),
+  tags: many(notesToTags),
 }));
 
 export const tag = pgTable("tag", {
@@ -112,8 +114,12 @@ export const tag = pgTable("tag", {
   ...lifecycleDates,
 });
 
+export const tagRelations = relations(tag, ({ many }) => ({
+  notes: many(notesToTags),
+}));
+
 export const notesToTags = pgTable("note_tags", {
-  note_id: integer("note_id")
+  note_id: text("note_id")
     .notNull()
     .references(() => note.id, { onDelete: "cascade" }),
   tag_id: integer("tag_id")
@@ -125,9 +131,11 @@ export const notesToTagsRelations = relations(notesToTags, ({ one }) => ({
   notes: one(note, {
     fields: [notesToTags.note_id],
     references: [note.id],
+    relationName: "note",
   }),
   tags: one(tag, {
     fields: [notesToTags.tag_id],
     references: [tag.id],
+    relationName: "tag",
   }),
 }));
