@@ -25,24 +25,34 @@ export const Toolbar = () => {
     <Tooltip.Provider delayDuration={500} skipDelayDuration={5000}>
       <AnimatePresence>
         <motion.div
-          className='fixed bottom-10 right-10 z-10 flex origin-center items-center rounded-full bg-neutral-950 py-2 pl-4 pr-2 shadow-sm shadow-black/20'
           initial={{
-            opacity: 0,
-            translateY: 10
+            scale: 0.75
           }}
-          animate={{
-            opacity: 1,
-            translateY: 0
+          whileHover={{
+            scale: 1
           }}
-          transition={{
-            duration: 0.5
-          }}
+          className='fixed bottom-10 right-10'
         >
-          <div className='flex items-center gap-1.5'>
-            <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
-            <FocusSwitcher />
-            <SaveButton />
-          </div>
+          <motion.div
+            className='z-10 flex origin-center items-center rounded-full bg-neutral-950 py-1 pl-4 pr-2 shadow-sm shadow-black/20'
+            initial={{
+              opacity: 0,
+              translateY: 10
+            }}
+            animate={{
+              opacity: 1,
+              translateY: 0
+            }}
+            transition={{
+              duration: 0.1
+            }}
+          >
+            <div className='flex items-center gap-1.5'>
+              <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
+              <FocusSwitcher />
+              <SaveButton />
+            </div>
+          </motion.div>
         </motion.div>
       </AnimatePresence>
     </Tooltip.Provider>

@@ -6,8 +6,4 @@
   .editor h1.is-empty {
     @apply first:before:pointer-events-none first:before:float-left first:before:h-0 first:before:text-sm first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
   }
-
-  .editor :not(.blur-0) {
-    @apply blur-sm transition-all duration-[4000];
-  }
 }

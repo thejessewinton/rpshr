@@ -5,17 +5,22 @@ import { note, tag } from '~/server/db/schema'
 
 export const notesRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ title: z.string().min(1), body: z.string().min(1) }))
+    .input(z.object({ id: z.string().optional(), title: z.string().min(1), body: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.db
         .insert(note)
         .values({
+          id: input.id,
           title: input.title,
           user_id: ctx.session.user.id,
           body: input.body
         })
         .returning({
           id: note.id
+        })
+        .onConflictDoUpdate({
+          target: [note.id],
+          set: { title: input.title, body: input.body }
         })
     }),
   getAll: protectedProcedure.query(async ({ ctx }) => {

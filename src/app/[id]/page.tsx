@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 
-import { Editor } from '~/components/tiptap/editor'
+import { NoteEditor } from '~/components/tiptap'
 import { api } from '~/trpc/server'
 
 type NotePageParams = {
@@ -16,5 +16,5 @@ export default async function Note({ params }: NotePageParams) {
     notFound()
   }
 
-  return <Editor content={note?.body} />
+  return <NoteEditor content={note?.body} id={(await params).id} />
 }

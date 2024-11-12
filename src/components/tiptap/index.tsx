@@ -1,15 +1,20 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import CharacterCount from '@tiptap/extension-character-count'
 import Document from '@tiptap/extension-document'
 import Focus from '@tiptap/extension-focus'
 import Heading from '@tiptap/extension-heading'
-import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
-import { EditorProvider, Node } from '@tiptap/react'
+import { EditorProvider, Node, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { isDeepEqual } from 'remeda'
+import { toast } from 'sonner'
+import { useDebounceCallback } from 'usehooks-ts'
 
 import { Toolbar } from '~/components/tiptap/toolbar'
+import { api } from '~/trpc/react'
 
 const FocusMode = Node.create({
   name: 'focusMode',
@@ -53,21 +58,51 @@ const extensions = [
     name: 'title',
     group: 'title',
     parseHTML: () => [{ tag: 'h1:first-child' }]
-  }).configure({ levels: [1] }),
-  FocusMode
+  }).configure({ levels: [1] })
 ]
 
 type EditorProps = {
   content?: string
+  id?: string
 }
 
-export const Editor = ({ content }: EditorProps) => {
+export const NoteEditor = ({ content, id }: EditorProps) => {
+  const router = useRouter()
+
+  const { mutate } = api.notes.create.useMutation({
+    onSuccess: ([data]) => {
+      if (data?.id) {
+        router.push(`/${data?.id}`)
+      }
+
+      toast.success('Saved!')
+      toast.dismiss()
+    }
+  })
+
+  const handleSave = (editor: Editor) => {
+    const isChanged = !isDeepEqual(content, editor.getHTML())
+
+    if (!isChanged) {
+      return
+    }
+
+    mutate({
+      id,
+      title: editor.view.state.doc.firstChild!.textContent.trim()!,
+      body: editor.getHTML()
+    })
+  }
+
+  const debouncedSave = useDebounceCallback((editor: Editor) => handleSave(editor), 1000)
+
   return (
     <EditorProvider
       autofocus
       immediatelyRender={false}
       extensions={extensions}
       content={content}
+      onUpdate={({ editor }) => debouncedSave(editor)}
       editorProps={{
         attributes: {
           class:
