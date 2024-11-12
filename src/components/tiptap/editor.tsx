@@ -19,7 +19,7 @@ const FocusMode = Node.create({
         types: ['paragraph'],
         attributes: {
           class: {
-            default: 'unfocused'
+            default: 'blur-sm'
           }
         }
       }
@@ -46,7 +46,7 @@ const extensions = [
     content: 'title block+'
   }),
   Focus.configure({
-    className: 'focused',
+    className: 'blur-0',
     mode: 'shallowest'
   }),
   Heading.extend({
