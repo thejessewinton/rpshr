@@ -1,17 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-
-import { FloppyDisk, PenNib } from '@phosphor-icons/react'
+import { PenNib } from '@phosphor-icons/react'
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { useCurrentEditor } from '@tiptap/react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { isShallowEqual } from 'remeda'
-import { toast } from 'sonner'
 
 import { useWritingStore } from '~/state/use-writing-store'
-import { api } from '~/trpc/react'
 import { cn } from '~/utils/core'
 
 export const Toolbar = () => {
@@ -23,38 +18,47 @@ export const Toolbar = () => {
 
   return (
     <Tooltip.Provider delayDuration={500} skipDelayDuration={5000}>
-      <AnimatePresence>
-        <motion.div
-          initial={{
-            scale: 0.75
-          }}
-          whileHover={{
-            scale: 1
-          }}
-          className='fixed bottom-10 right-10'
-        >
+      <MotionConfig
+        transition={{
+          duration: 0.3,
+          type: 'spring',
+          damping: 10
+        }}
+      >
+        <AnimatePresence>
           <motion.div
-            className='z-10 flex origin-center items-center rounded-full bg-neutral-950 py-1 pl-4 pr-2 shadow-sm shadow-black/20'
+            className='fixed bottom-10 right-10'
             initial={{
-              opacity: 0,
-              translateY: 10
+              scale: 0.8
             }}
-            animate={{
-              opacity: 1,
-              translateY: 0
-            }}
-            transition={{
-              duration: 0.1
+            whileHover={{
+              scale: 1
             }}
           >
-            <div className='flex items-center gap-1.5'>
-              <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
-              <FocusSwitcher />
-              <SaveButton />
-            </div>
+            <motion.div
+              className='z-10 flex origin-center cursor-pointer items-center rounded-full border border-neutral-700/80 bg-neutral-900 py-0.5 pl-4 pr-2 shadow-sm shadow-black/20'
+              initial={{
+                opacity: 0,
+                translateY: 10,
+                filter: 'blur(4px)'
+              }}
+              animate={{
+                opacity: 1,
+                translateY: 0,
+                filter: 'blur(0px)'
+              }}
+              whileHover={{
+                scale: 1
+              }}
+            >
+              <div className='flex items-center gap-1.5'>
+                <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
+                <FocusSwitcher />
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </MotionConfig>
     </Tooltip.Provider>
   )
 }
@@ -70,7 +74,7 @@ const FocusSwitcher = () => {
     <Tooltip.Root>
       <Tooltip.Trigger onClick={toggleIsFocusMode}>
         <div className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-800'>
-          <PenNib className={cn('size-5 text-white transition-colors')} />
+          <PenNib className={cn('size-4 text-white transition-colors')} />
         </div>
       </Tooltip.Trigger>
       <Tooltip.Content
@@ -80,50 +84,6 @@ const FocusSwitcher = () => {
         className='w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs radix-state-delayed-open:animate-tooltip'
       >
         Focus
-      </Tooltip.Content>
-    </Tooltip.Root>
-  )
-}
-
-const SaveButton = () => {
-  const router = useRouter()
-  const { mutate } = api.notes.create.useMutation({
-    onMutate: () => {
-      toast.loading('Saving…')
-    },
-    onSuccess: ([data]) => {
-      router.push(`/notes/${data?.id}`)
-      toast.success('Saved!')
-      toast.dismiss()
-    }
-  })
-  const { editor } = useCurrentEditor()
-
-  const handleSave = () => {
-    if (!editor) {
-      return
-    }
-
-    mutate({
-      title: editor.view.state.doc.firstChild!.textContent.trim()!,
-      body: editor.getHTML()
-    })
-  }
-
-  return (
-    <Tooltip.Root>
-      <Tooltip.Trigger onClick={handleSave}>
-        <div className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-800'>
-          <FloppyDisk className={cn('size-5 text-white transition-colors')} />
-        </div>
-      </Tooltip.Trigger>
-      <Tooltip.Content
-        side='top'
-        align='center'
-        sideOffset={2}
-        className='w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs radix-state-delayed-open:animate-tooltip'
-      >
-        Save
       </Tooltip.Content>
     </Tooltip.Root>
   )
