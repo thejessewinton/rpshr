@@ -19,7 +19,7 @@ enum Error {
 export default async function SignIn({
   searchParams
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const session = await auth()
 

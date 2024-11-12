@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 
 import { Editor } from '~/components/tiptap/editor'
-import { FocusMode } from '~/components/ui/focus-mode'
 import { api } from '~/trpc/server'
 
 type NotePageParams = {

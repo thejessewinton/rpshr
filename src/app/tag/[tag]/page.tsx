@@ -1,9 +1,9 @@
-type TagPageParams = {
-  params: Promise<{
-    tag: string
-  }>
-}
+// type TagPageParams = {
+//   params: Promise<{
+//     tag: string
+//   }>
+// }
 
-export default async function Tag({ params }: TagPageParams) {
+export default async function Tag() {
   return <div>Tag Page</div>
 }
