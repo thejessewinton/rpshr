@@ -1,15 +1,17 @@
 'use client'
 
-import { PenNib, FloppyDisk } from '@phosphor-icons/react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useWritingStore } from '~/state/use-writing-store'
-import { cn } from '~/utils/core'
-import * as Tooltip from '@radix-ui/react-tooltip'
-import { useHotkeys } from 'react-hotkeys-hook'
-import { useCurrentEditor } from '@tiptap/react'
-import { api } from '~/trpc/react'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+
+import { FloppyDisk, PenNib } from '@phosphor-icons/react'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import { useCurrentEditor } from '@tiptap/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { toast } from 'sonner'
+
+import { useWritingStore } from '~/state/use-writing-store'
+import { api } from '~/trpc/react'
+import { cn } from '~/utils/core'
 
 export const Toolbar = () => {
   const { editor } = useCurrentEditor()

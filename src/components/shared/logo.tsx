@@ -1,4 +1,5 @@
 import { type SVGProps } from 'react'
+
 import { cn } from '~/utils/core'
 
 export const Logo = ({ className, ...props }: SVGProps<SVGSVGElement>) => {

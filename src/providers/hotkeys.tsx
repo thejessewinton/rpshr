@@ -1,7 +1,8 @@
 'use client'
 
-import { useHotkeys } from 'react-hotkeys-hook'
 import { useRouter } from 'next/navigation'
+
+import { useHotkeys } from 'react-hotkeys-hook'
 
 export const Hotkeys = () => {
   const router = useRouter()

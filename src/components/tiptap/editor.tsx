@@ -1,10 +1,12 @@
 'use client'
 
-import { EditorProvider } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import { useState } from 'react'
+
 import CharacterCount from '@tiptap/extension-character-count'
 import Placeholder from '@tiptap/extension-placeholder'
+import { EditorProvider } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+
 import { Toolbar } from './toolbar'
 
 const extensions = [

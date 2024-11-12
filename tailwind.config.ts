@@ -1,7 +1,7 @@
-import { type Config } from 'tailwindcss'
-import { fontFamily } from 'tailwindcss/defaultTheme'
-import radix from 'tailwindcss-radix'
 import typography from '@tailwindcss/typography'
+import { type Config } from 'tailwindcss'
+import radix from 'tailwindcss-radix'
+import { fontFamily } from 'tailwindcss/defaultTheme'
 
 export default {
   content: ['./src/**/*.tsx'],
