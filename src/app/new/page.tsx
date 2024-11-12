@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { Editor } from "~/components/tiptap/editor";
+import { Metadata } from 'next'
+import { Editor } from '~/components/tiptap/editor'
 
 export const metadata: Metadata = {
-  title: "New Note",
-};
+  title: 'New Note'
+}
 
 export default async function NewNote() {
-  return <Editor />;
+  return <Editor />
 }

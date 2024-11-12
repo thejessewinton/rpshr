@@ -1,6 +1,6 @@
-import "./src/env.ts";
-import { type NextConfig } from "next";
+import './src/env.ts'
+import { type NextConfig } from 'next'
 
-const config = {} satisfies NextConfig;
+const config = {} satisfies NextConfig
 
-export default config;
+export default config
