@@ -66,7 +66,7 @@ const FocusSwitcher = () => {
         side="top"
         align="center"
         sideOffset={2}
-        className="radix-state-delayed-open:animate-tooltip w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs"
+        className="w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs radix-state-delayed-open:animate-tooltip"
       >
         Focus
       </Tooltip.Content>
@@ -110,7 +110,7 @@ const SaveButton = () => {
         side="top"
         align="center"
         sideOffset={2}
-        className="radix-state-delayed-open:animate-tooltip w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs"
+        className="w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs radix-state-delayed-open:animate-tooltip"
       >
         Save
       </Tooltip.Content>

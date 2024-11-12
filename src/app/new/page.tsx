@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Editor } from "~/components/ui/editor";
+import { Editor } from "~/components/tiptap/editor";
 
 export const metadata: Metadata = {
   title: "New Note",
