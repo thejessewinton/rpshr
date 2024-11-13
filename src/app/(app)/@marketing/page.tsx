@@ -18,7 +18,7 @@ export default function IndexPage() {
             place where creativity becomes the centermost ideal? What would you write if you had nothing to distract?
           </p>
           <p className='animate-enter [animation-delay:3000ms]'>
-            An environment to write, journal, and take notes. No frills, no features— no distractions. Just a simple
+            An environment to write, journal, and take notes. No frills, minimal features— no distractions. A simple
             interface built on top of a powerful text editor.
           </p>
           <p className='animate-enter [animation-delay:3750ms]'>
