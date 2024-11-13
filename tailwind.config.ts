@@ -13,27 +13,43 @@ export default {
         mono: ['var(--font-geist-mono)', ...fontFamily.mono]
       },
       animation: {
-        'fade-in': 'fade 250ms ease forwards',
-        'fade-out': 'fade 250ms ease reverse',
-        'scale-in': 'scale 250ms ease forwards',
-        'scale-out': 'scale 250ms ease reverse',
-        'slide-in': 'slide 250ms ease forwards',
-        'slide-out': 'slide 250ms ease reverse',
-        tooltip: 'fade 250ms ease forwards, slide 250ms ease forwards',
-        menu: 'fade-in 250ms ease forwards, slide-in 250ms ease forwards'
+        fade: 'animate-opacity 250ms ease forwards',
+        menu: 'animate-opacity 250ms ease forwards, animate-up 250ms ease forwards',
+        enter:
+          'animate-scale 0.75s ease-in-out both, animate-blur 0.75s ease-in-out both, animate-opacity 0.75s ease-in-out both'
       },
       keyframes: {
-        fade: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' }
+        'animate-opacity': {
+          '0%': {
+            opacity: '0'
+          },
+          '100%': {
+            opacity: '1'
+          }
         },
-        scale: {
-          '0%': { transform: 'scale(0.9)' },
-          '100%': { transform: 'scale(1)' }
+        'animate-blur': {
+          '0%': {
+            filter: 'blur(2px)'
+          },
+          '100%': {
+            filter: 'blur(0px)'
+          }
         },
-        slide: {
-          '0%': { transform: 'translateY(10px)' },
-          '100%': { transform: 'translateY(0)' }
+        'animate-up': {
+          '0%': {
+            transform: `translateY(8px)`
+          },
+          '100%': {
+            transform: 'translateY(0px)'
+          }
+        },
+        'animate-scale': {
+          '0%': {
+            transform: `translateY(10px)`
+          },
+          '100%': {
+            transform: 'translateY(0px)'
+          }
         }
       }
     }

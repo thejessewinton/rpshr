@@ -6,12 +6,12 @@ import CharacterCount from '@tiptap/extension-character-count'
 import Document from '@tiptap/extension-document'
 import Focus from '@tiptap/extension-focus'
 import Heading from '@tiptap/extension-heading'
+import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { EditorProvider, type Editor } from '@tiptap/react'
+import { EditorProvider, Node, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
-import { toast } from 'sonner'
 import { useDebounceCallback } from 'usehooks-ts'
 
 import { Toolbar } from '~/components/tiptap/toolbar'
@@ -25,7 +25,7 @@ import { api } from '~/trpc/react'
 //         types: ['paragraph'],
 //         attributes: {
 //           class: {
-//             default: 'blur-sm'
+//             default: 'blur-sm transition-all duration-300'
 //           }
 //         }
 //       }
@@ -53,22 +53,27 @@ const extensions = [
     content: 'title block+'
   }),
   Focus.configure({
-    className: 'blur-0',
+    className: '!blur-0',
     mode: 'shallowest'
   }),
   Heading.extend({
     name: 'title',
     group: 'title',
     parseHTML: () => [{ tag: 'h1:first-child' }]
-  }).configure({ levels: [1] })
+  }).configure({ levels: [1] }),
+  Link.configure({
+    autolink: true,
+    defaultProtocol: 'https://',
+    openOnClick: true
+  })
 ]
 
 type EditorProps = {
   content?: string
-  id?: string
+  noteId?: string
 }
 
-export const NoteEditor = ({ content, id }: EditorProps) => {
+export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const router = useRouter()
 
   const { mutate } = api.notes.create.useMutation({
@@ -76,9 +81,6 @@ export const NoteEditor = ({ content, id }: EditorProps) => {
       if (data?.id) {
         router.push(`/${data?.id}`)
       }
-
-      toast.success('Saved!')
-      toast.dismiss()
     }
   })
 
@@ -90,7 +92,7 @@ export const NoteEditor = ({ content, id }: EditorProps) => {
     }
 
     mutate({
-      id,
+      id: noteId,
       title: editor.view.state.doc.firstChild!.textContent.trim() ?? '',
       body: editor.getHTML() ?? ''
     })
@@ -108,7 +110,7 @@ export const NoteEditor = ({ content, id }: EditorProps) => {
       editorProps={{
         attributes: {
           class:
-            'editor prose-headings:text-sm max-w-none prose-headings:font-medium text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
+            'editor prose-headings:text-sm max-w-none prose-headings:font-medium font-light text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
         }
       }}
     >
