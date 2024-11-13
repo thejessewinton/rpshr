@@ -16,7 +16,7 @@ export default {
         fade: 'animate-opacity 250ms ease forwards',
         menu: 'animate-opacity 250ms ease forwards, animate-up 250ms ease forwards',
         enter:
-          'animate-scale 0.75s ease-in-out both, animate-blur 0.75s ease-in-out both, animate-opacity 0.75s ease-in-out both'
+          'animate-scale 1s ease-in-out both, animate-blur 1s ease-in-out both, animate-opacity 1s ease-in-out both'
       },
       keyframes: {
         'animate-opacity': {
@@ -29,7 +29,7 @@ export default {
         },
         'animate-blur': {
           '0%': {
-            filter: 'blur(2px)'
+            filter: 'blur(5px)'
           },
           '100%': {
             filter: 'blur(0px)'
