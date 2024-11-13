@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 
 import { api } from '~/trpc/server'
 
-export default async function LiftsPage() {
+export default async function NotesPage() {
   const notes = await api.notes.getAll()
   return (
     <div className='-mx-[2px] flex flex-col gap-4'>

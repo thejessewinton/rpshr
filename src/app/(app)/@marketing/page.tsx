@@ -2,7 +2,7 @@ import { Header } from '~/components/ui/header'
 
 export default function IndexPage() {
   return (
-    <div className='mx-auto mt-40'>
+    <div className='mx-auto mt-20 md:mt-40'>
       <Header />
 
       <div className='space-y-4 text-sm leading-loose text-neutral-700 dark:text-neutral-400'>
