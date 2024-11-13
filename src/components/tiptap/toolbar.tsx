@@ -1,22 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import NumberFlow from '@number-flow/react'
-import { List, PenNib, Plus } from '@phosphor-icons/react'
+import { PenNib, Plus } from '@phosphor-icons/react'
 import { useCurrentEditor } from '@tiptap/react'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useDebounceValue } from 'usehooks-ts'
 
-import { Dropdown } from '~/components/shared/dropdown'
 import { Tooltip } from '~/components/shared/tooltip'
 import { useWritingStore } from '~/state/use-writing-store'
 import { cn } from '~/utils/core'
 import { KBD } from '../shared/kbd'
-
-const TOOLTIP_OFFSET = 12
 
 export const Toolbar = () => {
   const { editor } = useCurrentEditor()
@@ -86,7 +82,7 @@ const NewButton = () => {
 const WordCount = () => {
   const { editor } = useCurrentEditor()
 
-  const [debouncedValue] = useDebounceValue((editor?.storage.characterCount as { words: () => number }).words(), 1000)
+  const [debouncedValue] = useDebounceValue((editor?.storage.characterCount as { words: () => number }).words(), 500)
 
   if (!editor) {
     return null

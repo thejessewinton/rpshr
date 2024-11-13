@@ -1,6 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import path from 'path'
+
+import { usePathname, useRouter } from 'next/navigation'
 
 import CharacterCount from '@tiptap/extension-character-count'
 import Document from '@tiptap/extension-document'
@@ -9,29 +11,13 @@ import Heading from '@tiptap/extension-heading'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { EditorProvider, Node, type Editor } from '@tiptap/react'
+import { EditorProvider, FloatingMenu, useCurrentEditor, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
 
 import { Toolbar } from '~/components/tiptap/toolbar'
 import { api } from '~/trpc/react'
-
-// const FocusMode = Node.create({
-//   name: 'focusMode',
-//   addGlobalAttributes() {
-//     return [
-//       {
-//         types: ['paragraph'],
-//         attributes: {
-//           class: {
-//             default: 'blur-sm transition-all duration-300'
-//           }
-//         }
-//       }
-//     ]
-//   }
-// })
 
 const extensions = [
   StarterKit,
@@ -40,7 +26,6 @@ const extensions = [
     limit: null
   }),
   Placeholder.configure({
-    showOnlyCurrent: false,
     placeholder: ({ node }) => {
       if (node.type.name === 'title') {
         return 'Breathe. Focus. Write.'
@@ -75,10 +60,11 @@ type EditorProps = {
 
 export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const router = useRouter()
+  const pathname = usePathname()
 
   const { mutate } = api.notes.create.useMutation({
     onSuccess: ([data]) => {
-      if (data?.id) {
+      if (data?.id && pathname === '/new') {
         router.push(`/${data?.id}`)
       }
     }
@@ -110,7 +96,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       editorProps={{
         attributes: {
           class:
-            'editor prose-headings:text-sm max-w-none prose-headings:font-medium font-light text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
+            'editor prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
         }
       }}
     >

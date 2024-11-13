@@ -1,3 +1,4 @@
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
@@ -23,6 +24,9 @@ export const notesRouter = createTRPCRouter({
           set: { title: input.title, body: input.body }
         })
     }),
+  delete: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
+    await ctx.db.delete(note).where(eq(note.id, input.id))
+  }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.query.note.findMany({
       where({ user_id }, { eq }) {
@@ -59,7 +63,7 @@ export const notesRouter = createTRPCRouter({
         user_id: ctx.session.user.id
       })
       .returning({
-        id: note.id
+        id: tag.id
       })
   })
 })
