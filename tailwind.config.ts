@@ -13,13 +13,14 @@ export default {
         mono: ['var(--font-geist-mono)', ...fontFamily.mono]
       },
       animation: {
-        'fade-in': 'fade 0.1s ease forwards',
-        'fade-out': 'fade 0.1s ease reverse',
-        'scale-in': 'scale 0.1s ease forwards',
-        'scale-out': 'scale 0.1s ease reverse',
-        'slide-in': 'slide 0.1s ease forwards',
-        'slide-out': 'slide 0.1s ease reverse',
-        tooltip: 'fade 250ms ease forwards, slide 250ms ease forwards'
+        'fade-in': 'fade 250ms ease forwards',
+        'fade-out': 'fade 250ms ease reverse',
+        'scale-in': 'scale 250ms ease forwards',
+        'scale-out': 'scale 250ms ease reverse',
+        'slide-in': 'slide 250ms ease forwards',
+        'slide-out': 'slide 250ms ease reverse',
+        tooltip: 'fade 250ms ease forwards, slide 250ms ease forwards',
+        menu: 'fade-in 250ms ease forwards, slide-in 250ms ease forwards'
       },
       keyframes: {
         fade: {
