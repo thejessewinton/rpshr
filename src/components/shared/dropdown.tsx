@@ -32,9 +32,9 @@ const DropdownContent = forwardRef(
     return (
       <DropdownPrimitive.Content
         className={cn(
-          'z-[9999] mt-1 w-40 space-y-1 overflow-hidden rounded-lg border p-1 text-xs shadow-lg shadow-black/10 backdrop-blur-sm radix-state-closed:animate-fade-out',
+          'm tt-1 z-[9999] w-40 space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-lg shadow-black/10 backdrop-blur-sm radix-state-closed:animate-fade-out',
           'border-neutral-200/70 bg-neutral-100/70 text-neutral-700',
-          'dark:border-neutral-700/30 dark:bg-neutral-800/70 dark:text-neutral-400',
+          'dark:border-neutral-700/30 dark:bg-neutral-950 dark:text-neutral-400',
           className
         )}
         ref={ref}
@@ -53,7 +53,7 @@ const DropdownItem = forwardRef(
         className={cn(
           'flex w-full cursor-pointer items-center justify-between gap-2 rounded p-2 outline-none',
           'focus:bg-neutral-200/70 focus:text-neutral-700 radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700',
-          'focus:dark:bg-neutral-700/20 focus:dark:text-white radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white',
+          'focus:dark:bg-neutral-900/20 focus:dark:text-white radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white',
           className
         )}
         ref={ref}

@@ -1,13 +1,17 @@
 'use client'
 
+import NumberFlow from '@number-flow/react'
 import { List, PenNib } from '@phosphor-icons/react'
-import * as Tooltip from '@radix-ui/react-tooltip'
 import { useCurrentEditor } from '@tiptap/react'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { useDebounceValue } from 'usehooks-ts'
 
+import { Dropdown } from '~/components/shared/dropdown'
+import { Tooltip } from '~/components/shared/tooltip'
 import { useWritingStore } from '~/state/use-writing-store'
-import { Dropdown } from '../shared/dropdown'
+
+const TOOLTIP_OFFSET = 12
 
 export const Toolbar = () => {
   const { editor } = useCurrentEditor()
@@ -51,10 +55,8 @@ export const Toolbar = () => {
                 scale: 1
               }}
             >
-              <div className='relative flex items-center gap-1'>
-                <span className='border-r border-neutral-700/40 pr-3 font-mono text-xs'>
-                  {(editor.storage.characterCount as { words: () => number }).words()} words
-                </span>
+              <div className='relative flex items-center justify-center gap-1'>
+                <WordCount />
                 <FocusSwitcher />
                 <NavigationMenu />
               </div>
@@ -69,7 +71,7 @@ export const Toolbar = () => {
 const NavigationMenu = () => {
   return (
     <Dropdown>
-      <Tooltip.Root>
+      <Tooltip>
         <Dropdown.Trigger asChild className='overflow-hidden rounded-full'>
           <Tooltip.Trigger>
             <div className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-900'>
@@ -80,16 +82,24 @@ const NavigationMenu = () => {
         <Dropdown.Content side='top' sideOffset={8}>
           <Dropdown.Item>Table of Contents</Dropdown.Item>
         </Dropdown.Content>
-        <Tooltip.Content
-          side='top'
-          align='center'
-          sideOffset={12}
-          className='w-full rounded-md bg-neutral-950 p-1 px-2 font-mono text-xs shadow-sm shadow-black/20 radix-state-delayed-open:animate-tooltip'
-        >
-          Navigation
-        </Tooltip.Content>
-      </Tooltip.Root>
+        <Tooltip.Content>Navigation</Tooltip.Content>
+      </Tooltip>
     </Dropdown>
+  )
+}
+
+const WordCount = () => {
+  const { editor } = useCurrentEditor()
+  const [debouncedValue] = useDebounceValue((editor?.storage.characterCount as { words: () => number }).words(), 1000)
+
+  if (!editor) {
+    return null
+  }
+
+  return (
+    <span className='flex items-center gap-1.5 border-r border-neutral-700/40 pr-3 font-mono text-xs'>
+      <NumberFlow value={debouncedValue} /> words
+    </span>
   )
 }
 
@@ -101,20 +111,13 @@ const FocusSwitcher = () => {
   })
 
   return (
-    <Tooltip.Root>
+    <Tooltip>
       <Tooltip.Trigger onClick={toggleIsFocusMode}>
         <div className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-900'>
           <PenNib className='size-4 text-white transition-colors' />
         </div>
       </Tooltip.Trigger>
-      <Tooltip.Content
-        side='top'
-        align='center'
-        sideOffset={12}
-        className='w-full rounded-md bg-neutral-950 p-1 px-2 font-mono text-xs shadow-sm shadow-black/20 radix-state-delayed-open:animate-tooltip'
-      >
-        Focus
-      </Tooltip.Content>
-    </Tooltip.Root>
+      <Tooltip.Content>Focus</Tooltip.Content>
+    </Tooltip>
   )
 }

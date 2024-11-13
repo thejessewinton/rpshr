@@ -23,6 +23,7 @@
     "@auth/drizzle-adapter": "^1.7.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@neondatabase/serverless": "^0.10.3",
+    "@number-flow/react": "^0.3.1",
     "@phosphor-icons/react": "^2.1.7",
     "@radix-ui/react-context-menu": "^2.2.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
