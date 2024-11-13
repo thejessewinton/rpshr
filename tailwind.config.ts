@@ -29,7 +29,7 @@ export default {
         },
         'animate-blur': {
           '0%': {
-            filter: 'blur(5px)'
+            filter: 'blur(3px)'
           },
           '100%': {
             filter: 'blur(0px)'
