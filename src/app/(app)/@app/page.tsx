@@ -17,7 +17,7 @@ export default async function LiftsPage() {
           <div className='flex items-center gap-4'>
             <span className='text-neutral-700 dark:text-white'>{note.title}</span>
           </div>
-          <span className='font-mono text-xs font-light text-neutral-700 dark:text-neutral-400'>
+          <span className='text-xs font-light text-neutral-700 dark:text-neutral-400'>
             {format(note.updated_at ?? note.created_at!, 'MMMM dd')}
           </span>
         </Link>
