@@ -36,7 +36,7 @@ export const Toolbar = () => {
             }}
           >
             <motion.div
-              className='z-10 flex origin-center cursor-pointer items-center rounded-full border border-neutral-700/80 bg-neutral-900 py-0.5 pl-4 pr-2 shadow-sm shadow-black/20'
+              className='z-10 flex origin-center cursor-pointer items-center rounded-full border border-neutral-700/80 bg-neutral-900 py-0.5 pl-3 pr-1 shadow-sm shadow-black/20'
               initial={{
                 opacity: 0,
                 translateY: 10,
@@ -52,7 +52,7 @@ export const Toolbar = () => {
               }}
             >
               <div className='flex items-center gap-1.5'>
-                <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
+                <span className='font-mono text-[.625rem]'>{editor.storage.characterCount.words()} words</span>
                 <FocusSwitcher />
               </div>
             </motion.div>

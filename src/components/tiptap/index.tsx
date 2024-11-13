@@ -7,6 +7,7 @@ import Document from '@tiptap/extension-document'
 import Focus from '@tiptap/extension-focus'
 import Heading from '@tiptap/extension-heading'
 import Placeholder from '@tiptap/extension-placeholder'
+import Typography from '@tiptap/extension-typography'
 import { EditorProvider, Node, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
@@ -34,6 +35,7 @@ const FocusMode = Node.create({
 
 const extensions = [
   StarterKit,
+  Typography,
   CharacterCount.configure({
     limit: null
   }),
