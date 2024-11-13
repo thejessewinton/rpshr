@@ -37,9 +37,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <SessionProvider>
           <ThemeProvider attribute='class'>
             <TRPCReactProvider>
-              <Header />
-              <main className='min-w-screen mx-auto flex w-full max-w-3xl flex-col justify-center'>{children}</main>
-              <Toaster />
+              <div className='mx-auto max-w-3xl px-8'>{children}</div>
               <Hotkeys />
             </TRPCReactProvider>
           </ThemeProvider>

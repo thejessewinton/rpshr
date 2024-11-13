@@ -27,16 +27,17 @@ export const Toolbar = () => {
       >
         <AnimatePresence>
           <motion.div
-            className='fixed bottom-10 right-10'
+            className='fixed bottom-10 left-1/2 origin-center'
             initial={{
-              scale: 0.8
+              scale: 0.9,
+              translateX: '-50%'
             }}
             whileHover={{
               scale: 1
             }}
           >
             <motion.div
-              className='z-10 flex origin-center cursor-pointer items-center rounded-full border border-neutral-700/80 bg-neutral-900 py-0.5 pl-3 pr-1 shadow-sm shadow-black/20'
+              className='z-10 flex origin-center cursor-pointer items-center rounded-full border border-neutral-700/80 bg-neutral-950 py-0.5 pl-3 pr-1 shadow-sm shadow-black/20'
               initial={{
                 opacity: 0,
                 translateY: 10,
@@ -52,7 +53,7 @@ export const Toolbar = () => {
               }}
             >
               <div className='flex items-center gap-1.5'>
-                <span className='font-mono text-[.625rem]'>{editor.storage.characterCount.words()} words</span>
+                <span className='font-mono text-xs'>{editor.storage.characterCount.words()} words</span>
                 <FocusSwitcher />
               </div>
             </motion.div>
@@ -73,15 +74,15 @@ const FocusSwitcher = () => {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger onClick={toggleIsFocusMode}>
-        <div className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-800'>
-          <PenNib className={cn('size-4 text-white transition-colors')} />
+        <div className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-900'>
+          <PenNib className='size-4 text-white transition-colors' />
         </div>
       </Tooltip.Trigger>
       <Tooltip.Content
         side='top'
         align='center'
-        sideOffset={2}
-        className='w-full rounded-sm bg-neutral-800 p-1 px-2 font-mono text-xs radix-state-delayed-open:animate-tooltip'
+        sideOffset={8}
+        className='w-full rounded-sm bg-neutral-950 p-1 px-2 font-mono text-xs shadow-sm shadow-black/20 radix-state-delayed-open:animate-tooltip'
       >
         Focus
       </Tooltip.Content>
