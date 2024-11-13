@@ -8,7 +8,7 @@ import Focus from '@tiptap/extension-focus'
 import Heading from '@tiptap/extension-heading'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { EditorProvider, Node, type Editor } from '@tiptap/react'
+import { EditorProvider, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
 import { toast } from 'sonner'
@@ -17,21 +17,21 @@ import { useDebounceCallback } from 'usehooks-ts'
 import { Toolbar } from '~/components/tiptap/toolbar'
 import { api } from '~/trpc/react'
 
-const FocusMode = Node.create({
-  name: 'focusMode',
-  addGlobalAttributes() {
-    return [
-      {
-        types: ['paragraph'],
-        attributes: {
-          class: {
-            default: 'blur-sm'
-          }
-        }
-      }
-    ]
-  }
-})
+// const FocusMode = Node.create({
+//   name: 'focusMode',
+//   addGlobalAttributes() {
+//     return [
+//       {
+//         types: ['paragraph'],
+//         attributes: {
+//           class: {
+//             default: 'blur-sm'
+//           }
+//         }
+//       }
+//     ]
+//   }
+// })
 
 const extensions = [
   StarterKit,
@@ -91,8 +91,8 @@ export const NoteEditor = ({ content, id }: EditorProps) => {
 
     mutate({
       id,
-      title: editor.view.state.doc.firstChild!.textContent.trim()!,
-      body: editor.getHTML()
+      title: editor.view.state.doc.firstChild!.textContent.trim() ?? '',
+      body: editor.getHTML() ?? ''
     })
   }
 

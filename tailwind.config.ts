@@ -19,7 +19,7 @@ export default {
         'scale-out': 'scale 0.1s ease reverse',
         'slide-in': 'slide 0.1s ease forwards',
         'slide-out': 'slide 0.1s ease reverse',
-        tooltip: 'fade 0.1s ease forwards, slide 0.1s ease forwards'
+        tooltip: 'fade 250ms ease forwards, slide 250ms ease forwards'
       },
       keyframes: {
         fade: {

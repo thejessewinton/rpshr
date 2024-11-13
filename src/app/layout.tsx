@@ -6,12 +6,10 @@ import { type Metadata } from 'next'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 
-import { Header } from '~/components/ui/header'
 import { env } from '~/env'
 import { Hotkeys } from '~/providers/hotkeys'
 import { SessionProvider } from '~/providers/session'
 import { ThemeProvider } from '~/providers/theme'
-import { Toaster } from '~/providers/toaster'
 import { TRPCReactProvider } from '~/trpc/react'
 import { cn } from '~/utils/core'
 
