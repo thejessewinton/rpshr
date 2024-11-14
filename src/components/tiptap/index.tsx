@@ -9,10 +9,10 @@ import Heading from '@tiptap/extension-heading'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { EditorProvider, FloatingMenu, isiOS, useCurrentEditor, type Editor } from '@tiptap/react'
+import { EditorProvider, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
-import { useDebounceCallback, useDebounceValue } from 'usehooks-ts'
+import { useDebounceCallback } from 'usehooks-ts'
 
 import { Toolbar } from '~/components/tiptap/toolbar'
 import { api } from '~/trpc/react'
@@ -99,7 +99,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       editorProps={{
         attributes: {
           class:
-            'editor prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
+            'editor md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
         }
       }}
     >
