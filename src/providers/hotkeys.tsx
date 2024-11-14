@@ -8,7 +8,7 @@ export const Hotkeys = () => {
   const router = useRouter()
 
   useHotkeys('c', () => {
-    router.push('/new')
+    router.push('/')
   })
 
   return null

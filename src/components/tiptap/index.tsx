@@ -1,7 +1,5 @@
 'use client'
 
-import path from 'path'
-
 import { usePathname, useRouter } from 'next/navigation'
 
 import CharacterCount from '@tiptap/extension-character-count'
@@ -11,10 +9,10 @@ import Heading from '@tiptap/extension-heading'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { EditorProvider, FloatingMenu, useCurrentEditor, type Editor } from '@tiptap/react'
+import { EditorProvider, FloatingMenu, isiOS, useCurrentEditor, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
-import { useDebounceCallback } from 'usehooks-ts'
+import { useDebounceCallback, useDebounceValue } from 'usehooks-ts'
 
 import { Toolbar } from '~/components/tiptap/toolbar'
 import { api } from '~/trpc/react'
@@ -62,9 +60,9 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const router = useRouter()
   const pathname = usePathname()
 
-  const { mutate } = api.notes.create.useMutation({
+  const { mutate, isPending, isSuccess, reset } = api.notes.create.useMutation({
     onSuccess: ([data]) => {
-      if (data?.id && pathname === '/new') {
+      if (data?.id && pathname === '/') {
         router.push(`/${data?.id}`)
       }
     }
@@ -84,7 +82,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
     })
   }
 
-  const debouncedSave = useDebounceCallback((editor: Editor) => handleSave(editor), 1000)
+  const debouncedSave = useDebounceCallback((editor: Editor) => handleSave(editor), 2000)
 
   return (
     <EditorProvider
@@ -92,7 +90,9 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       immediatelyRender={false}
       extensions={extensions}
       content={content}
-      onUpdate={({ editor }) => debouncedSave(editor)}
+      onUpdate={({ editor }) => {
+        debouncedSave(editor)
+      }}
       editorProps={{
         attributes: {
           class:
@@ -100,7 +100,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
         }
       }}
     >
-      <Toolbar />
+      <Toolbar isPending={isPending} isSuccess={isSuccess} />
     </EditorProvider>
   )
 }

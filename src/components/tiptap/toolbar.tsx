@@ -13,8 +13,14 @@ import { Tooltip } from '~/components/shared/tooltip'
 import { useWritingStore } from '~/state/use-writing-store'
 import { cn } from '~/utils/core'
 import { KBD } from '../shared/kbd'
+import { Ping } from '../shared/ping'
 
-export const Toolbar = () => {
+type ToolbarProps = {
+  isPending?: boolean
+  isSuccess?: boolean
+}
+
+export const Toolbar = ({ isPending, isSuccess }: ToolbarProps) => {
   const { editor } = useCurrentEditor()
 
   if (!editor) {
@@ -22,42 +28,41 @@ export const Toolbar = () => {
   }
 
   return (
-    <Tooltip.Provider delayDuration={50} skipDelayDuration={1000}>
-      <MotionConfig
-        transition={{
-          duration: 0.1,
-          repeatDelay: 4,
-          type: 'spring',
-          damping: 10
-        }}
-      >
-        <AnimatePresence>
-          <motion.div
-            className='fixed bottom-10 left-1/2 z-20 flex origin-center items-center rounded-full border border-neutral-700/40 bg-neutral-950 py-1.5 pl-4 pr-1 shadow-xl shadow-black/10'
-            initial={{
-              opacity: 0,
-              translateY: 10,
-              filter: 'blur(4px)',
-              translateX: '-50%'
-            }}
-            animate={{
-              opacity: 1,
-              translateY: 0,
-              filter: 'blur(0px)'
-            }}
-            whileHover={{
-              scale: 1
-            }}
-          >
-            <div className='relative flex items-center justify-center gap-1'>
-              <WordCount />
-              <FocusSwitcher />
-              <NewButton />
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </MotionConfig>
-    </Tooltip.Provider>
+    <MotionConfig
+      transition={{
+        duration: 0.1,
+        repeatDelay: 4,
+        type: 'spring',
+        damping: 10
+      }}
+    >
+      <AnimatePresence>
+        <motion.div
+          className='fixed bottom-10 left-1/2 z-20 flex origin-center items-center rounded-full border border-neutral-700/40 bg-neutral-950 py-1.5 pl-4 pr-1 shadow-xl shadow-black/10'
+          initial={{
+            opacity: 0,
+            translateY: 10,
+            filter: 'blur(4px)',
+            translateX: '-50%'
+          }}
+          animate={{
+            opacity: 1,
+            translateY: 0,
+            filter: 'blur(0px)'
+          }}
+          whileHover={{
+            scale: 1
+          }}
+        >
+          <div className='relative flex items-center justify-center gap-1'>
+            <WordCount />
+            <FocusSwitcher />
+            <NewButton />
+            <SaveState isPending={isPending} isSuccess={isSuccess} />
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </MotionConfig>
   )
 }
 
@@ -66,7 +71,7 @@ const NewButton = () => {
     <Tooltip>
       <Tooltip.Trigger>
         <Link
-          href='/new'
+          href='/'
           className='flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-900'
         >
           <Plus className='size-4 text-white transition-colors' />
@@ -116,6 +121,42 @@ const FocusSwitcher = () => {
       <Tooltip.Content>
         {isFocusMode ? 'Focus' : 'Unfocus'} <KBD>`</KBD>
       </Tooltip.Content>
+    </Tooltip>
+  )
+}
+
+const SaveState = ({ isPending, isSuccess }: ToolbarProps) => {
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <AnimatePresence mode='popLayout'>
+          <motion.div
+            initial={{
+              opacity: 0,
+              translateY: 10
+            }}
+            animate={{
+              opacity: 1,
+              translateY: 0
+            }}
+            exit={{
+              opacity: 0,
+              translateY: -10
+            }}
+            key={isPending ? 'pending' : isSuccess ? 'success' : 'idle'}
+            className='flex size-8 items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-900'
+          >
+            {isPending ? (
+              <Ping data-variant='pending' />
+            ) : isSuccess ? (
+              <Ping data-variant='success' />
+            ) : (
+              <Ping data-variant='idle' />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </Tooltip.Trigger>
+      <Tooltip.Content>{isPending ? 'Pending' : isSuccess ? 'Saved' : 'No changes'}</Tooltip.Content>
     </Tooltip>
   )
 }
