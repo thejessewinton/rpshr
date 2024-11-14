@@ -59,12 +59,14 @@ type EditorProps = {
 export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const router = useRouter()
   const pathname = usePathname()
+  const utils = api.useUtils()
 
-  const { mutate, isPending, isSuccess, reset } = api.notes.create.useMutation({
+  const { mutate, isPending, isSuccess } = api.notes.create.useMutation({
     onSuccess: ([data]) => {
       if (data?.id && pathname === '/') {
         router.push(`/${data?.id}`)
       }
+      utils.notes.getAll.invalidate()
     }
   })
 

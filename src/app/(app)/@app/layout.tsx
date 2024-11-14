@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react'
+import { unstable_cache } from 'next/cache'
 
 import { Tooltip } from '~/components/shared/tooltip'
 import { Header } from '~/components/ui/header'

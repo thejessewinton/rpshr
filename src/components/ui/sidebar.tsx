@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { ArrowLineRight } from '@phosphor-icons/react'
-import { format, getMonth } from 'date-fns'
+import { format } from 'date-fns'
 import { motion, type Variants } from 'framer-motion'
-import { groupBy, sortBy } from 'remeda'
+import { groupBy } from 'remeda'
 
 import { Tooltip } from '~/components/shared/tooltip'
 import { RouterOutputs } from '~/trpc/react'
