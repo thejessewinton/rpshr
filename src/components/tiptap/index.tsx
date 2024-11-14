@@ -72,8 +72,9 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
 
   const handleSave = (editor: Editor) => {
     const isChanged = !isDeepEqual(content, editor.getHTML())
+    const isEmpty = editor.view.state.doc.textContent.trim() === ''
 
-    if (!isChanged) {
+    if (!isChanged || isEmpty) {
       return
     }
 

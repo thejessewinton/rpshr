@@ -13,7 +13,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
     <Tooltip.Provider delayDuration={50} skipDelayDuration={1000}>
       <Header />
       <Sidebar notes={notes} />
-      <Shadow />
+      {/* <Shadow /> */}
       <main className='min-w-screen mx-auto flex w-full flex-col justify-center'>{children}</main>
     </Tooltip.Provider>
   )
