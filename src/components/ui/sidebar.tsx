@@ -208,7 +208,10 @@ export const Sidebar = ({ notes }: SidebarProps) => {
             })
           )}
         </div>
-        <Button href="/" className="mt-auto mb-0 w-full justify-between">
+        <Button
+          href="/"
+          className="mt-auto mb-0 w-full justify-between border border-neutral-700/40 bg-neutral-950"
+        >
           New <KBD>C</KBD>
         </Button>
       </motion.div>

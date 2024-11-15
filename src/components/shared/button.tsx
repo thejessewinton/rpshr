@@ -21,6 +21,11 @@ type ButtonProps =
     } & ComponentPropsWithRef<'a'> &
       LinkProps<string>)
 
+const defaultClassNames = cn(
+  'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md px-6 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
+  'border border-neutral-200/70 text-neutral-700 hover:border-neutral-200 dark:border-neutral-700/40 dark:text-neutral-400 hover:dark:border-neutral-700/70',
+)
+
 export const Button = forwardRef(
   (
     { children, icon, className, disabled, ...props }: ButtonProps,
@@ -29,11 +34,7 @@ export const Button = forwardRef(
     if (props.href === undefined) {
       return (
         <button
-          className={cn(
-            'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md px-6 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
-            'border border-neutral-200/70 text-neutral-700 hover:border-neutral-200 dark:border-neutral-700/30 dark:text-neutral-400 hover:dark:border-neutral-700/70',
-            className,
-          )}
+          className={cn(defaultClassNames, className)}
           disabled={disabled}
           ref={ref as Ref<HTMLButtonElement>}
           {...props}
@@ -46,11 +47,7 @@ export const Button = forwardRef(
 
     return (
       <Link
-        className={cn(
-          'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md px-6 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
-          'border border-neutral-200/70 text-neutral-700 hover:border-neutral-200 dark:border-neutral-700/30 dark:text-neutral-400 hover:dark:border-neutral-700/70',
-          className,
-        )}
+        className={cn(defaultClassNames, className)}
         ref={ref as Ref<HTMLAnchorElement>}
         {...props}
       >
