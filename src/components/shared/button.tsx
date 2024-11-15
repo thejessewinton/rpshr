@@ -1,10 +1,10 @@
+import Link, { type LinkProps } from 'next/link'
 import {
-  forwardRef,
   type ComponentPropsWithRef,
   type ReactNode,
   type Ref,
+  forwardRef,
 } from 'react'
-import Link, { type LinkProps } from 'next/link'
 
 import { cn } from '~/utils/core'
 

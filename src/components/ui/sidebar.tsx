@@ -1,16 +1,16 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
 import { ArrowLineRight } from '@phosphor-icons/react'
 import { format } from 'date-fns'
-import { motion, type Variants } from 'framer-motion'
+import { type Variants, motion } from 'framer-motion'
 import { groupBy } from 'remeda'
 
 import { Tooltip } from '~/components/shared/tooltip'
-import { api, RouterOutputs } from '~/trpc/react'
+import { type RouterOutputs, api } from '~/trpc/react'
 import { cn } from '~/utils/core'
 import { Button } from '../shared/button'
 import { KBD } from '../shared/kbd'
@@ -30,12 +30,10 @@ const useShadow = () => {
       const centerY = top + height / 10
 
       const distance = Math.sqrt(
-        Math.pow(centerX - e.clientX, 2) + Math.pow(centerY - e.clientY, 2),
+        (centerX - e.clientX) ** 2 + (centerY - e.clientY) ** 2,
       )
 
-      const maxDistance = Math.sqrt(
-        Math.pow(width / 2, 2) + Math.pow(height / 2, 2),
-      )
+      const maxDistance = Math.sqrt((width / 2) ** 2 + (height / 2) ** 2)
       const newOpacity = Math.max(0, 1 - Math.min(distance / maxDistance))
 
       setOpacity(newOpacity)
@@ -59,7 +57,7 @@ export const Shadow = () => {
         opacity,
       }}
       ref={shadowRef}
-      className="pointer-events-none fixed inset-0 w-[24rem] bg-gradient-to-r from-black/30 to-transparent to-80%"
+      className="pointer-events-none fixed inset-0 w-[24rem] bg-gradient-to-r from-black/30 to-80% to-transparent"
     />
   )
 }
@@ -120,9 +118,9 @@ export const Sidebar = ({ notes }: SidebarProps) => {
     >
       <motion.div
         className={cn(
-          'fixed inset-0 z-[100] flex w-72 flex-col items-center border-r border-neutral-700/40 bg-neutral-900 p-4 backdrop-blur-md',
+          'fixed inset-0 z-[100] flex w-72 flex-col items-center border-neutral-700/40 border-r bg-neutral-900 p-4 backdrop-blur-md',
           {
-            'bottom-1 top-1 rounded-r-xl border shadow-lg shadow-black/20':
+            'top-1 bottom-1 rounded-r-xl border shadow-black/20 shadow-lg':
               !isPinned,
           },
         )}
@@ -138,11 +136,11 @@ export const Sidebar = ({ notes }: SidebarProps) => {
         }}
       >
         <header className="flex w-full items-center justify-between">
-          <h2 className="text-xs text-white">My notes</h2>
+          <h2 className="text-white text-xs">My notes</h2>
           <Tooltip>
             <Tooltip.Trigger
               onClick={handlePinSidebar}
-              className="ml-auto mr-0"
+              className="mr-0 ml-auto"
             >
               <div className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-900">
                 <ArrowLineRight
@@ -161,12 +159,12 @@ export const Sidebar = ({ notes }: SidebarProps) => {
 
         <div className="my-10 flex w-full flex-1 flex-col gap-4">
           {!Object.entries(groupedNotes).length ? (
-            <div className="flex flex-1 flex-col items-center justify-center rounded-md border border-dashed border-neutral-700/70 text-sm" />
+            <div className="flex flex-1 flex-col items-center justify-center rounded-md border border-neutral-700/70 border-dashed text-sm" />
           ) : (
             Object.entries(groupedNotes).map(([date, notes]) => {
               return (
                 <div key={date} className="flex flex-col gap-2">
-                  <h3 className="text-xs text-neutral-400">{date}</h3>
+                  <h3 className="text-neutral-400 text-xs">{date}</h3>
                   {notes.map((note) => {
                     return (
                       <Tooltip key={note.id}>
@@ -174,7 +172,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                           <Link
                             href={`/${note.id}`}
                             className={cn(
-                              '-mx-3 line-clamp-1 px-3 py-2 text-left text-sm text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-white',
+                              '-mx-3 line-clamp-1 px-3 py-2 text-left text-neutral-400 text-sm transition-colors hover:bg-neutral-800 hover:text-white',
                               {
                                 'text-white': pathname === `/${note.id}`,
                               },
@@ -199,7 +197,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
             })
           )}
         </div>
-        <Button href="/" className="mb-0 mt-auto w-full justify-between">
+        <Button href="/" className="mt-auto mb-0 w-full justify-between">
           New <KBD>C</KBD>
         </Button>
       </motion.div>

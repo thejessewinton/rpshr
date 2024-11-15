@@ -29,6 +29,9 @@
         "useImportType": "warn",
         "noUnusedTemplateLiteral": {
           "level": "off"
+        },
+        "noNonNullAssertion": {
+          "level": "off"
         }
       },
       "nursery": {

@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, type Ref } from 'react'
+import { type Ref, forwardRef } from 'react'
 
 import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
 
@@ -41,7 +41,7 @@ const DropdownContent = forwardRef(
     return (
       <DropdownPrimitive.Content
         className={cn(
-          'z-[9999] mt-1 w-32 space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-lg shadow-black/10 backdrop-blur-sm radix-state-open:animate-menu',
+          'z-[9999] mt-1 w-32 radix-state-open:animate-menu space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-black/10 shadow-lg backdrop-blur-sm',
           'border-neutral-200/70 bg-neutral-100/70 text-neutral-700',
           'dark:border-neutral-700/30 dark:bg-neutral-950 dark:text-neutral-400',
           className,
@@ -64,8 +64,8 @@ const DropdownItem = forwardRef(
       <DropdownPrimitive.Item
         className={cn(
           'flex w-full cursor-pointer items-center justify-between gap-2 rounded px-1.5 py-1 pl-2 outline-none',
-          'focus:bg-neutral-200/70 focus:text-neutral-700 radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700',
-          'focus:dark:bg-neutral-900/20 focus:dark:text-white radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white',
+          'radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700 focus:bg-neutral-200/70 focus:text-neutral-700',
+          'radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white focus:dark:bg-neutral-900/20 focus:dark:text-white',
           className,
         )}
         ref={ref}
@@ -92,8 +92,8 @@ const DropdownSubTrigger = forwardRef(
       <DropdownPrimitive.SubTrigger
         className={cn(
           'flex w-full cursor-pointer items-center justify-between gap-2 rounded p-2 outline-none',
-          'focus:bg-neutral-200/70 focus:text-neutral-700 radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700',
-          'focus:dark:bg-neutral-700/20 focus:dark:text-white radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white',
+          'radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700 focus:bg-neutral-200/70 focus:text-neutral-700',
+          'radix-highlighted:dark:bg-neutral-700/20 radix-highlighted:dark:text-white focus:dark:bg-neutral-700/20 focus:dark:text-white',
           className,
         )}
         ref={ref}
@@ -113,7 +113,7 @@ const DropdownSubContent = forwardRef(
     return (
       <DropdownPrimitive.SubContent
         className={cn(
-          'mt-1 w-40 space-y-1 overflow-hidden rounded-lg border p-1 text-xs shadow-lg shadow-black/10 backdrop-blur-sm radix-state-closed:animate-fade-out',
+          'mt-1 w-40 radix-state-closed:animate-fade-out space-y-1 overflow-hidden rounded-lg border p-1 text-xs shadow-black/10 shadow-lg backdrop-blur-sm',
           'border-neutral-200/70 bg-neutral-100/70 text-neutral-700',
           'dark:border-neutral-700/30 dark:bg-neutral-800/70 dark:text-neutral-400',
           className,
