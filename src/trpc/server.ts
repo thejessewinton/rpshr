@@ -18,11 +18,14 @@ const createContext = cache(async () => {
   heads.set('x-trpc-source', 'rsc')
 
   return createTRPCContext({
-    headers: heads
+    headers: heads,
   })
 })
 
 const getQueryClient = cache(createQueryClient)
 const caller = createCaller(createContext)
 
-export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(caller, getQueryClient)
+export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
+  caller,
+  getQueryClient,
+)

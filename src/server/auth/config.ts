@@ -19,19 +19,19 @@ export const authConfig = {
         ...session,
         user: {
           ...session.user,
-          id: user.id
-        }
+          id: user.id,
+        },
       }
     },
     authorized({ auth }) {
       return !!auth?.user
-    }
+    },
   },
   pages: {
     signIn: '/login',
     signOut: '/login',
-    error: '/login'
+    error: '/login',
   },
   adapter: DrizzleAdapter(db),
-  providers: [Google]
+  providers: [Google],
 } satisfies NextAuthConfig

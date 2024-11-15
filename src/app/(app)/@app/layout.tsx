@@ -1,5 +1,4 @@
-import { type ReactNode } from 'react'
-import { unstable_cache } from 'next/cache'
+import type { ReactNode } from 'react'
 
 import { Tooltip } from '~/components/shared/tooltip'
 import { Header } from '~/components/ui/header'
@@ -14,7 +13,9 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       <Header />
       <Sidebar notes={notes} />
       <Shadow />
-      <main className='min-w-screen mx-auto flex w-full flex-col justify-center'>{children}</main>
+      <main className="mx-auto flex w-full min-w-screen flex-col justify-center">
+        {children}
+      </main>
     </Tooltip.Provider>
   )
 }

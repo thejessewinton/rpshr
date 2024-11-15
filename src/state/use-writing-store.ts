@@ -10,10 +10,10 @@ export const useWritingStore = create(
   persist<WritingStoreState>(
     (set, get) => ({
       isFocusMode: false,
-      toggleIsFocusMode: () => set({ isFocusMode: !get().isFocusMode })
+      toggleIsFocusMode: () => set({ isFocusMode: !get().isFocusMode }),
     }),
     {
-      name: 'user:focus'
-    }
-  )
+      name: 'user:focus',
+    },
+  ),
 )

@@ -1,6 +1,6 @@
 import './src/env.ts'
 
-import { type NextConfig } from 'next'
+import type { NextConfig } from 'next'
 
 const config = {} satisfies NextConfig
 

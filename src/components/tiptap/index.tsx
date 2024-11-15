@@ -9,7 +9,7 @@ import Heading from '@tiptap/extension-heading'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { EditorProvider, type Editor } from '@tiptap/react'
+import { type Editor, EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
@@ -21,7 +21,7 @@ const extensions = [
   StarterKit,
   Typography,
   CharacterCount.configure({
-    limit: null
+    limit: null,
   }),
   Placeholder.configure({
     placeholder: ({ node }) => {
@@ -30,25 +30,25 @@ const extensions = [
       }
 
       return 'Breathe. Focus. Write.'
-    }
+    },
   }),
   Document.extend({
-    content: 'title block+'
+    content: 'title block+',
   }),
   Focus.configure({
     className: '!blur-0',
-    mode: 'shallowest'
+    mode: 'shallowest',
   }),
   Heading.extend({
     name: 'title',
     group: 'title',
-    parseHTML: () => [{ tag: 'h1:first-child' }]
+    parseHTML: () => [{ tag: 'h1:first-child' }],
   }).configure({ levels: [1] }),
   Link.configure({
     autolink: true,
     defaultProtocol: 'https://',
-    openOnClick: true
-  })
+    openOnClick: true,
+  }),
 ]
 
 type EditorProps = {
@@ -67,7 +67,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
         router.push(`/${data?.id}`)
       }
       utils.notes.getAll.invalidate()
-    }
+    },
   })
 
   const handleSave = (editor: Editor) => {
@@ -80,12 +80,15 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
 
     mutate({
       id: noteId,
-      title: editor.view.state.doc.firstChild!.textContent.trim() ?? '',
-      body: editor.getHTML() ?? ''
+      title: editor.view.state.doc.firstChild?.textContent.trim() ?? '',
+      body: editor.getHTML() ?? '',
     })
   }
 
-  const debouncedSave = useDebounceCallback((editor: Editor) => handleSave(editor), 2000)
+  const debouncedSave = useDebounceCallback(
+    (editor: Editor) => handleSave(editor),
+    2000,
+  )
 
   return (
     <EditorProvider
@@ -99,8 +102,8 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       editorProps={{
         attributes: {
           class:
-            'editor md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none'
-        }
+            'editor md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-none',
+        },
       }}
     >
       <Toolbar isPending={isPending} isSuccess={isSuccess} />

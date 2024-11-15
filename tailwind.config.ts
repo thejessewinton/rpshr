@@ -1,5 +1,5 @@
 import typography from '@tailwindcss/typography'
-import { type Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss'
 import radix from 'tailwindcss-radix'
 import { fontFamily } from 'tailwindcss/defaultTheme'
 
@@ -10,49 +10,49 @@ export default {
     extend: {
       fontFamily: {
         sans: ['var(--font-geist-sans)', ...fontFamily.sans],
-        mono: ['var(--font-geist-mono)', ...fontFamily.mono]
+        mono: ['var(--font-geist-mono)', ...fontFamily.mono],
       },
       animation: {
         fade: 'animate-opacity 250ms ease forwards',
         menu: 'animate-opacity 250ms ease forwards, animate-up 250ms ease forwards',
         enter:
-          'animate-scale 1s ease-in-out both, animate-blur 1s ease-in-out both, animate-opacity 1s ease-in-out both'
+          'animate-scale 1s ease-in-out both, animate-blur 1s ease-in-out both, animate-opacity 1s ease-in-out both',
       },
       keyframes: {
         'animate-opacity': {
           '0%': {
-            opacity: '0'
+            opacity: '0',
           },
           '100%': {
-            opacity: '1'
-          }
+            opacity: '1',
+          },
         },
         'animate-blur': {
           '0%': {
-            filter: 'blur(3px)'
+            filter: 'blur(3px)',
           },
           '100%': {
-            filter: 'blur(0px)'
-          }
+            filter: 'blur(0px)',
+          },
         },
         'animate-up': {
           '0%': {
-            transform: `translateY(8px)`
+            transform: 'translateY(8px)',
           },
           '100%': {
-            transform: 'translateY(0px)'
-          }
+            transform: 'translateY(0px)',
+          },
         },
         'animate-scale': {
           '0%': {
-            transform: `translateY(10px)`
+            transform: 'translateY(10px)',
           },
           '100%': {
-            transform: 'translateY(0px)'
-          }
-        }
-      }
-    }
+            transform: 'translateY(0px)',
+          },
+        },
+      },
+    },
   },
-  plugins: [radix, typography]
+  plugins: [radix, typography],
 } satisfies Config

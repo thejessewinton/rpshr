@@ -1,9 +1,9 @@
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 
 import { NoteEditor } from '~/components/tiptap'
 
 export const metadata: Metadata = {
-  title: 'New Note'
+  title: 'New Note',
 }
 
 export default async function NewNote() {
