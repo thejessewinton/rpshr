@@ -29,7 +29,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'bg-neutral-50 font-sans antialiased selection:bg-blue-950 selection:text-white dark:bg-neutral-900',
+          'bg-neutral-50 font-sans antialiased selection:bg-blue-500 selection:text-white dark:bg-neutral-900 dark:selection:bg-blue-950',
           GeistSans.variable,
           GeistMono.variable,
         )}

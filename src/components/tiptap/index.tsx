@@ -107,7 +107,12 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
         },
       }}
     >
-      <Toolbar isPending={isPending} isSuccess={isSuccess} isError={isError} />
+      <Toolbar
+        isPending={isPending}
+        isSuccess={isSuccess}
+        isError={isError}
+        noteId={noteId}
+      />
     </EditorProvider>
   )
 }

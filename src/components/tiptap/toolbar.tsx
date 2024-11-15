@@ -3,26 +3,37 @@
 import Link from 'next/link'
 
 import NumberFlow from '@number-flow/react'
-import { PenNib, Plus } from '@phosphor-icons/react'
+import { PenNib, Plus, TextStrikethrough } from '@phosphor-icons/react'
 import { useCurrentEditor } from '@tiptap/react'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useDebounceValue } from 'usehooks-ts'
 
 import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { KBD } from '~/components/shared/kbd'
 import { Ping } from '~/components/shared/ping'
 import { Tooltip } from '~/components/shared/tooltip'
 import { useFocusStore } from '~/state/use-focus-store'
+import { api } from '~/trpc/react'
 import { cn } from '~/utils/core'
+import { Dropdown } from '../shared/dropdown'
+import { Spinner } from '../shared/spinner'
 
 type ToolbarProps = {
   isPending?: boolean
   isSuccess?: boolean
   isError?: boolean
+  noteId?: string
 }
 
-export const Toolbar = ({ isPending, isSuccess, isError }: ToolbarProps) => {
+export const Toolbar = ({
+  isPending,
+  isSuccess,
+  isError,
+  noteId,
+}: ToolbarProps) => {
   const { editor } = useCurrentEditor()
 
   if (!editor) {
@@ -64,6 +75,7 @@ export const Toolbar = ({ isPending, isSuccess, isError }: ToolbarProps) => {
             />
             <WordCount />
             <NewButton />
+            {noteId && <DeleteButton noteId={noteId} />}
             <FocusSwitcher />
             <ThemeSwitcher />
           </div>
@@ -163,6 +175,49 @@ const ThemeSwitcher = () => {
   )
 }
 
+const DeleteButton = ({ noteId }: { noteId: string }) => {
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const utils = api.useUtils()
+  const { mutate } = api.notes.delete.useMutation({
+    onMutate: () => {
+      router.push('/')
+    },
+    onSuccess: () => {
+      utils.notes.getById.invalidate()
+    },
+  })
+
+  useHotkeys('d', () => {
+    setOpen(true)
+  })
+
+  const handleDelete = () => {
+    mutate({ id: noteId })
+  }
+
+  return (
+    <Tooltip>
+      <Dropdown open={open} onOpenChange={setOpen}>
+        <Dropdown.Trigger className="rounded-full">
+          <Tooltip.Trigger asChild>
+            <div className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
+              <TextStrikethrough className="size-4 text-neutral-900 transition-transform dark:text-white" />
+            </div>
+          </Tooltip.Trigger>
+        </Dropdown.Trigger>
+        <Dropdown.Content side="top" sideOffset={12}>
+          <Dropdown.Item onClick={handleDelete}>Confirm?</Dropdown.Item>
+        </Dropdown.Content>
+      </Dropdown>
+
+      <Tooltip.Content>
+        Delete <KBD>D</KBD>
+      </Tooltip.Content>
+    </Tooltip>
+  )
+}
+
 const SaveState = ({ isPending, isSuccess, isError }: ToolbarProps) => {
   return (
     <Tooltip>
@@ -190,10 +245,10 @@ const SaveState = ({ isPending, isSuccess, isError }: ToolbarProps) => {
                     ? 'error'
                     : 'idle'
             }
-            className="mr-2 flex items-center justify-center"
+            className="mr-2 flex size-3 items-center justify-center"
           >
             {isPending ? (
-              <Ping data-variant="pending" />
+              <Spinner />
             ) : isSuccess ? (
               <Ping data-variant="success" />
             ) : isError ? (

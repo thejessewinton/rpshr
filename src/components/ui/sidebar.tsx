@@ -169,7 +169,9 @@ export const Sidebar = ({ notes }: SidebarProps) => {
 
         <div className="my-10 flex w-full flex-1 flex-col gap-4">
           {!data.length ? (
-            <div className="flex flex-1 flex-col items-center justify-center rounded-md border border-neutral-700/70 border-dashed text-sm" />
+            <div className="flex flex-1 flex-col items-center justify-center rounded-md border border-neutral-700/70 border-dashed font-medium text-neutral-400 text-xs">
+              Create something
+            </div>
           ) : (
             data.map((note) => {
               return (
