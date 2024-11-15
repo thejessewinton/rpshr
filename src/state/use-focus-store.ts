@@ -6,7 +6,7 @@ type WritingStoreState = {
   toggleIsFocusMode: () => void
 }
 
-export const useWritingStore = create(
+export const useFocusStore = create(
   persist<WritingStoreState>(
     (set, get) => ({
       isFocusMode: false,

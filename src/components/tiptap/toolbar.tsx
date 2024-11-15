@@ -13,7 +13,7 @@ import { useTheme } from 'next-themes'
 import { KBD } from '~/components/shared/kbd'
 import { Ping } from '~/components/shared/ping'
 import { Tooltip } from '~/components/shared/tooltip'
-import { useWritingStore } from '~/state/use-writing-store'
+import { useFocusStore } from '~/state/use-focus-store'
 import { cn } from '~/utils/core'
 
 type ToolbarProps = {
@@ -111,7 +111,7 @@ const WordCount = () => {
 }
 
 const FocusSwitcher = () => {
-  const { isFocusMode, toggleIsFocusMode } = useWritingStore()
+  const { isFocusMode, toggleIsFocusMode } = useFocusStore()
 
   useHotkeys('`', () => {
     toggleIsFocusMode()
