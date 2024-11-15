@@ -9,6 +9,7 @@ import { format } from 'date-fns'
 import { type Variants, motion } from 'framer-motion'
 import { groupBy } from 'remeda'
 
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Tooltip } from '~/components/shared/tooltip'
 import { type RouterOutputs, api } from '~/trpc/react'
 import { cn } from '~/utils/core'
@@ -85,6 +86,17 @@ export const Sidebar = ({ notes }: SidebarProps) => {
     setIsPinned((p) => !p)
   }
 
+  useHotkeys('p', handlePinSidebar)
+
+  const sidebarVariants = {
+    unpinned: {
+      width: '4.5rem',
+    },
+    pinned: {
+      width: '18rem',
+    },
+  } as const satisfies Variants
+
   const contentVariants = {
     unpinned: {
       transform: 'translateX(-25%)',
@@ -101,13 +113,9 @@ export const Sidebar = ({ notes }: SidebarProps) => {
   return (
     <motion.nav
       className="fixed inset-0 left-0 z-20 h-screen max-md:pointer-events-none"
-      animate="width"
-      variants={{
-        width: {
-          width: isPinned ? '18rem' : '4.5rem',
-        },
-      }}
-      initial="width"
+      variants={sidebarVariants}
+      initial={defaultVariant}
+      animate={isPinned ? 'pinned' : 'unpinned'}
       transition={{
         type: 'spring',
         stiffness: 400,
@@ -126,6 +134,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
         )}
         variants={contentVariants}
         initial={defaultVariant}
+        animate={isPinned ? 'pinned' : 'unpinned'}
         whileHover="pinned"
         transition={{
           type: 'spring',
@@ -153,7 +162,9 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                 />
               </div>
             </Tooltip.Trigger>
-            <Tooltip.Content side="right">Pin</Tooltip.Content>
+            <Tooltip.Content side="right">
+              Pin <KBD>P</KBD>
+            </Tooltip.Content>
           </Tooltip>
         </header>
 
