@@ -61,14 +61,15 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const pathname = usePathname()
   const utils = api.useUtils()
 
-  const { mutate, isPending, isSuccess } = api.notes.create.useMutation({
-    onSuccess: ([data]) => {
-      if (data?.id && pathname === '/') {
-        router.push(`/${data?.id}`)
-      }
-      utils.notes.getAll.invalidate()
-    },
-  })
+  const { mutate, isPending, isSuccess, isError } =
+    api.notes.create.useMutation({
+      onSuccess: ([data]) => {
+        if (data?.id && pathname === '/') {
+          router.push(`/${data?.id}`)
+        }
+        utils.notes.getAll.invalidate()
+      },
+    })
 
   const handleSave = (editor: Editor) => {
     const isChanged = !isDeepEqual(content, editor.getHTML())
@@ -106,7 +107,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
         },
       }}
     >
-      <Toolbar isPending={isPending} isSuccess={isSuccess} />
+      <Toolbar isPending={isPending} isSuccess={isSuccess} isError={isError} />
     </EditorProvider>
   )
 }

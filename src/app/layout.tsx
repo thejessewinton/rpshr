@@ -35,7 +35,7 @@ export default async function RootLayout({
         )}
       >
         <SessionProvider>
-          <ThemeProvider attribute="class">
+          <ThemeProvider attribute="class" disableTransitionOnChange>
             <TRPCReactProvider>
               <div className="mx-auto max-w-2xl px-8">{children}</div>
               <Hotkeys />
