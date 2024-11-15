@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: '%s — notes',
     default: 'notes',
   },
-  description: 'Simple notes.',
+  description: 'Breathe. Focus. Write.',
   metadataBase: new URL(env.APP_URL),
 }
 
