@@ -1,4 +1,4 @@
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { GoogleLogo } from '@phosphor-icons/react/dist/ssr'
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'Log In',
 }
 
-enum Error {
+enum AuthError {
   Configuration = 'Configuration',
   AccessDenied = 'AccessDenied',
 }
@@ -27,7 +27,7 @@ export default async function SignIn({
     redirect('/')
   }
 
-  const error = (await searchParams).error as Error | undefined
+  const error = (await searchParams).error as AuthError | undefined
 
   const providers = [
     {
@@ -40,9 +40,9 @@ export default async function SignIn({
     },
   ]
 
-  const errorMap: Record<keyof typeof Error, string> = {
-    [Error.Configuration]: 'Configuration error',
-    [Error.AccessDenied]: 'Access denied',
+  const errorMap: Record<keyof typeof AuthError, string> = {
+    Configuration: 'Configuration error',
+    AccessDenied: 'Access denied',
   }
 
   return (
@@ -61,9 +61,11 @@ export default async function SignIn({
             </form>
           ))}
         </div>
-        <div className="max-auto text-sm font-light text-gray-700 dark:text-gray-400">
-          {errorMap[error!]}
-        </div>
+        {error && (
+          <div className="max-auto font-light text-gray-700 text-sm dark:text-gray-400">
+            {errorMap[error]}
+          </div>
+        )}
       </div>
     </div>
   )
