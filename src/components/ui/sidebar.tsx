@@ -96,7 +96,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
 
   const contentVariants = {
     unpinned: {
-      transform: 'translateX(-25%)',
+      transform: 'translateX(-50%)',
       opacity: 0,
       filter: 'blur(2px)',
     },
