@@ -9,7 +9,7 @@ import { LoginBg } from '~/components/ui/login-bg'
 import { auth, signIn } from '~/server/auth'
 
 export const metadata: Metadata = {
-  title: 'Log In',
+  title: 'log in',
 }
 
 enum AuthError {
