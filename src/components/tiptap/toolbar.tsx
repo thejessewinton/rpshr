@@ -177,8 +177,10 @@ const ThemeSwitcher = () => {
 
 const DeleteButton = ({ noteId }: { noteId: string }) => {
   const [open, setOpen] = useState(false)
+
   const router = useRouter()
   const utils = api.useUtils()
+
   const { mutate } = api.notes.delete.useMutation({
     onMutate: () => {
       router.push('/')
@@ -207,7 +209,7 @@ const DeleteButton = ({ noteId }: { noteId: string }) => {
           </Tooltip.Trigger>
         </Dropdown.Trigger>
         <Dropdown.Content side="top" sideOffset={12}>
-          <Dropdown.Item onClick={handleDelete}>Confirm?</Dropdown.Item>
+          <Dropdown.Item onClick={handleDelete}>Delete?</Dropdown.Item>
         </Dropdown.Content>
       </Dropdown>
 
@@ -245,7 +247,7 @@ const SaveState = ({ isPending, isSuccess, isError }: ToolbarProps) => {
                     ? 'error'
                     : 'idle'
             }
-            className="mr-2 flex size-3 items-center justify-center"
+            className="mr-2 flex h-8 w-3 items-center justify-center"
           >
             {isPending ? (
               <Spinner />
