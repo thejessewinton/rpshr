@@ -1,5 +1,10 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Header } from '~/components/ui/header'
+
+export const metadata: Metadata = {
+  title: 'Write. Focus. Breathe.',
+}
 
 export default function IndexPage() {
   return (
