@@ -178,9 +178,9 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                     key={note.id}
                     href={`/${note.id}`}
                     className={cn(
-                      '-mx-3 flex flex-col justify-between gap-2 rounded-sm px-3 py-3 text-left text-neutral-900 text-sm transition-colors hover:bg-neutral-200 focus:bg-neutral-800 focus:text-white dark:text-neutral-400 dark:hover:bg-neutral-800',
+                      '-mx-2 flex flex-col justify-between gap-2 rounded px-3 py-3 text-left text-neutral-900 text-sm transition-colors hover:bg-neutral-200 focus:bg-neutral-800 focus:text-white dark:text-neutral-400 dark:hover:bg-neutral-800',
                       {
-                        'bg-neutral-100 dark:bg-neutral-800':
+                        'bg-neutral-100 dark:bg-neutral-950':
                           pathname === `/${note.id}`,
                       },
                     )}

@@ -23,6 +23,9 @@
       "a11y": {
         "noSvgWithoutTitle": {
           "level": "off"
+        },
+        "noAutofocus": {
+          "level": "off"
         }
       },
       "style": {

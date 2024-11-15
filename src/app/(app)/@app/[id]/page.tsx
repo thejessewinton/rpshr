@@ -16,5 +16,11 @@ export default async function Note({ params }: NotePageParams) {
     notFound()
   }
 
-  return <NoteEditor content={note?.body} noteId={(await params).id} />
+  return (
+    <NoteEditor
+      title={note.title}
+      content={note?.body}
+      noteId={(await params).id}
+    />
+  )
 }
