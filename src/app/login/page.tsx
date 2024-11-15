@@ -46,8 +46,19 @@ export default async function SignIn({
   }
 
   return (
-    <div className="flex h-screen items-center justify-center dark:bg-neutral-900">
-      <div className="w-full max-w-2xl space-y-6 text-center">
+    <div className="grid h-screen grid-cols-12 items-center justify-center dark:bg-neutral-900">
+      <div className="col-span-4 flex h-full flex-col items-center justify-center bg-neutral-950">
+        <h2 className="animate-enter font-medium text-neutral-950 dark:text-white">
+          Breathe.
+        </h2>
+        <h2 className="animate-enter font-medium text-neutral-950 [animation-delay:750ms] dark:text-white">
+          Focus.
+        </h2>
+        <h2 className="animate-enter font-medium text-neutral-950 [animation-delay:1500ms] dark:text-white">
+          Write.
+        </h2>
+      </div>
+      <div className="col-span-8 w-full max-w-2xl space-y-6 text-center">
         <Logo className="mx-auto size-8" />
         <div className="flex w-full items-center justify-center gap-2">
           {providers.map((provider) => (
