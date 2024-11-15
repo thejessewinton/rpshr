@@ -83,12 +83,13 @@ export const verificationTokens = pgTable(
 )
 
 const lifecycleDates = {
-  created_at: timestamp('created_at', { mode: 'date' }).$defaultFn(
-    () => new Date(),
-  ),
+  created_at: timestamp('created_at', { mode: 'date' })
+    .$defaultFn(() => new Date())
+    .notNull(),
   updated_at: timestamp('updated_at')
     .default(sql`CURRENT_TIMESTAMP(3)`)
-    .$onUpdateFn(() => new Date()),
+    .$onUpdateFn(() => new Date())
+    .notNull(),
 }
 
 // Notes and tags

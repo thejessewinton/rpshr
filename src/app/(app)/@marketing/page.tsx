@@ -1,8 +1,9 @@
+import Link from 'next/link'
 import { Header } from '~/components/ui/header'
 
 export default function IndexPage() {
   return (
-    <div className="mx-auto mt-20 md:mt-40">
+    <div className="mx-auto my-20 md:my-40">
       <Header />
 
       <div className="space-y-4 text-neutral-700 text-sm leading-loose dark:text-neutral-400">
@@ -36,15 +37,12 @@ export default function IndexPage() {
             write without worry. Mostly built for me.
           </p>
           <p className="animate-enter [animation-delay:5250ms]">
-            Just a focus on the words.
+            Just a focus on the words.{' '}
+            <Link href="/login" className="text-white">
+              Start now
+            </Link>
+            .
           </p>
-
-          <a
-            href={'/login'}
-            className="block animate-enter text-neutral-950 [animation-delay:8000ms] dark:text-white"
-          >
-            Start now
-          </a>
         </div>
       </div>
     </div>

@@ -30,8 +30,9 @@ export const Button = forwardRef(
       return (
         <button
           className={cn(
-            'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md px-3 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
-            'border border-neutral-200/70 text-neutral-700 hover:border-neutral-200 dark:border-neutral-700/40 dark:text-neutral-400 hover:dark:border-neutral-700/70',
+            'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md border px-3 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
+            'border-neutral-300/40 bg-neutral-100 hover:border-neutral-300',
+            'dark:border-neutral-700/40 dark:bg-neutral-950 dark:hover:bg-neutral-950/50',
             className,
           )}
           disabled={disabled}
@@ -47,8 +48,9 @@ export const Button = forwardRef(
     return (
       <Link
         className={cn(
-          'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md px-3 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
-          'border border-neutral-200/70 text-neutral-700 hover:border-neutral-200 dark:border-neutral-700/40 dark:text-neutral-400 hover:dark:border-neutral-700/70',
+          'relative flex min-h-8 w-fit cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-md border px-3 text-xs outline-none transition-colors focus:ring-1 focus:ring-sky-600/75 disabled:cursor-not-allowed disabled:opacity-70',
+          'border-neutral-300/40 bg-neutral-100 hover:border-neutral-300',
+          'dark:border-neutral-700/40 dark:bg-neutral-950 dark:hover:bg-neutral-950/50',
           className,
         )}
         ref={ref as Ref<HTMLAnchorElement>}

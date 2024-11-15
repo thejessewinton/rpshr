@@ -40,7 +40,7 @@ export const Toolbar = ({ isPending, isSuccess, isError }: ToolbarProps) => {
     >
       <AnimatePresence>
         <motion.div
-          className="fixed bottom-10 left-1/2 z-20 flex origin-center items-center rounded-full border border-neutral-300/40 bg-neutral-200 py-1.5 pr-1 pl-4 shadow-black/10 shadow-xl dark:border-neutral-700/40 dark:bg-neutral-950"
+          className="fixed bottom-10 left-1/2 z-20 flex origin-center items-center rounded-full border border-neutral-300/40 bg-neutral-200 py-1.5 pr-2 pl-4 shadow-black/10 shadow-xl dark:border-neutral-700/40 dark:bg-neutral-950"
           initial={{
             opacity: 0,
             translateY: 10,
@@ -152,7 +152,7 @@ const ThemeSwitcher = () => {
   return (
     <Tooltip>
       <Tooltip.Trigger onClick={handleToggleTheme}>
-        <div className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
+        <div className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
           <div className="size-3 rounded-full bg-neutral-950 dark:bg-white" />
         </div>
       </Tooltip.Trigger>
