@@ -17,7 +17,7 @@ import { Ping } from '~/components/shared/ping'
 import { Tooltip } from '~/components/shared/tooltip'
 import { useFocusStore } from '~/state/use-focus-store'
 import { api } from '~/trpc/react'
-import { cn } from '~/utils/core'
+import { cn, pluralize } from '~/utils/core'
 import { Dropdown } from '../shared/dropdown'
 import { Spinner } from '../shared/spinner'
 
@@ -106,10 +106,14 @@ const NewButton = () => {
 const WordCount = () => {
   const { editor } = useCurrentEditor()
 
-  const [debouncedValue] = useDebounceValue(
-    (editor?.storage.characterCount as { words: () => number }).words(),
-    500,
-  )
+  const counts = {
+    characters: (
+      editor?.storage.characterCount as { characters: () => number }
+    ).characters(),
+    words: (editor?.storage.characterCount as { words: () => number }).words(),
+  } as const
+
+  const [debouncedValue] = useDebounceValue(counts.words, 500)
 
   if (!editor) {
     return null
@@ -117,7 +121,7 @@ const WordCount = () => {
 
   return (
     <span className="flex items-center gap-1.5 border-neutral-700/40 border-r pr-3 font-mono text-xs">
-      <NumberFlow value={debouncedValue} /> words
+      <NumberFlow value={debouncedValue} /> {pluralize(debouncedValue, 'word')}
     </span>
   )
 }
