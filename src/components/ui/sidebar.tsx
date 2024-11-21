@@ -93,7 +93,7 @@ export const Shadow = () => {
         opacity,
       }}
       ref={shadowRef}
-      className="pointer-events-none fixed inset-0 hidden w-[24rem] bg-gradient-to-r from-black/30 to-80% to-transparent md:block"
+      className="pointer-events-none fixed inset-0 hidden w-[24rem] bg-linear-to-r from-black/30 to-80% to-transparent md:block"
     />
   )
 }
@@ -145,7 +145,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
     <>
       <HamburgerMenu isPinned={isPinned} setIsPinned={handlePinSidebar} />
       <motion.nav
-        className="fixed inset-0 left-0 z-[100] h-screen"
+        className="fixed inset-0 left-0 z-100 h-screen"
         variants={sidebarVariants}
         initial={defaultVariant}
         animate={isPinned ? 'pinned' : 'unpinned'}
@@ -159,7 +159,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
       >
         <motion.div
           className={cn(
-            'fixed inset-0 z-[100] flex w-72 flex-col items-center border-neutral-300/40 border-r bg-neutral-50 p-4 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900',
+            'fixed inset-0 z-100 flex w-72 flex-col items-center border-neutral-300/40 border-r bg-neutral-50 p-4 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900',
             {
               'top-1 bottom-1 rounded-r-xl border shadow-black/20 shadow-lg':
                 !isPinned,
@@ -214,7 +214,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                       key={note.id}
                       href={`/${note.id}`}
                       className={cn(
-                        '-mx-2 flex flex-col justify-between gap-2 rounded px-3 py-3 text-left text-neutral-900 text-sm transition-colors hover:bg-neutral-200 focus:bg-neutral-800 focus:text-white dark:text-neutral-400 dark:hover:bg-neutral-800',
+                        '-mx-2 flex flex-col justify-between gap-2 rounded-sm px-3 py-3 text-left text-neutral-900 text-sm transition-colors hover:bg-neutral-200 focus:bg-neutral-800 focus:text-white dark:text-neutral-400 dark:hover:bg-neutral-800',
                         {
                           'bg-neutral-100 dark:bg-neutral-950':
                             pathname === `/${note.id}`,

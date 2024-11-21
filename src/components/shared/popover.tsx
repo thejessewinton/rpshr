@@ -21,7 +21,7 @@ const PopoverTrigger = forwardRef(
     return (
       <PopoverPrimitive.Trigger
         className={cn(
-          'flex cursor-pointer items-center font-light outline-none transition-colors focus:ring-2',
+          'flex cursor-pointer items-center font-light outline-hidden transition-colors focus:ring-2',
           className,
         )}
         ref={ref}
@@ -41,7 +41,7 @@ const PopoverContent = forwardRef(
     return (
       <PopoverPrimitive.Content
         className={cn(
-          'z-[9999] mt-1 w-40 radix-state-closed:animate-fade-out radix-state-open:animate-fade-in space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-black/10 shadow-lg backdrop-blur-sm',
+          'z-9999 mt-1 w-40 radix-state-closed:animate-fade-out radix-state-open:animate-fade-in space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-black/10 shadow-lg backdrop-blur-sm',
           'border-neutral-200/70 bg-neutral-100/70 text-neutral-700',
           'dark:border-neutral-700/30 dark:bg-neutral-950 dark:text-neutral-400',
           className,

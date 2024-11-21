@@ -18,7 +18,7 @@ const TooltipTrigger = forwardRef(
     return (
       <TooltipPrimitive.Trigger
         className={cn(
-          'rounded-full outline-none transition-colors focus:ring-2',
+          'rounded-full outline-hidden transition-colors focus:ring-2',
           className,
         )}
         ref={ref}
@@ -44,7 +44,7 @@ const TooltipContent = forwardRef(
     return (
       <TooltipPrimitive.Content
         className={cn(
-          'flex w-full radix-state-delayed-open:animate-menu items-center justify-between gap-3 rounded-md bg-neutral-200 px-1.5 py-1 pl-2 font-mono text-xs shadow-black/20 shadow-sm dark:bg-neutral-950',
+          'flex w-full radix-state-delayed-open:animate-menu items-center justify-between gap-3 rounded-md bg-neutral-200 px-1.5 py-1 pl-2 font-mono text-xs shadow-black/20 shadow-xs dark:bg-neutral-950',
           className,
         )}
         side={side}

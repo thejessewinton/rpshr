@@ -1,9 +1,99 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer utilities {
-  .editor h1.is-empty {
+@plugin 'tailwindcss-radix';
+@plugin '@tailwindcss/typography';
+
+@variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  --animate-fade: animate-opacity 250ms ease forwards;
+  --animate-menu: animate-opacity 250ms ease forwards,
+    animate-up 250ms ease forwards;
+  --animate-enter: animate-scale 1s ease-in-out both,
+    animate-blur 1s ease-in-out both, animate-opacity 1s ease-in-out both;
+
+  @keyframes animate-opacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes animate-blur {
+    0% {
+      filter: blur(3px);
+    }
+    100% {
+      filter: blur(0px);
+    }
+  }
+  @keyframes animate-up {
+    0% {
+      transform: translateY(8px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  @keyframes animate-scale {
+    0% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+}
+
+/*
+  In Tailwind CSS v4, basic styles are applied to form elements by default. To
+  maintain compatibility with v3, the following resets have been added:
+*/
+@layer base {
+  input,
+  textarea,
+  select,
+  button {
+    border: 0px solid;
+    border-radius: 0;
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility editor {
+  & h1.is-empty {
+    @apply first:before:pointer-events-none first:before:float-left first:before:h-0 first:before:text-sm first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
+  }
+}
+
+@utility is-empty {
+  .editor &h1 {
     @apply first:before:pointer-events-none first:before:float-left first:before:h-0 first:before:text-sm first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
   }
 }

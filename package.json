@@ -67,6 +67,7 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0-beta.1",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^20.17.6",
     "@types/react": "^18.3.12",
@@ -74,7 +75,7 @@
     "drizzle-kit": "^0.28.1",
     "eslint-plugin-drizzle": "^0.2.3",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^4.0.0-beta.1",
     "typescript": "^5.6.3"
   }
 }
