@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-radix';
 @plugin '@tailwindcss/typography';
@@ -7,15 +7,15 @@
 
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
-    Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --animate-fade: animate-opacity 250ms ease forwards;
-  --animate-menu: animate-opacity 250ms ease forwards,
-    animate-up 250ms ease forwards;
-  --animate-enter: animate-scale 1s ease-in-out both,
-    animate-blur 1s ease-in-out both, animate-opacity 1s ease-in-out both;
+  --animate-menu: animate-opacity 250ms ease forwards, animate-up 250ms ease
+    forwards;
+  --animate-enter: animate-scale 1s ease-in-out both, animate-blur 1s
+    ease-in-out both, animate-opacity 1s ease-in-out both;
 
   @keyframes animate-opacity {
     0% {
