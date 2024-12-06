@@ -190,7 +190,7 @@ const DeleteButton = ({ noteId }: { noteId: string }) => {
       router.push('/')
     },
     onSuccess: () => {
-      utils.notes.getById.invalidate()
+      utils.notes.getAll.invalidate()
     },
   })
 
