@@ -88,7 +88,7 @@ export const Toolbar = ({
 const NewButton = () => {
   return (
     <Tooltip>
-      <Tooltip.Trigger>
+      <Tooltip.Trigger asChild>
         <Link
           href="/"
           className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900"
