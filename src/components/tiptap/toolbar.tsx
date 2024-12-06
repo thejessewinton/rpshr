@@ -120,7 +120,7 @@ const WordCount = () => {
   }
 
   return (
-    <span className="flex items-center gap-1.5 border-neutral-700/40 border-r pr-3 font-mono text-xs">
+    <span className="flex items-center gap-1.5 border-neutral-700/40 border-r pr-5 font-mono text-xs">
       <NumberFlow value={debouncedValue} /> {pluralize(debouncedValue, 'word')}
     </span>
   )
