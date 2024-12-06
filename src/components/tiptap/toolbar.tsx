@@ -227,7 +227,7 @@ const DeleteButton = ({ noteId }: { noteId: string }) => {
 const SaveState = ({ isPending, isSuccess, isError }: ToolbarProps) => {
   return (
     <Tooltip>
-      <Tooltip.Trigger>
+      <Tooltip.Trigger className="-ml-2 mr-2">
         <AnimatePresence mode="popLayout">
           <motion.div
             initial={{
@@ -251,7 +251,7 @@ const SaveState = ({ isPending, isSuccess, isError }: ToolbarProps) => {
                     ? 'error'
                     : 'idle'
             }
-            className="mr-2 flex h-8 w-3 items-center justify-center"
+            className="flex size-8 items-center justify-center"
           >
             {isPending ? (
               <Spinner />
