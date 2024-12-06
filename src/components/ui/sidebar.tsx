@@ -1,19 +1,15 @@
 'use client'
 
+import { format } from 'date-fns'
+import { type Variants, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-import { ArrowLineRight } from '@phosphor-icons/react'
-import { format } from 'date-fns'
-import { type Variants, motion } from 'framer-motion'
-
 import { signOut } from 'next-auth/react'
-import { useHotkeys } from 'react-hotkeys-hook'
 import { Button } from '~/components/shared/button'
 import { KBD } from '~/components/shared/kbd'
 import { Logo } from '~/components/shared/logo'
-import { Tooltip } from '~/components/shared/tooltip'
 import { type RouterOutputs, api } from '~/trpc/react'
 import { cn } from '~/utils/core'
 
@@ -103,38 +99,37 @@ type SidebarProps = {
 }
 
 export const Sidebar = ({ notes }: SidebarProps) => {
-  const [isPinned, setIsPinned] = useState(true)
+  const [isPinned, setIsPinned] = useState(false)
   const pathname = usePathname()
   const defaultVariant: keyof typeof contentVariants = isPinned
-    ? 'pinned'
-    : 'unpinned'
+    ? 'open'
+    : 'closed'
 
   const { data } = api.notes.getAll.useQuery(undefined, {
     initialData: notes,
   })
 
   const handlePinSidebar = () => {
+    console.log('pin')
     setIsPinned((p) => !p)
   }
 
-  useHotkeys('p', handlePinSidebar)
-
   const sidebarVariants = {
-    unpinned: {
+    closed: {
       width: '4.5rem',
     },
-    pinned: {
+    open: {
       width: '18rem',
     },
   } as const satisfies Variants
 
   const contentVariants = {
-    unpinned: {
+    closed: {
       transform: 'translateX(-50%)',
       opacity: 0,
       filter: 'blur(2px)',
     },
-    pinned: {
+    open: {
       transform: 'translateX(0%)',
       opacity: 1,
       filter: 'blur(0px)',
@@ -148,7 +143,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
         className="fixed inset-0 left-0 z-100 h-screen"
         variants={sidebarVariants}
         initial={defaultVariant}
-        animate={isPinned ? 'pinned' : 'unpinned'}
+        animate={isPinned ? 'open' : 'closed'}
         transition={{
           type: 'spring',
           stiffness: 400,
@@ -167,8 +162,8 @@ export const Sidebar = ({ notes }: SidebarProps) => {
           )}
           variants={contentVariants}
           initial={defaultVariant}
-          animate={isPinned ? 'pinned' : 'unpinned'}
-          whileHover="pinned"
+          animate={isPinned ? 'open' : 'closed'}
+          whileHover="open"
           transition={{
             type: 'spring',
             stiffness: 400,
@@ -181,26 +176,6 @@ export const Sidebar = ({ notes }: SidebarProps) => {
             <Link href="/">
               <Logo className="text-neutral-900 dark:text-white" />
             </Link>
-            <Tooltip>
-              <Tooltip.Trigger
-                onClick={handlePinSidebar}
-                className="mr-0 ml-auto hidden md:block"
-              >
-                <div className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
-                  <ArrowLineRight
-                    className={cn(
-                      'size-4 text-neutral-900 transition-all duration-300 ease-in-out dark:text-white',
-                      {
-                        'rotate-180': isPinned,
-                      },
-                    )}
-                  />
-                </div>
-              </Tooltip.Trigger>
-              <Tooltip.Content side="right">
-                Pin <KBD>P</KBD>
-              </Tooltip.Content>
-            </Tooltip>
           </header>
 
           <div className="my-10 flex w-full flex-1 flex-col gap-4">

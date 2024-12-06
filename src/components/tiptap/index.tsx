@@ -103,7 +103,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       editorProps={{
         attributes: {
           class:
-            'editor animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
+            'editor px-8 animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
         },
       }}
     >
