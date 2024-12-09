@@ -212,7 +212,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                           <KBD>
                             {format(
                               note.updated_at ?? note.created_at,
-                              'MMM dd',
+                              'MMM d',
                             )}
                             th
                           </KBD>
