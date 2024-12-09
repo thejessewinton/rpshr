@@ -43,7 +43,7 @@ export default function IndexPage() {
           </p>
           <p className="animate-enter [animation-delay:5250ms]">
             Just a focus on the words.{' '}
-            <Link href="/login" className="text-white">
+            <Link href="/login" className="text-neutral-900 dark:text-white">
               Start now
             </Link>
             .
