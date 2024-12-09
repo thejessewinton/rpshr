@@ -68,28 +68,9 @@ export default async function SignIn({
               {errorMap[error]}
             </div>
           )}
-          <div className="mt-0! absolute inset-0 z-0 bg-neutral-900/50 backdrop-blur-sm [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_0%,rgba(0,0,0,1)_30%,transparent_50%,rgba(0,0,0,1)_70%)]" />
         </div>
       </div>
       <LoginBg />
     </>
   )
 }
-
-//  backdrop-filter: blur(6px);
-//                 background-color: hsl(var(--web-color-background) / 50%);
-//                 mask-composite: intersect;
-//                 mask-image: linear-gradient(
-//                         to top,
-//                         transparent,
-//                         rgba(0, 0, 0, 1) 25%,
-//                         rgba(0, 0, 0, 1) 75%,
-//                         transparent
-//                     ),
-//                     linear-gradient(
-//                         to right,
-//                         transparent,
-//                         rgba(0, 0, 0, 1) 25%,
-//                         rgba(0, 0, 0, 1) 75%,
-//                         transparent
-//                     );

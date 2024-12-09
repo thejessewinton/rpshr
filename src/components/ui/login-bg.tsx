@@ -10,7 +10,7 @@ Morbi ut finibus felis, ac posuere metus. Quisque gravida, nisi sit amet commodo
 
 export const LoginBg = () => {
   return (
-    <div className="-z-10 t fixed inset-0 mx-auto flex h-full max-w-4xl flex-col items-center justify-center overflow-hidden bg-[linear-gradient(to_bottom,rgba(255,255,255,0.25)_0%,rgba(255,255,255,0)_50%,rgba(255,255,255,0.25)_100%)] bg-clip-text font-mono text-transparent text-xs">
+    <div className="-z-10 t fixed inset-0 mx-auto flex h-full max-w-4xl flex-col items-center justify-center overflow-hidden bg-radial from-neutral-700/50 via-neutral-800/50 to-neutral-900 bg-clip-text font-mono text-transparent text-xs">
       {copy}
       {copy}
     </div>
