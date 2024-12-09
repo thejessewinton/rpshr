@@ -5,9 +5,6 @@ import { type Variants, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-
-import { signOut } from 'next-auth/react'
-import { Button } from '~/components/shared/button'
 import { KBD } from '~/components/shared/kbd'
 import { Logo } from '~/components/shared/logo'
 import { type RouterOutputs, api } from '~/trpc/react'
@@ -230,16 +227,6 @@ export const Sidebar = ({ notes }: SidebarProps) => {
               })
             )}
           </div>
-          <Button
-            onClick={() => signOut()}
-            className="mt-auto mb-0 w-full justify-between"
-          >
-            Sign out
-            <div className="flex items-center gap-1">
-              <KBD>&#8997;</KBD>
-              <KBD>Q</KBD>
-            </div>
-          </Button>
         </motion.div>
       </motion.nav>
     </>

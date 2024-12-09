@@ -3,9 +3,15 @@
 import Link from 'next/link'
 
 import NumberFlow from '@number-flow/react'
-import { PenNib, Plus, TextStrikethrough } from '@phosphor-icons/react'
+import {
+  ArrowUpRight,
+  PenNib,
+  Plus,
+  TextStrikethrough,
+} from '@phosphor-icons/react'
 import { useCurrentEditor } from '@tiptap/react'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
+import { signOut } from 'next-auth/react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useDebounceValue } from 'usehooks-ts'
 
@@ -78,6 +84,7 @@ export const Toolbar = ({
             {noteId && <DeleteButton noteId={noteId} />}
             <FocusSwitcher />
             <ThemeSwitcher />
+            <SignoutButton />
           </div>
         </motion.div>
       </AnimatePresence>
@@ -219,6 +226,29 @@ const DeleteButton = ({ noteId }: { noteId: string }) => {
 
       <Tooltip.Content>
         Delete <KBD>D</KBD>
+      </Tooltip.Content>
+    </Tooltip>
+  )
+}
+
+const SignoutButton = () => {
+  useHotkeys('alt+q', () => {
+    signOut()
+  })
+
+  return (
+    <Tooltip>
+      <Tooltip.Trigger onClick={() => signOut()}>
+        <div className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
+          <ArrowUpRight className="size-4 text-neutral-900 transition-transform dark:text-white" />
+        </div>
+      </Tooltip.Trigger>
+      <Tooltip.Content>
+        Sign Out{' '}
+        <div className="flex items-center gap-1">
+          <KBD>&#8997;</KBD>
+          <KBD>Q</KBD>
+        </div>
       </Tooltip.Content>
     </Tooltip>
   )
