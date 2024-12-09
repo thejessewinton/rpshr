@@ -21,7 +21,7 @@ const PopoverTrigger = forwardRef(
     return (
       <PopoverPrimitive.Trigger
         className={cn(
-          'flex cursor-pointer items-center font-light outline-hidden transition-colors focus:ring-2',
+          'flex items-center font-light outline-hidden transition-colors focus:ring-2',
           className,
         )}
         ref={ref}

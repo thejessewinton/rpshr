@@ -18,13 +18,10 @@ const HamburgerMenu = ({
     <button
       onClick={setIsPinned}
       type="button"
-      className={cn(
-        'absolute top-8 right-8 flex cursor-pointer flex-col md:hidden',
-        {
-          'items-end justify-end space-y-1': !isPinned,
-          'items-center justify-center': isPinned,
-        },
-      )}
+      className={cn('absolute top-8 right-8 flex flex-col md:hidden', {
+        'items-end justify-end space-y-1': !isPinned,
+        'items-center justify-center': isPinned,
+      })}
     >
       <span
         className={cn(
