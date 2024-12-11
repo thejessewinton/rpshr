@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import {} from 'next/navigation'
 
 import CharacterCount from '@tiptap/extension-character-count'
 import Document from '@tiptap/extension-document'
@@ -57,16 +57,11 @@ type EditorProps = {
 }
 
 export const NoteEditor = ({ content, noteId }: EditorProps) => {
-  const router = useRouter()
-  const pathname = usePathname()
   const utils = api.useUtils()
 
   const { mutate, isPending, isSuccess, isError } =
     api.notes.create.useMutation({
-      onSuccess: ([data]) => {
-        if (data?.id && pathname === '/') {
-          router.push(`/${data?.id}`)
-        }
+      onSuccess: () => {
         utils.notes.getAll.invalidate()
       },
     })
