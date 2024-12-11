@@ -100,8 +100,8 @@ export const note = pgTable('note', {
   user_id: varchar('user_id', { length: 255 })
     .notNull()
     .references(() => users.id),
-  title: varchar('title', { length: 255 }).notNull(),
-  body: text('body').notNull(),
+  title: varchar('title', { length: 255 }),
+  body: text('body'),
   ...lifecycleDates,
 })
 

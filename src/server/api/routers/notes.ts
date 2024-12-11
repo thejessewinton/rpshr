@@ -5,12 +5,12 @@ import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
 import { note, tag } from '~/server/db/schema'
 
 export const notesRouter = createTRPCRouter({
-  create: protectedProcedure
+  createOrUpdate: protectedProcedure
     .input(
       z.object({
         id: z.string().optional(),
-        title: z.string().min(1),
-        body: z.string().min(1),
+        title: z.string(),
+        body: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

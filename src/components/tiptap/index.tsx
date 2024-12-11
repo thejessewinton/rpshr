@@ -30,7 +30,7 @@ const extensions = [
   Placeholder.configure({
     placeholder: ({ node }) => {
       if (node.type.name === 'title') {
-        return 'Breathe. Focus. Write.'
+        return 'Enter a title...'
       }
 
       return 'Breathe. Focus. Write.'
@@ -66,7 +66,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const pathname = usePathname()
 
   const { mutate, isPending, isSuccess, isError } =
-    api.notes.create.useMutation({
+    api.notes.createOrUpdate.useMutation({
       onSuccess: ([data]) => {
         if (data?.id && pathname === '/') {
           window.history.pushState({}, '', `/${data.id}`)
