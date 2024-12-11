@@ -57,7 +57,7 @@ export const Toolbar = ({
     >
       <AnimatePresence>
         <motion.div
-          className="fixed bottom-10 left-1/2 z-20 flex origin-center items-center rounded-full border border-neutral-300/40 bg-neutral-200 py-1.5 pr-2 pl-4 shadow-black/10 shadow-xl dark:border-neutral-700/40 dark:bg-neutral-950"
+          className="fixed bottom-10 left-1/2 flex origin-center items-center rounded-full border border-neutral-300/40 bg-neutral-200 py-1.5 pr-2 pl-4 shadow-black/10 shadow-xl dark:border-neutral-700/40 dark:bg-neutral-950"
           initial={{
             opacity: 0,
             translateY: 10,
