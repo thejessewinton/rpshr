@@ -151,9 +151,9 @@ export const Sidebar = ({ notes }: SidebarProps) => {
       >
         <motion.div
           className={cn(
-            'fixed inset-0 z-100 flex w-72 flex-col items-center border-neutral-300/40 border-r bg-neutral-50 p-4 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900',
+            'fixed inset-0 z-100 flex w-72 flex-col items-center border border-neutral-300/40 bg-neutral-50 p-4 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900',
             {
-              'top-1 bottom-1 rounded-r-xl border shadow-black/20 shadow-lg':
+              'top-1 bottom-1 rounded-r-xl border shadow-black/10 shadow-xl md:left-1 md:rounded-xl':
                 !isPinned,
             },
           )}
