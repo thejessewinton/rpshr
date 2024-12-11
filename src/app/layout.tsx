@@ -15,8 +15,8 @@ import { cn } from '~/utils/core'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s — notes',
-    default: 'notes',
+    template: '%s — rpshr',
+    default: 'rpshr',
   },
   description: 'Breathe. Focus. Write.',
   metadataBase: new URL(env.APP_URL),
