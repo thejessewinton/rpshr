@@ -18,7 +18,7 @@ export const notesRouter = createTRPCRouter({
         .insert(note)
         .values({
           id: input.id,
-          title: input.title ?? 'Untitled',
+          title: input.title,
           user_id: ctx.session.user.id,
           body: input.body,
         })
