@@ -1,7 +1,5 @@
 'use client'
 
-import {} from 'next/navigation'
-
 import CharacterCount from '@tiptap/extension-character-count'
 import Document from '@tiptap/extension-document'
 import Focus from '@tiptap/extension-focus'
@@ -9,13 +7,20 @@ import Heading from '@tiptap/extension-heading'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import Typography from '@tiptap/extension-typography'
-import { type Editor, EditorProvider } from '@tiptap/react'
+import {
+  type Editor,
+  EditorProvider,
+  type EditorProviderProps,
+} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
 
 import { Toolbar } from '~/components/tiptap/toolbar'
-import { api } from '~/trpc/react'
+import { useFocusStore } from '~/state/use-focus-store'
+import { type RouterOutputs, api } from '~/trpc/react'
 
 const extensions = [
   StarterKit,
@@ -35,10 +40,6 @@ const extensions = [
   Document.extend({
     content: 'title block+',
   }),
-  Focus.configure({
-    className: 'blur-0!',
-    mode: 'shallowest',
-  }),
   Heading.extend({
     name: 'title',
     group: 'title',
@@ -49,19 +50,29 @@ const extensions = [
     defaultProtocol: 'https://',
     openOnClick: true,
   }),
+  Focus.configure({
+    className: 'focused',
+    mode: 'deepest',
+  }),
 ]
 
 type EditorProps = {
-  content?: string
-  noteId?: string
+  content?: EditorProviderProps['content']
+  noteId?: NonNullable<RouterOutputs['notes']['getById']>['id']
 }
 
 export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const utils = api.useUtils()
+  const { isFocusMode } = useFocusStore()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const { mutate, isPending, isSuccess, isError } =
     api.notes.create.useMutation({
-      onSuccess: () => {
+      onSuccess: ([data]) => {
+        if (data?.id && pathname === '/') {
+          router.push(`/${data?.id}`)
+        }
         utils.notes.getAll.invalidate()
       },
     })
@@ -95,10 +106,15 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       onUpdate={({ editor }) => {
         debouncedSave(editor)
       }}
+      editorContainerProps={
+        {
+          'data-focus-mode': isFocusMode,
+        } as EditorProviderProps['editorContainerProps']
+      }
       editorProps={{
         attributes: {
           class:
-            'editor px-8 animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
+            'editor first:blur-none! px-8 animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
         },
       }}
     >

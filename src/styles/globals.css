@@ -84,16 +84,36 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-  
+}
+
+@layer utilities {
+
+[data-focus-mode="true"] {
+  & *:not(:focus-within):first-child {
+    @apply blur-none;
+  }
+
+  & *:not(.focused) {
+    @apply blur-xs;
+  }
+
+  & *:is(.focused) {
+    @apply blur-none;
+  }
+}
+
+  .editor {
+    & > * {
+      @apply transition-all duration-250;
+    }
+  }
 }
 
 @utility editor {
   & h1.is-empty {
     @apply first:before:pointer-events-none first:before:float-left first:before:h-0 first:before:text-sm first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
   }
-}
 
-@utility is-empty {
   .editor &h1 {
     @apply first:before:pointer-events-none first:before:hidden first:before:float-left first:before:h-0 first:before:text-sm first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
   }

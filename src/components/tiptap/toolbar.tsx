@@ -84,7 +84,7 @@ export const Toolbar = ({
             {noteId && <DeleteButton noteId={noteId} />}
             <FocusSwitcher />
             <ThemeSwitcher />
-            <SignoutButton />
+            <SignOutButton />
           </div>
         </motion.div>
       </AnimatePresence>
@@ -155,7 +155,7 @@ const FocusSwitcher = () => {
         </div>
       </Tooltip.Trigger>
       <Tooltip.Content>
-        {isFocusMode ? 'Focus' : 'Unfocus'} <KBD>`</KBD>
+        {isFocusMode ? 'Unfocus' : 'Focus'} <KBD>`</KBD>
       </Tooltip.Content>
     </Tooltip>
   )
@@ -231,7 +231,7 @@ const DeleteButton = ({ noteId }: { noteId: string }) => {
   )
 }
 
-const SignoutButton = () => {
+const SignOutButton = () => {
   useHotkeys('alt+q', () => {
     signOut()
   })

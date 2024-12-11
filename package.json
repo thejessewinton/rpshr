@@ -33,7 +33,7 @@
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-query": "^5.60.2",
     "@tiptap/extension-character-count": "^2.9.1",
-    "@tiptap/extension-focus": "^2.9.1",
+    "@tiptap/extension-focus": "^2.10.3",
     "@tiptap/extension-link": "^2.9.1",
     "@tiptap/extension-paragraph": "^2.9.1",
     "@tiptap/extension-placeholder": "^2.9.1",
