@@ -35,7 +35,7 @@ const Content = forwardRef(
     {
       className,
       side = 'top',
-      sideOffset = 12,
+      sideOffset = 24,
       align = 'center',
       ...props
     }: TooltipPrimitive.TooltipContentProps,
@@ -44,7 +44,7 @@ const Content = forwardRef(
     return (
       <TooltipPrimitive.Content
         className={cn(
-          'flex w-full radix-state-closed:animate-menu-out radix-state-delayed-open:animate-menu-in items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/40 dark:bg-neutral-900',
+          'flex w-full radix-state-delayed-open:animate-menu-in items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/20 dark:bg-neutral-900',
           className,
         )}
         side={side}
