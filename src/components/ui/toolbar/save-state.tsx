@@ -1,4 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Ping } from '~/components/shared/ping'
 import { Spinner } from '~/components/shared/spinner'
 import { Tooltip } from '~/components/shared/tooltip'
@@ -15,8 +17,14 @@ export const SaveState = ({
   isSuccess,
   isError,
 }: SaveStateProps) => {
+  const [open, setOpen] = useState(false)
+
+  useHotkeys('s', () => {
+    setOpen(true)
+  })
+
   return (
-    <Tooltip.Root>
+    <Tooltip.Root open={open} onOpenChange={setOpen}>
       <Tooltip.Trigger className="-ml-2 mr-2">
         <AnimatePresence mode="popLayout">
           <motion.div
