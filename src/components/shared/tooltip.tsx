@@ -35,7 +35,7 @@ const Content = forwardRef(
     {
       className,
       side = 'top',
-      sideOffset = 12,
+      sideOffset = 24,
       align = 'center',
       ...props
     }: TooltipPrimitive.TooltipContentProps,
