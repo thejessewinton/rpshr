@@ -11,13 +11,12 @@
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
     Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  --animate-fade: animate-opacity 250ms ease forwards;
-  --animate-menu-in: animate-opacity 250ms ease forwards, animate-up 250ms ease
+  --animate-fade: animate-opacity 250ms ease-in-out forwards;
+  --animate-menu-in: animate-opacity 250ms ease-in-out forwards, animate-up 250ms ease-in-out
     forwards;
-  --animate-menu-out: animate-opacity 250ms ease backwards, animate-up 250ms ease
-    backwards;
-  --animate-enter: animate-scale 1s ease-in-out both, animate-blur 1s
-    ease-in-out both, animate-opacity 1s ease-in-out both;
+--animate-menu-out: animate-opacity 250ms ease reverse forwards, animate-up 250ms ease reverse forwards;
+  --animate-enter: animate-scale 1s ease-in-out-in-out both, animate-blur 1s
+    ease-in-out-in-out both, animate-opacity 1s ease-in-out-in-out both;
 
   @keyframes animate-opacity {
     0% {
