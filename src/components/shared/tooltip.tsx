@@ -1,16 +1,18 @@
+'use client'
+
 import { type Ref, forwardRef } from 'react'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { cn } from '~/utils/core'
 
-export const Tooltip = ({
-  children,
-  ...props
-}: TooltipPrimitive.TooltipProps) => {
+const Provider = TooltipPrimitive.Provider
+
+const Root = ({ children, ...props }: TooltipPrimitive.TooltipProps) => {
   return <TooltipPrimitive.Root {...props}>{children}</TooltipPrimitive.Root>
 }
-const TooltipTrigger = forwardRef(
+
+const Trigger = forwardRef(
   (
     { className, ...props }: TooltipPrimitive.TooltipTriggerProps,
     ref: Ref<HTMLButtonElement>,
@@ -28,9 +30,7 @@ const TooltipTrigger = forwardRef(
   },
 )
 
-TooltipTrigger.displayName = 'TooltipTrigger'
-
-const TooltipContent = forwardRef(
+const Content = forwardRef(
   (
     {
       className,
@@ -57,8 +57,9 @@ const TooltipContent = forwardRef(
   },
 )
 
-TooltipContent.displayName = 'TooltipContent'
-
-Tooltip.Trigger = TooltipTrigger
-Tooltip.Content = TooltipContent
-Tooltip.Provider = TooltipPrimitive.Provider
+export const Tooltip = {
+  Provider,
+  Root,
+  Trigger,
+  Content,
+}
