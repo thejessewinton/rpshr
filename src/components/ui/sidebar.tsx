@@ -102,7 +102,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
     <Drawer.Root direction="left">
       <HamburgerMenu isPinned={false} />
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/1 backdrop-blur-xs" />
+        <Drawer.Overlay className="fixed inset-0 bg-black/10 backdrop-blur-xs" />
         <Drawer.Content className="fixed top-0 bottom-0 z-10 outline-0">
           <div className="flex h-full w-72 flex-col items-center border border-neutral-300/40 bg-neutral-50 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900">
             <header className="flex w-full items-center justify-between px-4 pt-4">
