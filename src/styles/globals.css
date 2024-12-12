@@ -84,23 +84,25 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
 }
+
 
 @layer utilities {
 
-[data-focus-mode="true"] {
-  & *:not(:focus-within):first-child {
-    @apply blur-none;
-  }
+  [data-focus-mode="true"] {
+    & *:not(:focus-within):first-child {
+      @apply blur-none;
+    }
 
-  & *:not(.focused) {
-    @apply blur-xs;
-  }
+    & *:not(.focused) {
+      @apply blur-xs;
+    }
 
-  & *:is(.focused) {
-    @apply blur-none;
+    & *:is(.focused) {
+      @apply blur-none;
+    }
   }
-}
 
   .editor {
     & > * {
