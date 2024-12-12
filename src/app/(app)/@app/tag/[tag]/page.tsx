@@ -15,7 +15,5 @@ export default async function Tag({ params }: TagPageParams) {
     return notFound()
   }
 
-  console.log(notes)
-
   return <div>Tag Page</div>
 }
