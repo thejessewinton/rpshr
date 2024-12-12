@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { NoteEditor } from '~/components/tiptap'
+import { NoteEditor } from '~/components/ui/tiptap'
 
 export const metadata: Metadata = {
   title: 'untitled',

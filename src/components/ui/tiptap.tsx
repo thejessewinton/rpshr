@@ -17,7 +17,7 @@ import { usePathname } from 'next/navigation'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
 
-import { Toolbar } from '~/components/tiptap/toolbar'
+import { Toolbar } from '~/components/ui/toolbar'
 import { useFocusStore } from '~/state/use-focus-store'
 import { type RouterOutputs, api } from '~/trpc/react'
 

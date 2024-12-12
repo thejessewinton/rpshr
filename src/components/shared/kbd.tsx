@@ -7,7 +7,7 @@ export const KBD = ({ children }: { children: ReactNode }) => {
     <kbd
       className={cn(
         'flex h-4 w-fit min-w-4 items-center justify-center rounded-sm p-1 font-sans text-[10px]',
-        'bg-neutral-300 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-400',
+        'bg-neutral-200/80 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-400',
       )}
     >
       {children}
