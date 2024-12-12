@@ -14,7 +14,7 @@ import { cn } from '~/utils/core'
 const HamburgerMenu = ({ isPinned }: { isPinned: boolean }) => {
   return (
     <Drawer.Trigger
-      className={cn('absolute top-8 right-8 flex flex-col md:hidden', {
+      className={cn('absolute top-8 right-8 flex flex-col', {
         'items-end justify-end space-y-1': !isPinned,
         'items-center justify-center': isPinned,
       })}
@@ -93,7 +93,6 @@ type SidebarProps = {
 
 export const Sidebar = ({ notes }: SidebarProps) => {
   const pathname = usePathname()
-  const [open, setOpen] = useState(false)
 
   const { data } = api.notes.getAll.useQuery(undefined, {
     initialData: notes,
@@ -101,15 +100,11 @@ export const Sidebar = ({ notes }: SidebarProps) => {
 
   return (
     <>
-      <Drawer.Root direction="left" open={open} onOpenChange={setOpen}>
+      <Drawer.Root direction="left">
         <HamburgerMenu isPinned={false} />
-        <div
-          className="fixed left-0 h-full w-32"
-          onMouseEnter={() => setOpen(true)}
-        />
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/1 backdrop-blur-xs" />
-          <Drawer.Content className="fixed inset-0 z-10">
+          <Drawer.Content className="fixed inset-0 z-10 outline-0">
             <div className="flex h-full w-72 flex-col items-center border border-neutral-300/40 bg-neutral-50 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900">
               <header className="flex w-full items-center justify-between px-4 pt-4">
                 <Link href="/">
@@ -147,7 +142,6 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                           <Link
                             key={note.id}
                             href={`/${note.id}`}
-                            onClick={() => setOpen(false)}
                             className={cn(
                               '-mx-2 flex flex-col justify-between gap-2 rounded-sm px-3 py-3 text-left text-neutral-900 text-sm transition-colors hover:bg-neutral-200 focus:bg-neutral-800 focus:text-white dark:text-neutral-400 dark:hover:bg-neutral-800',
                               {
