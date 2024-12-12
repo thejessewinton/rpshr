@@ -10,6 +10,7 @@ import {
   Plus,
   TextStrikethrough,
 } from '@phosphor-icons/react'
+import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { useCurrentEditor } from '@tiptap/react'
 import { format } from 'date-fns'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
@@ -333,24 +334,39 @@ const Notes = () => {
         <Dropdown.Content
           side="top"
           sideOffset={12}
-          className="min-w-xs overflow-y-scroll p-2"
+          className="min-w-xs overflow-y-scroll"
         >
-          {data?.map((note) => {
-            return (
-              <Dropdown.Item
-                key={note.id}
-                className="flex w-full items-center justify-between py-2"
-              >
-                <span className="line-clamp-1 max-w-[20ch]">{note.title}</span>
+          <ScrollArea.Root className="max-h-60">
+            <ScrollArea.Viewport className="space-y-2 p-2">
+              {data?.map((note) => {
+                return (
+                  <Dropdown.Item
+                    key={note.id}
+                    asChild
+                    className="flex w-full items-center justify-between py-2"
+                  >
+                    <Link href={`/${note.id}`}>
+                      <span className="line-clamp-1 max-w-[20ch]">
+                        {note.title}
+                      </span>
 
-                <span className="font-mono text-neutral-500 text-xs">
-                  <KBD>
-                    {format(note.updated_at ?? note.created_at, 'MMM do')}
-                  </KBD>
-                </span>
-              </Dropdown.Item>
-            )
-          })}
+                      <span className="font-mono text-neutral-500 text-xs">
+                        <KBD>
+                          {format(note.updated_at ?? note.created_at, 'MMM do')}
+                        </KBD>
+                      </span>
+                    </Link>
+                  </Dropdown.Item>
+                )
+              })}
+            </ScrollArea.Viewport>
+            <ScrollArea.Scrollbar
+              className="flex touch-none select-none bg-blackA3 p-0.5 transition-colors duration-[160ms] ease-out hover:bg-blackA5 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+              orientation="vertical"
+            >
+              <ScrollArea.Thumb className="before:-translate-x-1/2 before:-translate-y-1/2 relative flex-1 rounded-[10px] bg-black before:absolute before:top-1/2 before:left-1/2 before:size-full before:min-h-11 before:min-w-11" />
+            </ScrollArea.Scrollbar>
+          </ScrollArea.Root>
         </Dropdown.Content>
       </Dropdown>
 

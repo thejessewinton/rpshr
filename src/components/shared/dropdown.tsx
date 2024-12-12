@@ -63,7 +63,7 @@ const DropdownItem = forwardRef(
     return (
       <DropdownPrimitive.Item
         className={cn(
-          'flex w-full items-center justify-between gap-2 rounded-sm px-1.5 py-1 pl-2 outline-hidden',
+          'flex w-full items-center justify-between gap-2 rounded-sm px-1.5 py-1 pl-2 outline-hidden transition-all',
           'radix-highlighted:bg-neutral-200/70 radix-highlighted:text-neutral-700 focus:bg-neutral-200/70 focus:text-neutral-700',
           'dark:radix-highlighted:bg-neutral-700/20 dark:radix-highlighted:text-white dark:focus:bg-neutral-900/20 dark:focus:text-white',
           className,
