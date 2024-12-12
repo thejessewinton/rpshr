@@ -333,7 +333,7 @@ const Notes = () => {
         <Dropdown.Content
           side="top"
           sideOffset={12}
-          className="min-w-sm overflow-y-scroll p-2"
+          className="min-w-xs overflow-y-scroll p-2"
         >
           {data?.map((note) => {
             return (
