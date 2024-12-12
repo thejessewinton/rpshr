@@ -12,8 +12,10 @@
     Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --animate-fade: animate-opacity 250ms ease forwards;
-  --animate-menu: animate-opacity 250ms ease forwards, animate-up 250ms ease
+  --animate-menu-in: animate-opacity 250ms ease forwards, animate-up 250ms ease
     forwards;
+  --animate-menu-out: animate-opacity 250ms ease backwards, animate-up 250ms ease
+    backwards;
   --animate-enter: animate-scale 1s ease-in-out both, animate-blur 1s
     ease-in-out both, animate-opacity 1s ease-in-out both;
 
@@ -41,6 +43,7 @@
       transform: translateY(0px);
     }
   }
+
   @keyframes animate-scale {
     0% {
       transform: translateY(10px);
@@ -84,12 +87,9 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-
 }
 
-
 @layer utilities {
-
   [data-focus-mode="true"] {
     & *:not(:focus-within):first-child {
       @apply blur-none;
