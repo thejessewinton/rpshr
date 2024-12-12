@@ -18,7 +18,7 @@ const Trigger = forwardRef(
     return (
       <DropdownPrimitive.Trigger
         className={cn(
-          'flex items-center font-light outline-hidden transition-colors focus:ring-2',
+          'flex items-center font-light outline-hidden transition-colors focus:ring-1',
           className,
         )}
         ref={ref}
