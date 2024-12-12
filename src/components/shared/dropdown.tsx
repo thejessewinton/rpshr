@@ -6,14 +6,11 @@ import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
 
 import { cn } from '~/utils/core'
 
-export const Dropdown = ({
-  children,
-  ...props
-}: DropdownPrimitive.DropdownMenuProps) => {
+const Root = ({ children, ...props }: DropdownPrimitive.DropdownMenuProps) => {
   return <DropdownPrimitive.Root {...props}>{children}</DropdownPrimitive.Root>
 }
 
-const DropdownTrigger = forwardRef(
+const Trigger = forwardRef(
   (
     { className, ...props }: DropdownPrimitive.DropdownMenuTriggerProps,
     ref: Ref<HTMLButtonElement>,
@@ -31,9 +28,7 @@ const DropdownTrigger = forwardRef(
   },
 )
 
-DropdownTrigger.displayName = 'DropdownTrigger'
-
-const DropdownContent = forwardRef(
+const Content = forwardRef(
   (
     { className, ...props }: DropdownPrimitive.DropdownMenuContentProps,
     ref: Ref<HTMLDivElement>,
@@ -53,9 +48,7 @@ const DropdownContent = forwardRef(
   },
 )
 
-DropdownContent.displayName = 'DropdownContent'
-
-const DropdownItem = forwardRef(
+const Item = forwardRef(
   (
     { className, ...props }: DropdownPrimitive.DropdownMenuItemProps,
     ref: Ref<HTMLDivElement>,
@@ -75,8 +68,9 @@ const DropdownItem = forwardRef(
   },
 )
 
-DropdownItem.displayName = 'DropdownItem'
-
-Dropdown.Trigger = DropdownTrigger
-Dropdown.Content = DropdownContent
-Dropdown.Item = DropdownItem
+export const Dropdown = {
+  Root,
+  Trigger,
+  Content,
+  Item,
+}

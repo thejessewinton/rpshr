@@ -1,16 +1,18 @@
+'use client'
+
 import { type Ref, forwardRef } from 'react'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { cn } from '~/utils/core'
 
-export const Tooltip = ({
-  children,
-  ...props
-}: TooltipPrimitive.TooltipProps) => {
+const Provider = TooltipPrimitive.Provider
+
+const Root = ({ children, ...props }: TooltipPrimitive.TooltipProps) => {
   return <TooltipPrimitive.Root {...props}>{children}</TooltipPrimitive.Root>
 }
-const TooltipTrigger = forwardRef(
+
+const Trigger = forwardRef(
   (
     { className, ...props }: TooltipPrimitive.TooltipTriggerProps,
     ref: Ref<HTMLButtonElement>,
@@ -28,9 +30,7 @@ const TooltipTrigger = forwardRef(
   },
 )
 
-TooltipTrigger.displayName = 'TooltipTrigger'
-
-const TooltipContent = forwardRef(
+const Content = forwardRef(
   (
     {
       className,
@@ -44,7 +44,7 @@ const TooltipContent = forwardRef(
     return (
       <TooltipPrimitive.Content
         className={cn(
-          'flex w-full radix-state-delayed-open:animate-menu-in items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs shadow-black/20 shadow-xs dark:border-neutral-700/40 dark:bg-neutral-900',
+          'flex w-full radix-state-closed:animate-menu-out radix-state-delayed-open:animate-menu-in items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs shadow-black/20 shadow-xs dark:border-neutral-700/40 dark:bg-neutral-900',
           className,
         )}
         side={side}
@@ -57,8 +57,9 @@ const TooltipContent = forwardRef(
   },
 )
 
-TooltipContent.displayName = 'TooltipContent'
-
-Tooltip.Trigger = TooltipTrigger
-Tooltip.Content = TooltipContent
-Tooltip.Provider = TooltipPrimitive.Provider
+export const Tooltip = {
+  Provider,
+  Root,
+  Trigger,
+  Content,
+}
