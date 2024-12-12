@@ -44,7 +44,7 @@ const TooltipContent = forwardRef(
     return (
       <TooltipPrimitive.Content
         className={cn(
-          'flex w-full radix-state-delayed-open:animate-menu items-center justify-between gap-3 rounded-md bg-neutral-200 px-1.5 py-1 pl-2 font-mono text-xs shadow-black/20 shadow-xs dark:bg-neutral-950',
+          'flex w-full radix-state-delayed-open:animate-menu items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs shadow-black/20 shadow-xs dark:border-neutral-700/40 dark:bg-neutral-900',
           className,
         )}
         side={side}
