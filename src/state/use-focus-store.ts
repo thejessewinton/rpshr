@@ -1,13 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type WritingStoreState = {
+type FocusStoreState = {
   isFocusMode: boolean
   toggleIsFocusMode: () => void
 }
 
 export const useFocusStore = create(
-  persist<WritingStoreState>(
+  persist<FocusStoreState>(
     (set, get) => ({
       isFocusMode: false,
       toggleIsFocusMode: () => set({ isFocusMode: !get().isFocusMode }),

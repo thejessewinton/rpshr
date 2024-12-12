@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Tooltip } from '~/components/shared/tooltip'
 import { Shadow, Sidebar } from '~/components/ui/sidebar'
+import { RouteChangeListener } from '~/state/route-change-listener'
 import { api } from '~/trpc/server'
 
 export default async function AppLayout({ children }: { children: ReactNode }) {
@@ -14,6 +15,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       <main className="mx-auto flex w-full flex-col justify-center">
         {children}
       </main>
+      <RouteChangeListener />
     </Tooltip.Provider>
   )
 }

@@ -97,7 +97,6 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
 
   return (
     <EditorProvider
-      autofocus
       immediatelyRender={false}
       extensions={extensions}
       content={content}
