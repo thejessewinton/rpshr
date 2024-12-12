@@ -104,7 +104,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
         <HamburgerMenu isPinned={false} />
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/1 backdrop-blur-xs" />
-          <Drawer.Content className="fixed inset-0 z-10 outline-0">
+          <Drawer.Content className="fixed top-0 bottom-0 z-10 outline-0">
             <div className="flex h-full w-72 flex-col items-center border border-neutral-300/40 bg-neutral-50 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-900">
               <header className="flex w-full items-center justify-between px-4 pt-4">
                 <Link href="/">
@@ -171,7 +171,7 @@ export const Sidebar = ({ notes }: SidebarProps) => {
                   )}
                 </ScrollArea.Viewport>
                 <ScrollArea.Scrollbar
-                  className="flex touch-none select-none bg-blackA3 p-0.5 transition-colors duration-[160ms] ease-out hover:bg-blackA5 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+                  className="flex radix-orientation-[vertical]:w-2.5 touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out"
                   orientation="vertical"
                 >
                   <ScrollArea.Thumb className="before:-translate-x-1/2 before:-translate-y-1/2 relative flex-1 rounded-[10px] bg-mauve10 before:absolute before:top-1/2 before:left-1/2 before:size-full before:min-h-11 before:min-w-11" />
