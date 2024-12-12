@@ -4,7 +4,6 @@ import {
   integer,
   pgTable,
   primaryKey,
-  serial,
   text,
   timestamp,
   varchar,
@@ -25,7 +24,6 @@ export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   notes: many(note),
-  tags: many(tag),
 }))
 
 export const accounts = pgTable(
@@ -92,7 +90,7 @@ const lifecycleDates = {
     .notNull(),
 }
 
-// Notes and tags
+// Notes
 export const note = pgTable('note', {
   id: text('id')
     .primaryKey()
@@ -105,42 +103,6 @@ export const note = pgTable('note', {
   ...lifecycleDates,
 })
 
-export const noteRelations = relations(note, ({ one, many }) => ({
+export const noteRelations = relations(note, ({ one }) => ({
   user: one(users, { fields: [note.user_id], references: [users.id] }),
-  tags: many(notesToTags),
-}))
-
-export const tag = pgTable('tag', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  slug: varchar('slug', { length: 255 }).notNull(),
-  user_id: varchar('user_id', { length: 255 }),
-  ...lifecycleDates,
-})
-
-export const tagRelations = relations(tag, ({ many, one }) => ({
-  notes: many(notesToTags),
-  user: one(users, { fields: [tag.user_id], references: [users.id] }),
-}))
-
-export const notesToTags = pgTable('note_tags', {
-  note_id: text('note_id')
-    .notNull()
-    .references(() => note.id, { onDelete: 'cascade' }),
-  tag_id: integer('tag_id')
-    .notNull()
-    .references(() => tag.id, { onDelete: 'cascade' }),
-})
-
-export const notesToTagsRelations = relations(notesToTags, ({ one }) => ({
-  notes: one(note, {
-    fields: [notesToTags.note_id],
-    references: [note.id],
-    relationName: 'note',
-  }),
-  tags: one(tag, {
-    fields: [notesToTags.tag_id],
-    references: [tag.id],
-    relationName: 'tag',
-  }),
 }))
