@@ -5,11 +5,13 @@ import Link from 'next/link'
 import NumberFlow from '@number-flow/react'
 import {
   ArrowUpRight,
+  ListDashes,
   PenNib,
   Plus,
   TextStrikethrough,
 } from '@phosphor-icons/react'
 import { useCurrentEditor } from '@tiptap/react'
+import { format } from 'date-fns'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { signOut } from 'next-auth/react'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -80,6 +82,7 @@ export const Toolbar = ({
               isError={isError}
             />
             <WordCount />
+            <Notes />
             <NewButton />
             {noteId && <DeleteButton noteId={noteId} />}
             <FocusSwitcher />
@@ -303,6 +306,56 @@ const SaveState = ({ isPending, isSuccess, isError }: ToolbarProps) => {
             : isError
               ? 'Error'
               : 'No changes'}
+      </Tooltip.Content>
+    </Tooltip>
+  )
+}
+
+const Notes = () => {
+  const [open, setOpen] = useState(false)
+
+  useHotkeys('n', () => {
+    setOpen(true)
+  })
+
+  const { data } = api.notes.getAll.useQuery()
+
+  return (
+    <Tooltip>
+      <Dropdown open={open} onOpenChange={setOpen}>
+        <Dropdown.Trigger className="rounded-full">
+          <Tooltip.Trigger asChild>
+            <div className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
+              <ListDashes className="size-4 text-neutral-900 transition-transform dark:text-white" />
+            </div>
+          </Tooltip.Trigger>
+        </Dropdown.Trigger>
+        <Dropdown.Content
+          side="top"
+          sideOffset={12}
+          className="min-w-xs overflow-y-scroll p-2"
+        >
+          {data?.map((note) => {
+            return (
+              <Dropdown.Item
+                key={note.id}
+                className="flex w-full items-center justify-between py-2"
+              >
+                <span className="line-clamp-1 max-w-[20ch]">{note.title}</span>
+
+                <span className="font-mono text-neutral-500 text-xs">
+                  <KBD>
+                    {format(note.updated_at ?? note.created_at, 'MMM do')}
+                  </KBD>
+                </span>
+              </Dropdown.Item>
+            )
+          })}
+        </Dropdown.Content>
+      </Dropdown>
+
+      <Tooltip.Content>
+        Notes <KBD>N</KBD>
       </Tooltip.Content>
     </Tooltip>
   )
