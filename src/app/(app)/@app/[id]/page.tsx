@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { NoteEditor } from '~/components/tiptap'
+import { NoteEditor } from '~/components/ui/tiptap'
 import { api } from '~/trpc/server'
 
 export const generateMetadata = async ({
