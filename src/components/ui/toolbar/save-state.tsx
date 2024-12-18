@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Ping } from '~/components/shared/ping'
