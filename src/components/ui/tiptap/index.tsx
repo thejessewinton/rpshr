@@ -20,6 +20,8 @@ import { useDebounceCallback } from 'usehooks-ts'
 import { Toolbar } from '~/components/ui/toolbar'
 import { useFocusStore } from '~/state/use-focus-store'
 import { type RouterOutputs, api } from '~/trpc/react'
+import { cn } from '~/utils/core'
+import styles from './editor.module.css'
 
 const extensions = [
   StarterKit,
@@ -110,8 +112,10 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       }
       editorProps={{
         attributes: {
-          class:
-            'editor first:blur-none! px-8 animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
+          class: cn(
+            styles.editor,
+            'px-8 animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
+          ),
         },
       }}
     >
