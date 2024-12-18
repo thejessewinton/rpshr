@@ -1,7 +1,7 @@
 'use client'
 
 import { useCurrentEditor } from '@tiptap/react'
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
+import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import { Tooltip } from '~/components/shared/tooltip'
 
 import { DeleteNote } from '~/components/ui/toolbar/delete-note'
