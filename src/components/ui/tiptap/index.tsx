@@ -13,10 +13,11 @@ import {
   type EditorProviderProps,
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
 
+import { useState } from 'react'
 import { Toolbar } from '~/components/ui/toolbar'
 import { useFocusStore } from '~/state/use-focus-store'
 import { type RouterOutputs, api } from '~/trpc/react'
@@ -66,13 +67,16 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const utils = api.useUtils()
   const { isFocusMode } = useFocusStore()
   const pathname = usePathname()
-  const router = useRouter()
+
+  // local state to store the id of the note on first save
+  const [id, setId] = useState<string | undefined>(undefined)
 
   const { mutate, isPending, isSuccess, isError } =
     api.notes.createOrUpdate.useMutation({
       onSuccess: ([data]) => {
         if (data?.id && pathname === '/') {
-          router.push(`/${data.id}`, undefined)
+          window.history.pushState({}, '', `/${data.id}`)
+          setId(data.id)
         }
         utils.notes.getAll.invalidate()
       },
@@ -87,7 +91,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
     }
 
     mutate({
-      id: noteId,
+      id: noteId ?? id,
       title: editor.view.state.doc.firstChild?.textContent.trim() ?? '',
       body: editor.getHTML() ?? '',
     })
