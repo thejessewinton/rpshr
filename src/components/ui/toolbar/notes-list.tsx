@@ -50,15 +50,14 @@ export const NotesList = () => {
             </div>
           ) : (
             <ScrollArea.Root className="max-h-60">
-              <ScrollArea.Viewport className="space-y-2 p-2">
+              <ScrollArea.Viewport className="space-y-2">
                 {data.map((note) => {
                   const isCurrent = pathname === `/${note.id}`
-                  console.log({ isCurrent, pathname })
                   return (
                     <Dropdown.Item
                       key={note.id}
                       asChild
-                      className="flex w-full items-center justify-between py-2"
+                      className="flex w-full items-center justify-between px-3 py-2"
                     >
                       <Link href={`/${note.id}`}>
                         <div className="flex items-center gap-2">
