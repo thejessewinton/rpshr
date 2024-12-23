@@ -13,7 +13,7 @@ import {
   type EditorProviderProps,
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
 
@@ -66,12 +66,13 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const utils = api.useUtils()
   const { isFocusMode } = useFocusStore()
   const pathname = usePathname()
+  const router = useRouter()
 
   const { mutate, isPending, isSuccess, isError } =
     api.notes.createOrUpdate.useMutation({
       onSuccess: ([data]) => {
         if (data?.id && pathname === '/') {
-          window.history.pushState({}, '', `/${data.id}`)
+          router.push(`/${data.id}`, undefined)
         }
         utils.notes.getAll.invalidate()
       },
