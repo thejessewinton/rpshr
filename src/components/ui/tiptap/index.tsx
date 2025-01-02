@@ -3,6 +3,7 @@
 import CharacterCount from '@tiptap/extension-character-count'
 import Focus from '@tiptap/extension-focus'
 import Link from '@tiptap/extension-link'
+import Mention from '@tiptap/extension-mention'
 import Typography from '@tiptap/extension-typography'
 import {
   type Editor,
@@ -19,22 +20,6 @@ import { Toolbar } from '~/components/ui/toolbar'
 import { useFocusStore } from '~/state/use-focus-store'
 import { type RouterOutputs, api } from '~/trpc/react'
 
-const extensions = [
-  StarterKit,
-  Typography,
-  CharacterCount.configure({
-    limit: null,
-  }),
-  Link.configure({
-    autolink: true,
-    defaultProtocol: 'https://',
-    openOnClick: true,
-  }),
-  Focus.configure({
-    className: 'focused',
-  }),
-]
-
 type EditorProps = {
   content?: EditorProviderProps['content']
   noteId?: NonNullable<RouterOutputs['notes']['getById']>['id']
@@ -44,6 +29,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const utils = api.useUtils()
   const { isFocusMode } = useFocusStore()
   const pathname = usePathname()
+  const { data: notes, refetch } = api.notes.getAll.useQuery()
 
   // local state to store the id of the note on first save
   const [id, setId] = useState<string | undefined>(undefined)
@@ -78,6 +64,48 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
     (editor: Editor) => handleSave(editor),
     2000,
   )
+
+  const extensions = [
+    StarterKit,
+    Typography,
+    CharacterCount.configure({
+      limit: null,
+    }),
+    Link.configure({
+      autolink: true,
+      defaultProtocol: 'https://',
+      openOnClick: true,
+    }),
+    Focus.configure({
+      className: 'focused',
+    }),
+    Mention.configure({
+      HTMLAttributes: {
+        class: 'mention',
+      },
+      suggestion: {
+        items: async ({ query }) => {
+          console.log(notes)
+          if (!notes) return []
+          return notes.filter((note) =>
+            note.title!.toLowerCase().includes(query.toLowerCase()),
+          )
+        },
+        render: () => {
+          return {
+            onStart: async (props) => {
+              await refetch()
+              console.log('onStart', props)
+            },
+            onUpdate: async (props) => {
+              await refetch()
+              console.log('onUpdate', props)
+            },
+          }
+        },
+      },
+    }),
+  ]
 
   return (
     <EditorProvider
