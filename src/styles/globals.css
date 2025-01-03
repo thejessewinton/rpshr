@@ -92,23 +92,24 @@
 }
 
 @layer utilities {
-  [data-focus-mode="true"] {
-    & *:not(:focus-within):first-child {
-      @apply blur-none;
-    }
+  .editor {
+    --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    & *:not(.focused) {
-      @apply blur-xs;
-    }
-
-    & *:is(.focused) {
-      @apply blur-none;
+    & > * {
+      transition-duration: 200ms;
+      transition-property: all;
+      transition-timing-function: var(--ease-out-quad);
     }
   }
-}
 
-@utility editor {
-  & h1.is-empty {
-    @apply first:before:pointer-events-none first:before:float-left first:before:h-0 first:before:text-sm first:before:text-neutral-500 first:before:content-[attr(data-placeholder)];
+  [data-focus-mode="true"] {
+    & *:not(.focused) {
+      @apply opacity-40;
+    }
+
+    & *:not(:focus-within) > *,
+    & *:is(.focused) {
+      @apply opacity-100;
+    }
   }
 }

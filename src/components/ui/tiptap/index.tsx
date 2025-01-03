@@ -1,11 +1,9 @@
 'use client'
 
 import CharacterCount from '@tiptap/extension-character-count'
-import Document from '@tiptap/extension-document'
 import Focus from '@tiptap/extension-focus'
-import Heading from '@tiptap/extension-heading'
 import Link from '@tiptap/extension-link'
-import Placeholder from '@tiptap/extension-placeholder'
+import Mention from '@tiptap/extension-mention'
 import Typography from '@tiptap/extension-typography'
 import {
   type Editor,
@@ -21,42 +19,6 @@ import { useState } from 'react'
 import { Toolbar } from '~/components/ui/toolbar'
 import { useFocusStore } from '~/state/use-focus-store'
 import { type RouterOutputs, api } from '~/trpc/react'
-import { cn } from '~/utils/core'
-import styles from './editor.module.css'
-
-const extensions = [
-  StarterKit,
-  Typography,
-  CharacterCount.configure({
-    limit: null,
-  }),
-  Placeholder.configure({
-    placeholder: ({ node }) => {
-      if (node.type.name === 'title') {
-        return 'Enter a title...'
-      }
-
-      return 'Breathe. Focus. Write.'
-    },
-  }),
-  Document.extend({
-    content: 'title block+',
-  }),
-  Heading.extend({
-    name: 'title',
-    group: 'title',
-    parseHTML: () => [{ tag: 'h1:first-child' }],
-  }).configure({ levels: [1] }),
-  Link.configure({
-    autolink: true,
-    defaultProtocol: 'https://',
-    openOnClick: true,
-  }),
-  Focus.configure({
-    className: 'focused',
-    mode: 'deepest',
-  }),
-]
 
 type EditorProps = {
   content?: EditorProviderProps['content']
@@ -67,6 +29,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
   const utils = api.useUtils()
   const { isFocusMode } = useFocusStore()
   const pathname = usePathname()
+  const { data: notes, refetch } = api.notes.getAll.useQuery()
 
   // local state to store the id of the note on first save
   const [id, setId] = useState<string | undefined>(undefined)
@@ -102,6 +65,48 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
     2000,
   )
 
+  const extensions = [
+    StarterKit,
+    Typography,
+    CharacterCount.configure({
+      limit: null,
+    }),
+    Link.configure({
+      autolink: true,
+      defaultProtocol: 'https://',
+      openOnClick: true,
+    }),
+    Focus.configure({
+      className: 'focused',
+    }),
+    Mention.configure({
+      HTMLAttributes: {
+        class: 'mention',
+      },
+      suggestion: {
+        items: async ({ query }) => {
+          console.log(notes)
+          if (!notes) return []
+          return notes.filter((note) =>
+            note.title!.toLowerCase().includes(query.toLowerCase()),
+          )
+        },
+        render: () => {
+          return {
+            onStart: async (props) => {
+              await refetch()
+              console.log('onStart', props)
+            },
+            onUpdate: async (props) => {
+              await refetch()
+              console.log('onUpdate', props)
+            },
+          }
+        },
+      },
+    }),
+  ]
+
   return (
     <EditorProvider
       immediatelyRender={false}
@@ -117,10 +122,8 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       }
       editorProps={{
         attributes: {
-          class: cn(
-            styles.editor,
+          class:
             'editor px-8 animate-enter mt-20 md:prose-headings:text-sm max-w-none pb-[12rem] prose-headings:font-medium font-light prose-headings:text-base text-base md:text-sm prose dark:prose-invert prose-neutral py-4 focus:outline-hidden',
-          ),
         },
       }}
     >
