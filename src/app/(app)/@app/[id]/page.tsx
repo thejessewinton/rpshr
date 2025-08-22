@@ -6,7 +6,7 @@ import { api } from '~/trpc/server'
 
 export const generateMetadata = async ({
   params,
-}: NotePageParams): Promise<Metadata> => {
+}: PageProps<'/[id]'>): Promise<Metadata> => {
   const note = await api.notes.getById({ id: (await params).id })
 
   return {
@@ -14,13 +14,7 @@ export const generateMetadata = async ({
   }
 }
 
-type NotePageParams = {
-  params: Promise<{
-    id: string
-  }>
-}
-
-export default async function Note({ params }: NotePageParams) {
+export default async function Note({ params }: PageProps<'/[id]'>) {
   const note = await api.notes.getById({ id: (await params).id })
 
   if (!note) {

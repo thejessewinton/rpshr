@@ -4,7 +4,7 @@ import { type Ref, forwardRef } from 'react'
 
 import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
 
-import { cn } from '~/utils/core'
+import { cn } from '~/utils/cn'
 
 const Root = ({ children, ...props }: DropdownPrimitive.DropdownMenuProps) => {
   return <DropdownPrimitive.Root {...props}>{children}</DropdownPrimitive.Root>

@@ -1,6 +1,4 @@
-import type { ReactNode } from 'react'
-
-export default function AppLayout({ children }: { children: ReactNode }) {
+export default function AppLayout({ children }: LayoutProps<'/'>) {
   return (
     <main className="mx-auto flex w-full flex-col justify-center">
       {children}

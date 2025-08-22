@@ -1,6 +1,6 @@
 import { ArrowUpRight } from '@phosphor-icons/react'
-import { signOut } from 'next-auth/react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { signOut } from '~/auth/client'
 import { KBD } from '~/components/shared/kbd'
 import { Tooltip } from '~/components/shared/tooltip'
 

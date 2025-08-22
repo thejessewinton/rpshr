@@ -4,7 +4,7 @@ import { type Ref, forwardRef } from 'react'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
-import { cn } from '~/utils/core'
+import { cn } from '~/utils/cn'
 
 const Provider = TooltipPrimitive.Provider
 

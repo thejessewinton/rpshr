@@ -1,7 +1,7 @@
 import NumberFlow from '@number-flow/react'
 import { useCurrentEditor } from '@tiptap/react'
 import { useDebounceValue } from 'usehooks-ts'
-import { pluralize } from '~/utils/core'
+import { pluralize } from '~/utils/pluralize'
 
 export const WordCount = () => {
   const { editor } = useCurrentEditor()

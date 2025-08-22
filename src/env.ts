@@ -1,5 +1,5 @@
-import { createEnv } from '@t3-oss/env-nextjs'
-import { z } from 'zod'
+import { createEnv } from '@t3-oss/env-nextjs';
+import { z } from 'zod';
 
 export const env = createEnv({
   /**
@@ -7,14 +7,14 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    APP_URL: z.string().url(),
-    AUTH_GOOGLE_ID: z.string(),
-    AUTH_GOOGLE_SECRET: z.string(),
-    AUTH_SECRET:
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+    BETTER_AUTH_SECRET:
       process.env.NODE_ENV === 'production'
         ? z.string()
         : z.string().optional(),
-    DATABASE_URL: z.string().url(),
+    BETTER_AUTH_URL: z.url(),
+    DATABASE_URL: z.url(),
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
@@ -34,10 +34,10 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    APP_URL: process.env.APP_URL,
-    AUTH_SECRET: process.env.AUTH_SECRET,
-    AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
-    AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
   },
@@ -51,4 +51,4 @@ export const env = createEnv({
    * `SOME_VAR=''` will throw an error.
    */
   emptyStringAsUndefined: true,
-})
+});
