@@ -15,3 +15,10 @@ export const auth = betterAuth({
     },
   },
 });
+
+export const getSessionData = async (requestHeaders: Headers) => {
+  'use cache';
+  return await auth.api.getSession({
+    headers: requestHeaders,
+  });
+};

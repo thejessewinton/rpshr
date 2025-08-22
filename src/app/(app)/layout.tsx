@@ -1,11 +1,8 @@
-import type { ReactNode } from 'react'
+import { headers } from 'next/headers'
+import { getSessionData } from '~/auth'
 
-import { auth } from '~/auth'
+export default async function AppLayout({ marketing, app }: LayoutProps<'/'>) {
+  const session = await getSessionData(await headers())
 
-type AppLayoutProps = { marketing: ReactNode; app: ReactNode }
-
-export default async function AppLayout({ marketing, app }: AppLayoutProps) {
-  const session = await auth()
-
-  return <>{session ? app : marketing}</>
+  return <>{session?.user ? app : marketing}</>
 }

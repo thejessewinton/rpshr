@@ -1,7 +1,11 @@
-import './src/env.ts'
+import './src/env.ts';
 
-import type { NextConfig } from 'next'
+import type { NextConfig } from 'next';
 
-const config = {} satisfies NextConfig
+const config = {
+  experimental: {
+    useCache: true,
+  },
+} satisfies NextConfig;
 
-export default config
+export default config;
