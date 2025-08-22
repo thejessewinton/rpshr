@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin 'tailwindcss-radix';
 @plugin '@tailwindcss/typography';
 
 @variant dark (&:is(.dark *));
@@ -14,6 +13,8 @@
   --animate-menu-in: menu-in 250ms ease-in-out forwards;
   --animate-menu-out: menu-out 250ms ease-in-out forwards;
   --animate-enter: enter 1s ease-in-out both;
+
+  --blur-xs: 2px;
 
   @keyframes menu-in {
     0% {

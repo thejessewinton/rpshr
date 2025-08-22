@@ -1,61 +1,47 @@
 'use client'
 
-import { type Ref, forwardRef } from 'react'
-
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { Tooltip as TooltipPrimitive } from '@base-ui-components/react'
 
 import { cn } from '~/utils/cn'
 
-const Provider = TooltipPrimitive.Provider
+const Provider = ({ children, ...props }: TooltipPrimitive.Provider.Props) => {
+  return (
+    <TooltipPrimitive.Provider {...props}>{children}</TooltipPrimitive.Provider>
+  )
+}
 
-const Root = ({ children, ...props }: TooltipPrimitive.TooltipProps) => {
+const Root = ({ children, ...props }: TooltipPrimitive.Root.Props) => {
   return <TooltipPrimitive.Root {...props}>{children}</TooltipPrimitive.Root>
 }
 
-const Trigger = forwardRef(
-  (
-    { className, ...props }: TooltipPrimitive.TooltipTriggerProps,
-    ref: Ref<HTMLButtonElement>,
-  ) => {
-    return (
-      <TooltipPrimitive.Trigger
-        className={cn(
-          'rounded-full outline-hidden transition-colors focus:ring-1',
-          className,
-        )}
-        ref={ref}
-        {...props}
-      />
-    )
-  },
-)
+const Trigger = ({ className, ...props }: TooltipPrimitive.Trigger.Props) => {
+  return (
+    <TooltipPrimitive.Trigger
+      className={cn(
+        'rounded-full outline-hidden transition-colors focus:ring-1',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 
-const Content = forwardRef(
-  (
-    {
-      className,
-      side = 'top',
-      sideOffset = 24,
-      align = 'center',
-      ...props
-    }: TooltipPrimitive.TooltipContentProps,
-    ref: Ref<HTMLDivElement>,
-  ) => {
-    return (
-      <TooltipPrimitive.Content
-        className={cn(
-          'flex w-full radix-state-delayed-open:animate-menu-in items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/20 dark:bg-neutral-900',
-          className,
-        )}
-        side={side}
-        sideOffset={sideOffset}
-        align={align}
-        ref={ref}
-        {...props}
-      />
-    )
-  },
-)
+const Content = ({ className, ...props }: TooltipPrimitive.Popup.Props) => {
+  return (
+    <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Positioner side="top" sideOffset={24} align="center">
+        <TooltipPrimitive.Popup
+          className={cn(
+            'flex w-full items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/20 dark:bg-neutral-900',
+
+            className,
+          )}
+          {...props}
+        />
+      </TooltipPrimitive.Positioner>
+    </TooltipPrimitive.Portal>
+  )
+}
 
 export const Tooltip = {
   Provider,
