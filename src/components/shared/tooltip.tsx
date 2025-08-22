@@ -32,7 +32,8 @@ const Content = ({ className, ...props }: TooltipPrimitive.Popup.Props) => {
       <TooltipPrimitive.Positioner side="top" sideOffset={24} align="center">
         <TooltipPrimitive.Popup
           className={cn(
-            'flex w-full radix-state-delayed-open:animate-menu-in items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/20 dark:bg-neutral-900',
+            'flex w-full items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/20 dark:bg-neutral-900',
+
             className,
           )}
           {...props}

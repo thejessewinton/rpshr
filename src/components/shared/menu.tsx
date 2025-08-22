@@ -48,7 +48,7 @@ const Popup = ({
   return (
     <MenuPrimitive.Popup
       className={cn(
-        'z-9999 mt-1 w-32 space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-black/10 shadow-lg backdrop-blur-sm',
+        'z-9999 mt-1 w-32 origin-(--transform-origin) space-y-1 overflow-hidden rounded-lg border p-1 font-mono text-xs shadow-black/10 shadow-lg outline-none backdrop-blur-sm transition-[transform,opacity,filter]',
         'border-neutral-300/40 bg-neutral-100/70 text-neutral-700',
         'dark:border-neutral-700/30 dark:bg-neutral-900 dark:text-neutral-400',
         className,
