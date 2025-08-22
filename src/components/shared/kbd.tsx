@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { cn } from '~/utils/core'
+import { cn } from '~/utils/cn'
 
 export const KBD = ({ children }: { children: ReactNode }) => {
   return (

@@ -3,7 +3,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { KBD } from '~/components/shared/kbd'
 import { Tooltip } from '~/components/shared/tooltip'
 import { useFocusStore } from '~/state/use-focus-store'
-import { cn } from '~/utils/core'
+import { cn } from '~/utils/cn'
 
 export const FocusSwitcher = () => {
   const { isFocusMode, toggleIsFocusMode } = useFocusStore()

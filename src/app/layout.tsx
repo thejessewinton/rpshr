@@ -6,12 +6,11 @@ import type { ReactNode } from 'react'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 
-import { SessionProvider } from 'next-auth/react'
 import { ThemeProvider } from 'next-themes'
 import { env } from '~/env'
 import { Hotkeys } from '~/providers/hotkeys'
 import { TRPCReactProvider } from '~/trpc/react'
-import { cn } from '~/utils/core'
+import { cn } from '~/utils/cn'
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +18,7 @@ export const metadata: Metadata = {
     default: 'rpshr',
   },
   description: 'Breathe. Focus. Write.',
-  metadataBase: new URL(env.APP_URL),
+  metadataBase: new URL(env.BETTER_AUTH_URL),
 }
 
 export default async function RootLayout({
@@ -34,14 +33,12 @@ export default async function RootLayout({
           GeistMono.variable,
         )}
       >
-        <SessionProvider>
-          <ThemeProvider attribute="class" disableTransitionOnChange>
-            <TRPCReactProvider>
-              <div className="mx-auto max-w-2xl">{children}</div>
-              <Hotkeys />
-            </TRPCReactProvider>
-          </ThemeProvider>
-        </SessionProvider>
+        <ThemeProvider attribute="class" disableTransitionOnChange>
+          <TRPCReactProvider>
+            <div className="mx-auto max-w-2xl">{children}</div>
+            <Hotkeys />
+          </TRPCReactProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

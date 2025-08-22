@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 
 import { GoogleLogo } from '@phosphor-icons/react/dist/ssr'
 
-import { authClient } from '~/client/auth'
+import { getSession, signIn } from '~/auth/client'
 import { Button } from '~/components/shared/button'
 import { Logo } from '~/components/shared/logo'
 import { LoginBg } from '~/components/ui/login-bg'
@@ -22,7 +22,7 @@ export default async function SignIn({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
-  const session = await authClient.getSession()
+  const session = await getSession()
 
   if (session.data?.user) {
     redirect('/')
@@ -36,7 +36,7 @@ export default async function SignIn({
       icon: GoogleLogo,
       action: async () => {
         'use server'
-        await authClient.signIn.social({
+        await signIn.social({
           provider: 'google',
           callbackURL: '/',
         })

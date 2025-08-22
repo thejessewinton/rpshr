@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { auth } from '~/server/auth'
+import { auth } from '~/auth'
 
 type AppLayoutProps = { marketing: ReactNode; app: ReactNode }
 
