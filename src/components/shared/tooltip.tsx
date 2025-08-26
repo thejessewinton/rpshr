@@ -4,11 +4,7 @@ import { Tooltip as TooltipPrimitive } from '@base-ui-components/react'
 
 import { cn } from '~/utils/cn'
 
-const Provider = ({ children, ...props }: TooltipPrimitive.Provider.Props) => {
-  return (
-    <TooltipPrimitive.Provider {...props}>{children}</TooltipPrimitive.Provider>
-  )
-}
+const Provider = TooltipPrimitive.Provider
 
 const Root = ({ children, ...props }: TooltipPrimitive.Root.Props) => {
   return <TooltipPrimitive.Root {...props}>{children}</TooltipPrimitive.Root>
@@ -33,7 +29,7 @@ const Content = ({ className, ...props }: TooltipPrimitive.Popup.Props) => {
         <TooltipPrimitive.Popup
           className={cn(
             'flex w-full items-center justify-between gap-3 rounded-lg border border-neutral-300/40 bg-white px-1.5 py-1 pl-2 font-mono text-xs dark:border-neutral-700/20 dark:bg-neutral-900',
-
+            'origin-[var(--transform-origin)] transition-[transform,scale,opacity,filter] data-[ending-style]:scale-98 data-[starting-style]:scale-98 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:blur-xs data-[starting-style]:blur-xs',
             className,
           )}
           {...props}
