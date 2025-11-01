@@ -15,11 +15,7 @@ enum AuthError {
   AccessDenied = 'AccessDenied',
 }
 
-export default async function SignIn({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>
-}) {
+export default async function LoginPage({ searchParams }: PageProps<'/login'>) {
   const session = await getSessionData(await headers())
 
   if (session?.user) {
