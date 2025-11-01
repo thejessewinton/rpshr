@@ -1,14 +1,16 @@
 import { getCookieCache } from 'better-auth/cookies'
 import { type NextRequest, NextResponse } from 'next/server'
 
-const publicRoutes = ['/login', '/marketing']
-
 export const proxy = async (request: NextRequest) => {
   const session = await getCookieCache(request)
 
-  if (!session && !publicRoutes.includes(request.nextUrl.pathname)) {
-    return NextResponse.rewrite(new URL('/marketing', request.url))
+  if (session) {
+    return NextResponse.rewrite(new URL('/', request.url))
   }
+
+  // if (!session && !request.nextUrl.pathname.startsWith('/login')) {
+  //   return NextResponse.rewrite(new URL('/marketing', request.url))
+  // }
 
   return NextResponse.next()
 }
