@@ -1,8 +1,7 @@
-import { headers } from 'next/headers'
-import { getSessionData } from '~/auth'
-
-export default async function AppLayout({ marketing, app }: LayoutProps<'/'>) {
-  const session = await getSessionData(await headers())
-
-  return <>{session?.user ? app : marketing}</>
+export default function AppLayout({ children }: LayoutProps<'/'>) {
+  return (
+    <main className="isolate mx-auto flex w-full flex-col justify-center">
+      {children}
+    </main>
+  )
 }
