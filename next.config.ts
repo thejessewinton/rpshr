@@ -4,7 +4,7 @@ import type { NextConfig } from 'next'
 
 const config = {
   reactCompiler: true,
-  //cacheComponents: true,
+  typedRoutes: true,
   experimental: {
     useCache: true,
     turbopackFileSystemCacheForDev: true,

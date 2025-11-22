@@ -1,7 +1,4 @@
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { getSessionData } from '~/auth'
 import { Logo } from '~/components/shared/logo'
 import { Login } from '~/components/ui/login'
 import { LoginBg } from '~/components/ui/login-bg'
@@ -15,17 +12,7 @@ enum AuthError {
   AccessDenied = 'AccessDenied',
 }
 
-export default async function SignIn({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>
-}) {
-  const session = await getSessionData(await headers())
-
-  if (session?.user) {
-    redirect('/')
-  }
-
+export default async function LoginPage({ searchParams }: PageProps<'/login'>) {
   const error = (await searchParams).error as AuthError | undefined
 
   const errorMap: Record<keyof typeof AuthError, string> = {
