@@ -5,14 +5,14 @@ import { db } from '~/server/db'
 
 import { note } from '~/server/db/schema'
 
+const NoteInputSchema = z.object({
+  id: z.string().optional(),
+  title: z.string(),
+  body: z.string(),
+})
+
 export const createOrUpdate = createServerFn({ method: 'POST' })
-  .inputValidator({
-    data: {
-      id: z.string().optional(),
-      title: z.string(),
-      body: z.string(),
-    },
-  })
+  .inputValidator(NoteInputSchema)
   .handler(async ({ data }) => {
     return await db
       .insert(note)
