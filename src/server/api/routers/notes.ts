@@ -1,8 +1,31 @@
+import { createServerFn } from '@tanstack/react-start'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
+import { db } from '~/server/db'
 
-import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
 import { note } from '~/server/db/schema'
+
+export const createOrUpdate = createServerFn({ method: 'POST' })
+  .inputValidator({
+    data: {
+      id: z.string().optional(),
+      title: z.string(),
+      body: z.string(),
+    },
+  })
+  .handler(async ({ data }) => {
+    return await db
+      .insert(note)
+      .values({
+        id: data.id,
+        title: data.title,
+        user_id: ctx.session.user.id,
+        body: input.body,
+      })
+      .returning({
+        id: note.id,
+      })
+  })
 
 export const notesRouter = createTRPCRouter({
   createOrUpdate: protectedProcedure

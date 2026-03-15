@@ -1,7 +1,7 @@
 'use client'
 
-import { ArrowUpRight } from '@phosphor-icons/react'
-import { useRouter } from 'next/navigation'
+import { ArrowUpRightIcon } from '@phosphor-icons/react/ArrowUpRight'
+import { useRouter } from '@tanstack/react-router'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { signOut } from '~/auth/client'
 import { KBD } from '~/components/shared/kbd'
@@ -14,7 +14,7 @@ export const SignOutButton = () => {
     await signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push('/login')
+          router.navigate({ to: '/' })
         },
       },
     })
@@ -28,7 +28,7 @@ export const SignOutButton = () => {
     <Tooltip.Root>
       <Tooltip.Trigger onClick={async () => await handleSignout()}>
         <div className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
-          <ArrowUpRight className="size-4 text-neutral-900 transition-transform dark:text-white" />
+          <ArrowUpRightIcon className="size-4 text-neutral-900 transition-transform dark:text-white" />
         </div>
       </Tooltip.Trigger>
       <Tooltip.Content>

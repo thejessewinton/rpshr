@@ -11,39 +11,23 @@ import {
   type EditorProviderProps,
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { usePathname } from 'next/navigation'
 import { isDeepEqual } from 'remeda'
 import { useDebounceCallback } from 'usehooks-ts'
 
 import { useState } from 'react'
 import { Toolbar } from '~/components/ui/toolbar'
 import { useFocusStore } from '~/state/use-focus-store'
-import { type RouterOutputs, api } from '~/trpc/react'
 
 type EditorProps = {
   content?: EditorProviderProps['content']
-  noteId?: NonNullable<RouterOutputs['notes']['getById']>['id']
+  noteId?: string
 }
 
 export const NoteEditor = ({ content, noteId }: EditorProps) => {
-  const utils = api.useUtils()
   const { isFocusMode } = useFocusStore()
-  const pathname = usePathname()
-  const { data: notes, refetch } = api.notes.getAll.useQuery()
 
   // local state to store the id of the note on first save
   const [id, setId] = useState<string | undefined>(undefined)
-
-  const { mutate, isPending, isSuccess, isError } =
-    api.notes.createOrUpdate.useMutation({
-      onSuccess: ([data]) => {
-        if (data?.id && pathname === '/') {
-          window.history.pushState({}, '', `/${data.id}`)
-          setId(data.id)
-        }
-        utils.notes.getAll.invalidate()
-      },
-    })
 
   const handleSave = (editor: Editor) => {
     const isChanged = !isDeepEqual(content, editor.getHTML())
@@ -53,11 +37,7 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       return
     }
 
-    mutate({
-      id: noteId ?? id,
-      title: editor.view.state.doc.firstChild?.textContent.trim() ?? '',
-      body: editor.getHTML() ?? '',
-    })
+    console.log('save', editor.getHTML())
   }
 
   const debouncedSave = useDebounceCallback(
@@ -83,27 +63,6 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       HTMLAttributes: {
         class: 'mention',
       },
-      suggestion: {
-        items: async ({ query }) => {
-          console.log(notes)
-          if (!notes) return []
-          return notes.filter((note) =>
-            note.title!.toLowerCase().includes(query.toLowerCase()),
-          )
-        },
-        render: () => {
-          return {
-            onStart: async (props) => {
-              await refetch()
-              console.log('onStart', props)
-            },
-            onUpdate: async (props) => {
-              await refetch()
-              console.log('onUpdate', props)
-            },
-          }
-        },
-      },
     }),
   ]
 
@@ -128,9 +87,9 @@ export const NoteEditor = ({ content, noteId }: EditorProps) => {
       }}
     >
       <Toolbar
-        isPending={isPending}
-        isSuccess={isSuccess}
-        isError={isError}
+        isPending={false}
+        isSuccess={true}
+        isError={false}
         noteId={noteId}
       />
     </EditorProvider>

@@ -1,23 +1,18 @@
-import { ListDashes } from '@phosphor-icons/react'
-import { format } from 'date-fns'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { ListDashesIcon } from '@phosphor-icons/react/ListDashes'
+import { useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { KBD } from '~/components/shared/kbd'
 import { Menu } from '~/components/shared/menu'
 import { Tooltip } from '~/components/shared/tooltip'
-import { api } from '~/trpc/react'
 
 export const NotesList = () => {
   const [open, setOpen] = useState(false)
-  const pathname = usePathname()
+  const location = useLocation()
 
   useHotkeys('n', () => {
     setOpen(true)
   })
-
-  const { data } = api.notes.getAll.useQuery()
 
   return (
     <Tooltip.Root>
@@ -26,7 +21,7 @@ export const NotesList = () => {
           <Tooltip.Trigger
             render={
               <div className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900">
-                <ListDashes className="size-4 text-neutral-900 transition-transform dark:text-white" />
+                <ListDashesIcon className="size-4 text-neutral-900 transition-transform dark:text-white" />
               </div>
             }
           />
@@ -34,7 +29,7 @@ export const NotesList = () => {
         <Menu.Portal>
           <Menu.Positioner>
             <Menu.Popup className="group min-w-xs overflow-y-scroll">
-              {!data?.length ? (
+              {!location.pathname.includes('/') ? (
                 <div className="flex h-20 flex-1 flex-col items-center justify-center rounded-md border border-neutral-400/70 border-dashed font-medium text-neutral-400 text-xs dark:border-neutral-700/70">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +44,7 @@ export const NotesList = () => {
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {data.map((note) => {
+                  {/* {data.map((note) => {
                     const isCurrent = pathname === `/${note.id}`
                     return (
                       <Menu.Item
@@ -78,7 +73,7 @@ export const NotesList = () => {
                         }
                       />
                     )
-                  })}
+                  })} */}
                 </div>
               )}
             </Menu.Popup>
