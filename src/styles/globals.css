@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
-@variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
@@ -102,14 +102,10 @@
     }
   }
 
-  [data-focus-mode="true"] {
-    & *:not(.focused) {
+  [data-focus-mode="true"]:focus-within .editor {
+    & > *:not(.focused),
+    & .focused > li:not(.focused) {
       @apply opacity-40;
-    }
-
-    & *:not(:focus-within) > *,
-    & *:is(.focused) {
-      @apply opacity-100;
     }
   }
 }
